@@ -1,0 +1,90 @@
+
+bombdif.png
+size: 1024, 256
+format: RGBA8888
+filter: Nearest, Nearest
+repeat: none
+arrow
+  rotate: false
+  xy: 808, 70
+  size: 62, 128
+  orig: 128, 128
+  offset: 25, 0
+  index: -1
+arrow_r
+  rotate: false
+  xy: 742, 70
+  size: 64, 128
+  orig: 128, 128
+  offset: 26, 0
+  index: -1
+back_rec
+  rotate: false
+  xy: 2, 36
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+bar
+  rotate: false
+  xy: 2, 166
+  size: 256, 32
+  orig: 256, 32
+  offset: 0, 0
+  index: -1
+bombe
+  rotate: false
+  xy: 496, 70
+  size: 83, 128
+  orig: 128, 128
+  offset: 23, 0
+  index: 1
+bombe
+  rotate: false
+  xy: 581, 70
+  size: 83, 128
+  orig: 128, 128
+  offset: 23, 0
+  index: 0
+cursor
+  rotate: false
+  xy: 872, 70
+  size: 12, 128
+  orig: 128, 128
+  offset: 54, 0
+  index: -1
+field
+  rotate: false
+  xy: 2, 2
+  size: 128, 32
+  orig: 128, 32
+  offset: 0, 0
+  index: -1
+iconbomb
+  rotate: false
+  xy: 392, 70
+  size: 102, 128
+  orig: 128, 128
+  offset: 16, 0
+  index: -1
+noback_rec
+  rotate: false
+  xy: 132, 36
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
+retry
+  rotate: false
+  xy: 666, 70
+  size: 74, 128
+  orig: 128, 128
+  offset: 29, 0
+  index: -1
+smoke
+  rotate: false
+  xy: 262, 70
+  size: 128, 128
+  orig: 128, 128
+  offset: 0, 0
+  index: -1
