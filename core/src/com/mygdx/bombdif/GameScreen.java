@@ -34,9 +34,9 @@ public class GameScreen implements Screen {
     private Animation<TextureRegion> tickingbomb;
     private TextureRegion currentFrame;
     private float stateTime;
-    private int countdown =60;
+    private int countdown =30;
     private Chronom chrono;
-    private int display;
+    private boolean display=true;
     private Image bombI;
     private Label inst;
     private Tapey tap;
@@ -52,7 +52,7 @@ public class GameScreen implements Screen {
 
         bomb = new Bomb();
         customUi = new CustomUiBdf(game);
-        tickingbomb = bomb.getTickingbomb();
+        //tickingbomb = bomb.getTickingbomb();
 
         tap = new Tapey(language);
 
@@ -60,13 +60,14 @@ public class GameScreen implements Screen {
         Timer.schedule(new Timer.Task(){
                            @Override
                            public void run() {
-                               chrono.updateTimer();
-                               timerL.setText(chrono.display());
+                               if (display) {
+                                   display = chrono.updateTimer();
+                                   timerL.setText(chrono.display());
+                               }
                            }
                        }
-                , 3        //    (delay)
-                , 1     //    (seconds)
-                ,countdown
+                , 1        //    (delay)
+                , 1f     //    (seconds)
         );
 
 
@@ -82,7 +83,11 @@ public class GameScreen implements Screen {
         table.row();
 
         timerL = customUi.createLabel(80,chrono.display());
-        table.add(timerL).top().pad(50);//.expand().top().pad(20)
+        table.add(timerL).top().padTop(50);//.expand().top().pad(20)
+
+        table.row();
+        bombI = bomb.getiBomb();
+        table.add(bombI).expand().fill().padLeft(80).padRight(80);
 
         table.row();
         inputSpace = customUi.createButton("back");
@@ -95,17 +100,15 @@ public class GameScreen implements Screen {
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
+
         });
         table.add(inputSpace).fill().expand();
 
         table.row();
 
         inst = customUi.createLabel(40, tap.getInstruc());
-        table.add(inst);
+        table.add(inst).padBottom(10);
 
-        table.row();
-        bombI = bomb.getiBomb();
-        table.add(bombI).expand().fill().padLeft(70).padRight(70);
 
         // time to 0
         stateTime = 0;
@@ -136,7 +139,7 @@ public class GameScreen implements Screen {
         if (tap.isDone()){
             tap = new Tapey(language);
             inst.setText(tap.getInstruc());
-            chrono.setSec(2);
+            chrono.bonusSec(2);
         }
         stateTime = chrono.getSec();
 
@@ -146,7 +149,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        viewport.update(width, height);
     }
 
     @Override

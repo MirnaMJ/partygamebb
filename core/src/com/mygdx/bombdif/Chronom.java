@@ -12,15 +12,8 @@ public class Chronom {
         counting = true;
     }
 
-    public int getSec() {
-        return sec;
-    }
-
-    public void setSec(int sec) {
-        this.sec += sec;
-    }
-
     public String display(){
+        convert();
         return addZero(hour)+":"+addZero(min)+":"+addZero(sec);
     }
 
@@ -32,11 +25,15 @@ public class Chronom {
             if (sec/60 >= 1){
                 min = (int) Math.floor(sec/60);
                 sec -= min*60;
+            }else {
+                min = 0;
             }
         }else if (sec_total/60 >= 1){
+            hour = 0;
             min = (int) Math.floor(sec_total/60);
             sec = sec_total - min*60;
         }else {
+            min = 0;
             sec = sec_total;
         }
     }
@@ -50,6 +47,21 @@ public class Chronom {
     }
 
     public boolean updateTimer(){
+        sec_total-=1;
+        if (sec_total <=0){
+            return false;
+        }return true;
+    }
+
+    public int getSec() {
+        return sec_total;
+    }
+
+    public void bonusSec(int sec) {
+        this.sec_total += sec;
+    }
+
+    /*public boolean updateTimer(){
         if (sec == 0 && min==0 && hour==0 ){
             counting = false;
             return false;
@@ -68,7 +80,7 @@ public class Chronom {
             sec-=1;
         }
         return counting;
-    }
+    }*/
 
 
 }
