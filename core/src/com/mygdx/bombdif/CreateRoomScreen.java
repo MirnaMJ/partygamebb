@@ -40,6 +40,8 @@ public class CreateRoomScreen implements Screen {
     private Label label4;
     private TextField roomName;
     private int nbPlayer;
+    /* Hide textfield for room name when nbplayer equal 1
+    * */
 
     public CreateRoomScreen(final Bombdife game){
         this.game = game;

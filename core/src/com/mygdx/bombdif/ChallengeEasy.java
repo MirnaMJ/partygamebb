@@ -4,13 +4,15 @@ public abstract class ChallengeEasy extends Challenge{
     private int countdown;
     public ChallengeEasy(){
         super();
-        countdown = 30;
+        countdown = 350;
         /*challeng chosen are tap flip or shake
         30 sec
          */
     }
 
+    @Override
     public int getCountdown() {
         return countdown;
     }
+
 }

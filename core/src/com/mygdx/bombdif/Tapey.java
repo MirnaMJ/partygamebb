@@ -28,7 +28,7 @@ public class Tapey extends ChallengeEasy{
         };
     }
 
-    public InputListener getTap(){return tap;}
+    public InputListener getInputListener(){return tap;}
 
     public String getInstruc(){
         return instruction[0]+iter+instruction[1];

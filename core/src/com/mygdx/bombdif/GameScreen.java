@@ -39,7 +39,7 @@ public class GameScreen implements Screen {
     private boolean display=true;
     private Image bombI;
     private Label inst;
-    private Tapey tap;
+    private Challenge prompt;
     private ImageButton inputSpace;
 
     public GameScreen(Bombdife game){
@@ -54,9 +54,26 @@ public class GameScreen implements Screen {
         customUi = new CustomUiBdf(game);
         //tickingbomb = bomb.getTickingbomb();
 
-        tap = new Tapey(language);
+        /*int choice = (int) (Math.random() * 1);//Min + (int)(Math.random() * ((Max - Min) + 1))
+        if (game.getRules().getDifficulty().equals(language.getEasy())){
+            switch(choice){
+                case 0:
+                    prompt = new Swipey(language);
+                    System.out.println("gamescreen: prompt 0");
+                    break;
+                default:
+                    prompt = new Tapey(language);
+                    System.out.println("gamescreen: prompt d3fault");
+                    break;
+            }
 
-        chrono = new Chronom(countdown);
+        }else {
+            prompt = new Tapey(language);
+            System.out.println("gamescreen: if rules jot easy ");
+        }*/
+        selecChallenge();
+
+        chrono = new Chronom(prompt.getCountdown());
         Timer.schedule(new Timer.Task(){
                            @Override
                            public void run() {
@@ -91,22 +108,19 @@ public class GameScreen implements Screen {
 
         table.row();
         inputSpace = customUi.createButton("back");
-        inputSpace.addListener(new InputListener(){
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                tap.updateStep();
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                return true;
-            }
+        //
+        //
+        //
+        // chnage the listener accordinto what class is randomly selected
+        //
+        //
+        inputSpace.addListener(prompt.getInputListener());
 
-        });
         table.add(inputSpace).fill().expand();
 
         table.row();
 
-        inst = customUi.createLabel(40, tap.getInstruc());
+        inst = customUi.createLabel(40, prompt.getInstruc());
         table.add(inst).padBottom(10);
 
 
@@ -133,18 +147,43 @@ public class GameScreen implements Screen {
         game.getFont80().draw(game.getBatch(), chrono.display(), camera.viewportWidth/6, camera.viewportHeight*7/8);
         game.getBatch().draw(currentFrame, 10, 10,camera.viewportWidth-20,camera.viewportWidth); // Draw current frame at (x, y)
         game.getBatch().end()*/
+
+        //animation bomb
         if (chrono.getSec()!= stateTime){
             bomb.tick(chrono.getSec());
         }
-        if (tap.isDone()){
-            tap = new Tapey(language);
-            inst.setText(tap.getInstruc());
+
+        //gameloop
+        if (prompt.isDone()){
+            selecChallenge();
+            inst.setText(prompt.getInstruc());
             chrono.bonusSec(2);
         }
         stateTime = chrono.getSec();
 
         stage.draw();
 
+    }
+
+    private void selecChallenge(){
+        int choice = (int) (Math.random() * 1);//Min + (int)(Math.random() * ((Max - Min) + 1))
+        choice =4;
+        if (game.getRules().getDifficulty().equals(language.getEasy())){
+            switch(choice){
+                case 0:
+                    prompt = new Swipey(language);
+                    System.out.println("gamescreen: prompt 0");
+                    break;
+                default:
+                    prompt = new Tapey(language);
+                    System.out.println("gamescreen: prompt d3fault");
+                    break;
+            }
+
+        }else {
+            prompt = new Tapey(language);
+            System.out.println("gamescreen: if rules jot easy ");
+        }
     }
 
     @Override

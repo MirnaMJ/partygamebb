@@ -49,7 +49,7 @@ public class Language {
                 waiting = "En attente de...";
                 room = "Salle ";
                 start = "COMMENCER";
-                instrucSwipe = "GLISSE TON DOIGT SUR L'ECRAN";
+                instrucSwipe = "GLISSE TON DOIGT SUR\n L'ECRAN";
                 instrucTap = "TAPPE L'ECRAN ";
                 instrucShake = "SECOUE LE TELEPHONE!";
                 nTimes = " FOIS!";

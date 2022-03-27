@@ -1,5 +1,7 @@
 package com.mygdx.bombdif;
 
+import com.badlogic.gdx.scenes.scene2d.InputListener;
+
 public abstract class Challenge {
     private boolean done;
     private String instruc;
@@ -15,7 +17,9 @@ public abstract class Challenge {
         done = true;
     }
 
+    public abstract int getCountdown();
     public abstract String getInstruc();
+    public abstract InputListener getInputListener();
 
 
 }

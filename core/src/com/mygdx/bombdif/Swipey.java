@@ -9,13 +9,13 @@ public class Swipey extends ChallengeEasy{
 
     public Swipey(Language lang){
         super();
-        instruction = lang.getInstrucShake();
+        instruction = lang.getInstrucSwipe();
         swipe = new InputListener(){
 
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 //super.touchDragged(event, x, y, pointer);
-                System.out.println("ttest");
+                System.out.println("Swipy: ttest");
                 updateState();
             }
         };
@@ -25,7 +25,7 @@ public class Swipey extends ChallengeEasy{
         return instruction;
     }
 
-    public InputListener getSwipe() {
+    public InputListener getInputListener() {
         return swipe;
     }
 
