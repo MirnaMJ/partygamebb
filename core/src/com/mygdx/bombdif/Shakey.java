@@ -1,5 +1,6 @@
 package com.mygdx.bombdif;
 
+import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class Shakey extends ChallengeEasy{
@@ -15,7 +16,7 @@ public class Shakey extends ChallengeEasy{
     }
 
     @Override
-    public InputListener getInputListener() {
-        return null;
+    public void updateState(int flag) {
+int a = 2;
     }
 }

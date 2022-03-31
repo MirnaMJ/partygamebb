@@ -34,13 +34,16 @@ public class GameScreen implements Screen {
     private Animation<TextureRegion> tickingbomb;
     private TextureRegion currentFrame;
     private float stateTime;
-    private int countdown =30;
     private Chronom chrono;
     private boolean display=true;
     private Image bombI;
     private Label inst;
     private Challenge prompt;
     private ImageButton inputSpace;
+    private int inputFlag;
+    private float dragSensitivity= 20;
+    private float posX;
+    private float posY;
 
     public GameScreen(Bombdife game){
         this.game = game;
@@ -93,7 +96,7 @@ public class GameScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         table = new Table();
-        table.debug();
+        //table.debug();
         stage.addActor(table);
         table.setFillParent(true);
 
@@ -104,17 +107,48 @@ public class GameScreen implements Screen {
 
         table.row();
         bombI = bomb.getiBomb();
-        table.add(bombI).expand().fill().padLeft(80).padRight(80);
+        table.add(bombI).expand().fill().padLeft(120).padRight(120);//
 
         table.row();
+
+        inputFlag = 0;
         inputSpace = customUi.createButton("back");
         //
-        //
-        //
-        // chnage the listener accordinto what class is randomly selected
-        //
-        //
-        inputSpace.addListener(prompt.getInputListener());
+        //touch down
+        //touch dragged keep where the drag started to be detected
+        // touch up look how long the drag was and if iwas long enough will consider it a drag
+        // tap is flag =0
+        // drag is flag=1
+        inputSpace.addListener( new InputListener(){
+            @Override
+            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
+                if (Math.abs(posX-x)>dragSensitivity || Math.abs(posY-y)>dragSensitivity) {
+                    //System.out.println("gamescreen: drag  , "+x+" , "+y+", "+pointer);
+                    prompt.updateState(inputFlag);
+                    inputFlag=0;
+                }else {
+                    //System.out.println("gamescreen: jut touch  , "+x+" , "+y+", "+pointer);
+                    inputFlag=0;
+                    prompt.updateState(inputFlag);
+                }
+            }
+            @Override
+            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
+                //System.out.println("gamescreen:   , "+x+" , "+y+", "+pointer);
+                return true;
+            }
+
+            @Override
+            public void touchDragged(InputEvent event, float x, float y, int pointer) {
+                super.touchDragged(event, x, y, pointer);
+                if (inputFlag==0){
+                    posX = x;
+                    posY = y;
+                }
+                inputFlag = 1;
+
+            }
+        });
 
         table.add(inputSpace).fill().expand();
 
@@ -157,7 +191,7 @@ public class GameScreen implements Screen {
         if (prompt.isDone()){
             selecChallenge();
             inst.setText(prompt.getInstruc());
-            chrono.bonusSec(2);
+            chrono.bonusSec(5);
         }
         stateTime = chrono.getSec();
 
@@ -166,8 +200,7 @@ public class GameScreen implements Screen {
     }
 
     private void selecChallenge(){
-        int choice = (int) (Math.random() * 1);//Min + (int)(Math.random() * ((Max - Min) + 1))
-        choice =4;
+        int choice = (int) (Math.random() * 2);//Min + (int)(Math.random() * ((Max - Min) + 1))
         if (game.getRules().getDifficulty().equals(language.getEasy())){
             switch(choice){
                 case 0:
@@ -176,13 +209,13 @@ public class GameScreen implements Screen {
                     break;
                 default:
                     prompt = new Tapey(language);
-                    System.out.println("gamescreen: prompt d3fault");
+                    System.out.println("gamescreen: prompt default");
                     break;
             }
 
         }else {
             prompt = new Tapey(language);
-            System.out.println("gamescreen: if rules jot easy ");
+            System.out.println("gamescreen: if rules not easy ");
         }
     }
 

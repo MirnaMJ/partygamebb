@@ -7,7 +7,7 @@ public class Tapey extends ChallengeEasy{
     private String[] instruction;
     private int iter;
     private int step;
-    private InputListener tap;
+    //private InputListener tap;
 
     public Tapey(Language lang){
         super();
@@ -16,28 +16,30 @@ public class Tapey extends ChallengeEasy{
         instruction[1] = lang.getnTimes();
         step = 0;
         iter = 1 + (int)(Math.random() * 5);//Min + (int)(Math.random() * ((Max - Min) + 1))
-        tap = new InputListener(){
+        /*tap = new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                updateStep();
+                updateState();
             }
             @Override
             public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
                 return true;
             }
-        };
+        };*/
     }
 
-    public InputListener getInputListener(){return tap;}
+    //public InputListener getInputListener(){return tap;}
 
     public String getInstruc(){
-        return instruction[0]+iter+instruction[1];
+        return instruction[0]+(iter-step)+instruction[1];
     }
 
-    public void updateStep() {
-        step+=1;
-        if (iter == step){
-            this.setDone();
+    public void updateState(int flag ) {
+        if (flag == 0){
+            step+=1;
+            if (iter == step){
+                this.setDone();
+            }
         }
     }
 }

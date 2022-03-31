@@ -50,7 +50,7 @@ public class Bomb extends Actor {
     }
 
     public void tick(int s){
-        if (time_since_last_tick <5) {
+        if (time_since_last_tick <2) {
             time_since_last_tick += 1;
             iBomb.setColor(tint);
         }else{
@@ -80,5 +80,8 @@ public class Bomb extends Actor {
     bomb.updattat timticin
     bomb.act
 
+if losing bomb sound, vibration, red screen else nice sound no vibration
+
+tick tick every seconds or playing on loop and cut by nice sound when 30seconds/1 mn was added
     */
 }

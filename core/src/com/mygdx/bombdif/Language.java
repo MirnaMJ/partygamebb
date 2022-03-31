@@ -71,7 +71,7 @@ public class Language {
                 instrucSwipe = "SWIPE";
                 instrucTap = "TAP THE SCREEN ";
                 instrucShake = "SHAKE YOUR PHONE!";
-                nTimes = "TIMES!";
+                nTimes = " TIMES!";
                 break;
             default:
                 create = "";
