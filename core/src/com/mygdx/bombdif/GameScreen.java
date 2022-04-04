@@ -188,6 +188,23 @@ public class GameScreen implements Screen {
         }
 
         //gameloop
+        if (prompt.checkShake()){
+            if ((Math.abs(Gdx.input.getAccelerometerX())>10 && Math.abs(Gdx.input.getAccelerometerX())<20) ||
+                    ((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5) ||
+                    (Gdx.input.getAccelerometerZ()>14 && Gdx.input.getAccelerometerZ()<20))){
+                /*
+                    ((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5) ||
+                    (Gdx.input.getAccelerometerZ()>11 && Gdx.input.getAccelerometerZ()<20)) */
+                inputFlag = 2;
+                prompt.updateState(inputFlag);
+                System.out.println(Math.abs(Gdx.input.getAccelerometerX())>10);
+                System.out.println(Math.abs(Gdx.input.getAccelerometerX())<20);
+                System.out.println("x: "+Gdx.input.getAccelerometerX());
+                System.out.println((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5));
+                System.out.println((Gdx.input.getAccelerometerZ()>14 && Gdx.input.getAccelerometerZ()<20));
+                System.out.println("z: "+Gdx.input.getAccelerometerZ());
+            }
+        }
         if (prompt.isDone()){
             selecChallenge();
             inst.setText(prompt.getInstruc());
@@ -200,12 +217,16 @@ public class GameScreen implements Screen {
     }
 
     private void selecChallenge(){
-        int choice = (int) (Math.random() * 2);//Min + (int)(Math.random() * ((Max - Min) + 1))
+        int choice = (int) (Math.random() * 3);//Min + (int)(Math.random() * ((Max - Min) + 1))
         if (game.getRules().getDifficulty().equals(language.getEasy())){
             switch(choice){
                 case 0:
                     prompt = new Swipey(language);
                     System.out.println("gamescreen: prompt 0");
+                    break;
+                case 1:
+                    prompt = new Shakey(language);
+                    System.out.println("gamescreen: prompt 1");
                     break;
                 default:
                     prompt = new Tapey(language);

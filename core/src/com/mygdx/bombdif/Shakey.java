@@ -1,5 +1,6 @@
 package com.mygdx.bombdif;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
@@ -8,6 +9,9 @@ public class Shakey extends ChallengeEasy{
     public Shakey(Language lan){
         super();
         instruction = lan.getInstrucShake();
+        float accelX = Gdx.input.getAccelerometerX();
+        float accelY = Gdx.input.getAccelerometerY();
+        float accelZ = Gdx.input.getAccelerometerZ();
     }
 
     @Override
@@ -17,6 +21,13 @@ public class Shakey extends ChallengeEasy{
 
     @Override
     public void updateState(int flag) {
-int a = 2;
+        if (flag==2){
+            this.setDone();
+
+        }
+    }
+
+    public boolean checkShake(){
+        return true;
     }
 }

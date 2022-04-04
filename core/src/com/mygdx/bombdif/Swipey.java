@@ -33,4 +33,8 @@ public class Swipey extends ChallengeEasy{
             this.setDone();
         }
     }
+
+    public boolean checkShake(){
+        return false;
+    }
 }

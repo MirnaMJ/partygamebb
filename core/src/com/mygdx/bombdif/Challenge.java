@@ -20,6 +20,7 @@ public abstract class Challenge {
     public abstract int getCountdown();
     public abstract String getInstruc();
     public abstract void updateState( int flag);
+    public abstract boolean checkShake();
 
 
 }

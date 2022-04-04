@@ -42,4 +42,8 @@ public class Tapey extends ChallengeEasy{
             }
         }
     }
+
+    public boolean checkShake(){
+        return false;
+    }
 }

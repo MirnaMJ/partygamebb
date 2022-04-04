@@ -35,6 +35,8 @@ public class Bombdife extends Game {
 		language = new Language("Français");
 		rules = new GameRulesManager(language);
 		this.setScreen(new TitleScreen(this));
+		// might need to check presnecepsnece of accelerometer? boolean available = Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer);
+
 	}
 
 	@Override
