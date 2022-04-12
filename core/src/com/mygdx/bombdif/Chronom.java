@@ -53,6 +53,15 @@ public class Chronom {
         }return true;
     }
 
+    public boolean ended(){
+        if (sec_total == 0){
+            counting = false;
+            return true;
+        }else {
+            return false;
+        }
+    }
+
     public int getSec() {
         return sec_total;
     }

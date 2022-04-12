@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 public class CustomUiBdf {
@@ -34,6 +35,9 @@ public class CustomUiBdf {
 
     private Drawable tableStyle0;
     private Drawable tableStyle1;
+
+    private Window.WindowStyle windowStyle;
+    private Window window;
 
     private Skin skin;
     private TextureAtlas bombdife;
@@ -59,33 +63,33 @@ public class CustomUiBdf {
 
         textButtonStyle0 = new TextButton.TextButtonStyle();
         textButtonStyle0.font = game.getFont20();
-        textButtonStyle0.up = skin.newDrawable("noback_rec");
-        tintColor0 = new Color(0f, 1f, 1f, 1f);
-        textButtonStyle0.down = skin.newDrawable("noback_rec",tintColor0);
+        textButtonStyle0.up = skin.newDrawable("Button");
+        tintColor0 = new Color(0.4f, 0.4f, 0.4f, 1f);
+        textButtonStyle0.down = skin.newDrawable("Button",tintColor0);
 
         textButtonStyle1 = new TextButton.TextButtonStyle();
         textButtonStyle1.font = game.getFont20();
-        textButtonStyle1.up = skin.getDrawable("back_rec");
-        textButtonStyle1.down = skin.getDrawable("back_rec");
+        textButtonStyle1.up = skin.getDrawable("Button");
+        textButtonStyle1.down = skin.getDrawable("Button");
 
 
         ButtonStyle0 = new ImageButton.ImageButtonStyle();
-        ButtonStyle0.up = skin.getDrawable("arrow");
-        ButtonStyle0.down = skin.getDrawable("arrow");
+        ButtonStyle0.up = skin.getDrawable("Left_arrow");
+        ButtonStyle0.down = skin.getDrawable("Left_arrow");
 
         ButtonStyle1 = new ImageButton.ImageButtonStyle();
-        tintColor1 = new Color(0.2f, 1f, 1f, 1f);
-        ButtonStyle1.up = skin.newDrawable("retry");
-        ButtonStyle1.down = skin.newDrawable("retry",tintColor1);
+        tintColor1 = new Color(0.2f, 1f, 0.2f, 1f);
+        ButtonStyle1.up = skin.newDrawable("Retry_button");
+        ButtonStyle1.down = skin.newDrawable("Retry_button",tintColor1);
 
         ButtonStyle2 = new ImageButton.ImageButtonStyle();
-        tintColor2 = new Color(1f, 1f, 1f, 1f);
-        ButtonStyle2.up = skin.newDrawable("back_rec");
-        ButtonStyle2.down = skin.newDrawable("noback_rec",tintColor2);
+        ButtonStyle2.up = skin.getDrawable("Pixel_transparent");
+        ButtonStyle2.down = skin.getDrawable("Pixel_transparent");
 
+        tintColor2 = new Color(0.21f, 0.41f, 0.41f, 1f);
         ButtonStyle3 = new ImageButton.ImageButtonStyle();
-        ButtonStyle3.up = skin.newDrawable("arrow_r");
-        ButtonStyle3.down = skin.newDrawable("arrow_r",tintColor2);
+        ButtonStyle3.up = skin.newDrawable("Left_arrow");
+        ButtonStyle3.down = skin.newDrawable("Left_arrow",tintColor2);
 
 
         labelStyle0  = new Label.LabelStyle();
@@ -98,17 +102,17 @@ public class CustomUiBdf {
         textFStyle = new TextField.TextFieldStyle();
         textFStyle.font = game.getFont20();
         textFStyle.fontColor = new Color(0.81f, 0.81f, 0.81f, 1f);
-        textFStyle.background = skin.getDrawable("field");
-        textFStyle.cursor =  skin.getDrawable("cursor");
-        textFStyle.selection = skin.getDrawable("noback_rec");
+        textFStyle.background = skin.getDrawable("Text_background");
+        textFStyle.cursor =  skin.getDrawable("Cursor_text");
+        textFStyle.selection = skin.getDrawable("Button");
 
         sliderStyle = new Slider.SliderStyle();
-        sliderStyle.background = skin.getDrawable("bar");
-        sliderStyle.knob = skin.getDrawable("iconbomb");
+        sliderStyle.background = skin.getDrawable("Slider_volume");
+        sliderStyle.knob = skin.getDrawable("volume_cursor");
 
         tintColor3 = new Color(0.5f, 1f, 1f, 1f);
-        tableStyle0 = skin.newDrawable("field",tintColor3);
-        tableStyle1 = skin.getDrawable("field");
+        tableStyle0 = skin.newDrawable("Text_background",tintColor3);
+        tableStyle1 = skin.getDrawable("Text_background");
 
 
     }
@@ -191,11 +195,9 @@ public class CustomUiBdf {
                 table.setBackground(tableStyle1);
                 return table;
             default:
-                table = new Table(skin);
-                table.setBackground(tableStyle1);
+                table = new Table();
                 break;
         }
         return table;
     }
-
 }

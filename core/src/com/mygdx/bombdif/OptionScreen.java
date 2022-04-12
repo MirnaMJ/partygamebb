@@ -63,7 +63,7 @@ public class OptionScreen implements Screen {
 
 
         table.row();
-        back = cbutton.createButton( "arrow");
+        back = cbutton.createButton( "arrow_r");
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -72,13 +72,16 @@ public class OptionScreen implements Screen {
                 dispose();
             }
         });
-        table.add(back).top().left();//.right().pad(10).padLeft(830);//size of button via size of cell
+        back.setTransform(true);
+        back.setOrigin(back.getWidth()/2, back.getHeight()/2);
+        back.setScale(0.6f,0.6f);
+        table.add(back).top().left();//.expand().right().pad(10);//size of button via size of cell
 
         table.row();
         //label
         label0 = cbutton.createLabel(40,language.getTongue());
         //label0 = new Label(language.getTongue(),labelStyle);
-        table.add(label0).expand().top().padTop(20);
+        table.add(label0);//.top().padLeft(80).expand().padTop(20).left()
 
         table.row();
 
@@ -95,18 +98,18 @@ public class OptionScreen implements Screen {
                 }
             }
         });
-        table.add(lingua).padBottom(60).top().expand();//.pad(10).bottom();
+        table.add(lingua).padBottom(60).top().expand();//.pad(10).bottom();.colspan(2)
 
         table.row();
         //label
         label1 = cbutton.createLabel(40,language.getVolume());
         //label1 = new Label(language.getVolume(),labelStyle);
-        table.add(label1).expand().top();
+        table.add(label1).expand().top();//.colspan(2)
 
         table.row();
         volume = cbutton.createSlider(0,10,1f,false,"bombCursor");
         //volume = new Slider(0, 10, 1f, false, sliderStyle );
-        table.add(volume).padBottom(70).fill(true,false).padLeft(20f).padRight(20f);//.pad(10).padRight(380).padTop(270).bottom();
+        table.add(volume).padBottom(70).fill(true,false).padLeft(20f).padRight(20f);//.colspan(2).pad(10).padRight(380).padTop(270).bottom();
 
 
     }

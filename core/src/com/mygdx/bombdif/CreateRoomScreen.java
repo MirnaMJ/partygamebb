@@ -73,7 +73,10 @@ public class CreateRoomScreen implements Screen {
         table.setFillParent(true);
 
         table.row();
-        back = cbutton.createButton( "arrow");
+        back = cbutton.createButton( "arrow_r");
+        back.setTransform(true);
+        back.setOrigin(back.getWidth()/2, back.getHeight()/2);
+        back.setScale(0.6f,0.6f);
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -81,7 +84,7 @@ public class CreateRoomScreen implements Screen {
                 dispose();
             }
         });
-        table.add(back).colspan(3).top().left().expand();//.left().colspan(3).expand();
+        table.add(back).colspan(3).top().left();//.left().colspan(3).expand();
 
         table.row();
         label4 = cbutton.createLabel(40, language.getChooseName());
@@ -99,7 +102,10 @@ public class CreateRoomScreen implements Screen {
         table.add(label0).colspan(3).expand();;//.colspan(3).expand();
 
         table.row();
-        minusPlayer = cbutton.createButton( "arrow");
+        minusPlayer = cbutton.createButton( "arrow_r");
+        minusPlayer.setTransform(true);
+        minusPlayer.setOrigin(minusPlayer.getWidth()/2, minusPlayer.getHeight()/2);
+        minusPlayer.setScale(0.5f,0.5f);
         minusPlayer.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -119,6 +125,10 @@ public class CreateRoomScreen implements Screen {
         table.add(label1).expand();;
 
         plusPlayer = cbutton.createButton( "arrow_r");
+        plusPlayer.setTransform(true);
+        plusPlayer.setOrigin(plusPlayer.getWidth()/2, plusPlayer.getHeight()/2);
+        plusPlayer.setScale(0.5f,0.5f);
+        plusPlayer.setRotation(180);
         plusPlayer.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -138,7 +148,7 @@ public class CreateRoomScreen implements Screen {
         //label2 = new Label(language.getDiff(),labelStyle0);
         table.add(label2).colspan(3).expand();;//.colspan(3).expand();
 
-        table.row();
+        /*table.row();
         difficulty = cbutton.createTButton(game.getRules().getDifficulty(),"back");
         difficulty.addListener(new ChangeListener() {
             @Override
@@ -152,7 +162,7 @@ public class CreateRoomScreen implements Screen {
                 }
             }
         });
-        table.add(difficulty).colspan(3).expand();;//.colspan(3).expand().top();
+        table.add(difficulty).colspan(3).expand();;//.colspan(3).expand().top();*/
 
 
         table.row();
@@ -185,7 +195,8 @@ public class CreateRoomScreen implements Screen {
 
             }
         });
-        table.add(create).colspan(3).fillX();;//.colspan(3).fillX();
+        table.add(create).colspan(3).fillX().padBottom(10);;//.colspan(3).fillX();
+        Gdx.graphics.setContinuousRendering(false);
     }
 
 

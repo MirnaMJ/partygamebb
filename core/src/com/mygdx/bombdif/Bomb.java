@@ -26,9 +26,9 @@ public class Bomb extends Actor {
         skin = new Skin();
         skin.addRegions(bombdife);
         tint = new Color(1f, 0.4f, 0.4f, 1f);
-        dBomb = skin.getDrawable("iconbomb");
+        dBomb = skin.getDrawable("Bomb_in_game_back");
         //iBomb = new Image(dBomb);
-        iBomb = new Image(bombdife.findRegion("bombe"));
+        iBomb = new Image(bombdife.findRegion("Bomb_in_game_back"));
         state = new String[3];
         state[0]="";
         state[1]="";

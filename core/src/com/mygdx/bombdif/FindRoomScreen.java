@@ -27,13 +27,9 @@ public class FindRoomScreen implements Screen {
     private ImageButton back;
     private TextButton ok;
     private Label label;
-    //private Label.LabelStyle labelStyle;
     private TextField roomName;
-    //private TextField.TextFieldStyle textFStyle;
     private Stage stage;
     private Table table;
-    //private TextureAtlas bombdif;
-    //private Skin skin;
 
     public FindRoomScreen(final Bombdife game){
         this.game = game;
@@ -42,19 +38,6 @@ public class FindRoomScreen implements Screen {
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
         language = game.getLanguage();
-
-        //bombdif = new TextureAtlas(Gdx.files.internal("bombdif.atlas"));
-
-        //skin = new Skin();
-        //skin.addRegions(bombdif);
-        //labelStyle = new Label.LabelStyle();
-        //labelStyle.font = game.font20;
-        //textFStyle = new TextField.TextFieldStyle();
-        //textFStyle.font = game.font20;
-        //textFStyle.fontColor = new Color(0.2f, 0.81f, 0.81f, 1f);
-        //textFStyle.background = skin.getDrawable("back_rec");
-        //textFStyle.cursor =  skin.getDrawable("iconbomb");
-        //textFStyle.selection = skin.getDrawable("noback_rec");
 
         cbutton = new CustomUiBdf(game);
 
@@ -67,7 +50,10 @@ public class FindRoomScreen implements Screen {
         table.setFillParent(true);
 
         table.row();
-        back = cbutton.createButton( "arrow");
+        back = cbutton.createButton( "arrow_r");
+        back.setTransform(true);
+        back.setOrigin(back.getWidth()/2, back.getHeight()/2);
+        back.setScale(0.6f,0.6f);
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -96,6 +82,7 @@ public class FindRoomScreen implements Screen {
             }
         });
         table.add(ok).top();
+        Gdx.graphics.setContinuousRendering(false);
     }
 
     @Override

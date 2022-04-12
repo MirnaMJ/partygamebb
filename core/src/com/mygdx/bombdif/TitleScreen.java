@@ -8,6 +8,7 @@ import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -41,7 +42,7 @@ public class TitleScreen implements Screen {
         language = game.getLanguage();
 
         bombdif = new TextureAtlas(Gdx.files.internal("bombdif.atlas"));
-        bomb = bombdif.findRegion("iconbomb");
+        bomb = bombdif.findRegion("Logo");
         imageBomb = new Image(bomb);
 
         cbutton = new CustomUiBdf(game);
@@ -55,7 +56,7 @@ public class TitleScreen implements Screen {
         table.setFillParent(true);
 
         table.row();
-        table.add(imageBomb).padLeft(50).padRight(30).padBottom(10).expand().fill();//.padTop(10)
+        table.add(imageBomb).expand().fill();//.padTop(10).padLeft(50).padRight(30).padBottom(10)
 
         table.row();
         int pad = 50;
@@ -67,7 +68,7 @@ public class TitleScreen implements Screen {
                 dispose();
             }
         });
-        table.add(create).fill().padLeft(pad).padRight(pad);//size of button via size of cell
+        table.add(create).padTop(100);//size of button via size of cell.padLeft(pad).padRight(pad)
 
         table.row();
         join = cbutton.createTButton(language.getJoin(), "noback");
@@ -78,7 +79,7 @@ public class TitleScreen implements Screen {
                 dispose();
             }
         });
-        table.add(join).fill().padLeft(pad).padRight(pad);
+        table.add(join).padTop(pad);//.fill().padLeft(pad).padRight(pad)
 
         table.row();
         option = cbutton.createTButton(language.getOption(), "noback");
@@ -89,19 +90,18 @@ public class TitleScreen implements Screen {
                 dispose();
             }
         });
-        table.add(option).fill().padLeft(pad).padRight(pad);
+        table.add(option).padTop(pad).padBottom(20);//.fill().padLeft(pad).padRight(pad)
+        Gdx.graphics.setContinuousRendering(false);
+        //Gdx.graphics.requestRendering();
 
     }
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0.12f, 1);
+        ScreenUtils.clear(0, 0, 0.15f, 1);
         camera.update();
         stage.draw();
-        game.getBatch().setProjectionMatrix(camera.combined);
-        game.getBatch().begin();
-        game.getFont40().draw(game.getBatch(), "Bomb Di Fé", camera.viewportWidth/3, camera.viewportHeight/2);
-        game.getBatch().end();
+        //game.getBatch().setProjectionMatrix(camera.combined);
 
 
     }

@@ -15,6 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
@@ -31,7 +32,8 @@ public class GameScreen implements Screen {
     private Language language;
     private CustomUiBdf customUi;
     private Bomb bomb;
-    private Animation<TextureRegion> tickingbomb;
+    private Label test;
+    private Window window;
     private TextureRegion currentFrame;
     private float stateTime;
     private Chronom chrono;
@@ -107,7 +109,7 @@ public class GameScreen implements Screen {
 
         table.row();
         bombI = bomb.getiBomb();
-        table.add(bombI).expand().fill().padLeft(120).padRight(120);//
+        table.add(bombI).expand().fill().padLeft(100).padRight(100);//
 
         table.row();
 
@@ -150,12 +152,21 @@ public class GameScreen implements Screen {
             }
         });
 
-        table.add(inputSpace).fill().expand();
-
-        table.row();
+        //test = customUi.createLabel(20,"azrtyuiop");
+        /*window = customUi.createWindow("");
+        window.add(inputSpace).fill().row();
 
         inst = customUi.createLabel(40, prompt.getInstruc());
-        table.add(inst).padBottom(10);
+        window.add(inst);
+        table.add(window).expand().fill();*/
+
+
+
+        //table.add(inputSpace);
+
+        //table.row();
+
+        //table.add(inst).padBottom(10);
 
 
         // time to 0
@@ -208,12 +219,18 @@ public class GameScreen implements Screen {
         if (prompt.isDone()){
             selecChallenge();
             inst.setText(prompt.getInstruc());
-            chrono.bonusSec(5);
+            chrono.bonusSec(1);
         }
         stateTime = chrono.getSec();
 
         stage.draw();
 
+        if (chrono.ended()){
+            //function animation wit mo particl all ovr crn
+            game.setScreen(new EndGameScreen(game));
+            dispose();
+
+        }
     }
 
     private void selecChallenge(){

@@ -40,7 +40,7 @@ public class Language {
                 join = "Rejoindre une salle";
                 option = "Option";
                 tongue = "Langue";
-                diff = "Difficulté";
+                diff = "Liste des taches";
                 easy = "facile";
                 hard = "dur";
                 enterName = "Entrer le nom de la salle à rejoindre";
@@ -59,7 +59,7 @@ public class Language {
                 join = "Join room";
                 option = "Option";
                 tongue = "Language";
-                diff = "Difficulty";
+                diff = "Task list";
                 easy = "easy";
                 hard = "harder";
                 enterName = "Enter the room's name to join:";
