@@ -8,9 +8,10 @@ public class Language {
     private String tongue;
     private String volume = "Volume";
     private String diff;
-    private String easy;
-    private String inter = "normal";
-    private String hard;
+    private String selecTime;
+    private String tap;
+    private String swipe;
+    private String shake;
     private String enterName;
     private String chooseName;
     private String nbPlayer;
@@ -41,8 +42,10 @@ public class Language {
                 option = "Option";
                 tongue = "Langue";
                 diff = "Liste des taches";
-                easy = "facile";
-                hard = "dur";
+                selecTime = "Durée du décompte";
+                tap = "Tappe";
+                swipe = "Glisse";
+                shake = "Secoue";
                 enterName = "Entrer le nom de la salle à rejoindre";
                 chooseName = "Entrer le nom de \nla salle à créer";
                 nbPlayer = "Nombre de joueur";
@@ -60,8 +63,10 @@ public class Language {
                 option = "Option";
                 tongue = "Language";
                 diff = "Task list";
-                easy = "easy";
-                hard = "harder";
+                selecTime = "Timer duration";
+                tap = "Tap";
+                swipe = "Swipe";
+                shake = "Shake";
                 enterName = "Enter the room's name to join:";
                 chooseName = "   Name the room \nyou are going to host";
                 nbPlayer = "Number of player";
@@ -79,8 +84,10 @@ public class Language {
                 option = "";
                 tongue = "";
                 diff = "";
-                easy = "";
-                hard = "";
+                selecTime = "";
+                tap = "";
+                swipe = "";
+                shake = "";
                 enterName = "";
                 chooseName = "";
                 nbPlayer = "";
@@ -107,15 +114,21 @@ public class Language {
     }
 
     public String getEasy() {
-        return easy;
+        return "easy";
+    }
+    public String getInter() {
+        return "inter";
+    }
+    public String getHard() {
+        return "hard";
     }
 
     public String getEnterName() {
         return enterName;
     }
 
-    public String getHard() {
-        return hard;
+    public String getSelecTime() {
+        return selecTime;
     }
 
     public String getInstrucShake() {
@@ -130,8 +143,16 @@ public class Language {
         return instrucTap;
     }
 
-    public String getInter() {
-        return inter;
+    public String getTap() {
+        return tap;
+    }
+
+    public String getSwipe() {
+        return swipe;
+    }
+
+    public String getShake() {
+        return shake;
     }
 
     public String getJoin() {

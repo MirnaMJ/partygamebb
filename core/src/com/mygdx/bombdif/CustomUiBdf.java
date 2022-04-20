@@ -5,6 +5,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -29,7 +30,8 @@ public class CustomUiBdf {
     private Label.LabelStyle labelStyle1;
     private Label.LabelStyle labelStyle2;
 
-    private TextField.TextFieldStyle textFStyle;
+    private TextField.TextFieldStyle textFStyle0;
+    private TextField.TextFieldStyle textFStyle1;
 
     private Slider.SliderStyle sliderStyle;
 
@@ -38,6 +40,9 @@ public class CustomUiBdf {
 
     private Window.WindowStyle windowStyle;
     private Window window;
+
+    private CheckBox checkBox;
+    private CheckBox.CheckBoxStyle checkBoxStyle;
 
     private Skin skin;
     private TextureAtlas bombdife;
@@ -99,12 +104,19 @@ public class CustomUiBdf {
         labelStyle2 = new Label.LabelStyle();
         labelStyle2.font = game.getFont80();
 
-        textFStyle = new TextField.TextFieldStyle();
-        textFStyle.font = game.getFont20();
-        textFStyle.fontColor = new Color(0.81f, 0.81f, 0.81f, 1f);
-        textFStyle.background = skin.getDrawable("Text_background");
-        textFStyle.cursor =  skin.getDrawable("Cursor_text");
-        textFStyle.selection = skin.getDrawable("Button");
+        textFStyle0 = new TextField.TextFieldStyle();
+        textFStyle0.font = game.getFont20();
+        textFStyle0.fontColor = new Color(0.81f, 0.81f, 0.81f, 1f);
+        textFStyle0.background = skin.getDrawable("Text_background");
+        textFStyle0.cursor =  skin.getDrawable("Cursor_text");
+        textFStyle0.selection = skin.getDrawable("Button");
+
+        textFStyle1 = new TextField.TextFieldStyle();
+        textFStyle1.font = game.getFont40();
+        textFStyle1.fontColor = new Color(0.81f, 0.81f, 0.81f, 1f);
+        textFStyle1.background = skin.getDrawable("Text_background");
+        textFStyle1.cursor =  skin.getDrawable("Cursor_text");
+        textFStyle1.selection = skin.getDrawable("Button");
 
         sliderStyle = new Slider.SliderStyle();
         sliderStyle.background = skin.getDrawable("Slider_volume");
@@ -114,6 +126,11 @@ public class CustomUiBdf {
         tableStyle0 = skin.newDrawable("Text_background",tintColor3);
         tableStyle1 = skin.getDrawable("Text_background");
 
+        checkBoxStyle = new CheckBox.CheckBoxStyle();
+        checkBoxStyle.checkboxOff = skin.getDrawable("Box");
+        checkBoxStyle.checkboxOn = skin.getDrawable("Checked_box");
+        checkBoxStyle.font = game.getFont20();
+        checkBoxStyle.fontColor = new Color(0.81f, 0.81f, 0.81f, 1f);
 
     }
 
@@ -175,7 +192,14 @@ public class CustomUiBdf {
     }
 
     public TextField createTField(String txt, String style){
-        textField = new TextField("",textFStyle);
+        switch (style){
+            case "chrono":
+                textField = new TextField(txt,textFStyle1);
+                return textField;
+            default:
+                textField = new TextField(txt,textFStyle0);
+                break;
+        }
         return textField;
     }
 
@@ -199,5 +223,10 @@ public class CustomUiBdf {
                 break;
         }
         return table;
+    }
+
+    public CheckBox createCBox(String txt) {
+        checkBox = new CheckBox(txt,checkBoxStyle);
+        return checkBox;
     }
 }

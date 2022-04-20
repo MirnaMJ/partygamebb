@@ -17,6 +17,7 @@ public class Chronom {
         return addZero(hour)+":"+addZero(min)+":"+addZero(sec);
     }
 
+
     private void convert(){
 
         if (sec_total/3600 >= 1){
