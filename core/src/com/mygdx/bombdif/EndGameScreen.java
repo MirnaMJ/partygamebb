@@ -49,7 +49,7 @@ public class EndGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0, 0, 0.1f, 1);
+        ScreenUtils.clear(0.4f, 0, 0.1f, 1);
         camera.update();
 
     }

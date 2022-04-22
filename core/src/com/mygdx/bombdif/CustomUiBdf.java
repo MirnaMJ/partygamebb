@@ -225,8 +225,9 @@ public class CustomUiBdf {
         return table;
     }
 
-    public CheckBox createCBox(String txt) {
+    public CheckBox createCBox(String txt,String name) {
         checkBox = new CheckBox(txt,checkBoxStyle);
+        checkBox.setName(name);
         return checkBox;
     }
 }

@@ -78,7 +78,7 @@ public class GameScreen implements Screen {
         }*/
         selecChallenge();
 
-        chrono = new Chronom(prompt.getCountdown());
+        chrono = new Chronom(game.getRules().getCountdown());
         Timer.schedule(new Timer.Task(){
                            @Override
                            public void run() {

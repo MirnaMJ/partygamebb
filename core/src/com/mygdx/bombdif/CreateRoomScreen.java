@@ -63,15 +63,18 @@ public class CreateRoomScreen implements Screen {
     private TextField minTF;
     private Label sep1;
     private TextField secTF;
-    private int hour = 0;
-    private int min = 0;
-    private int sec = 20;
+    private int hour;
+    private int min;
+    private int sec;
     private Label lTap;
     private CheckBox checkTap;
     private Label lSwipe;
     private CheckBox checkSwipe;
     private Label lShake;
     private CheckBox checkShake;
+
+    private CheckBox[] trackingTasks;
+    private String[] challenges;
 
 
     public CreateRoomScreen(final Bombdife game){
@@ -83,6 +86,10 @@ public class CreateRoomScreen implements Screen {
         language = game.getLanguage();
 
         nbPlayer = game.getRules().getNbPlayer();
+
+        hour = game.getRules().getHour();
+        min = game.getRules().getMin();
+        sec = game.getRules().getSec();
 
         //bombdif = new TextureAtlas(Gdx.files.internal("bombdif.atlas"));
 
@@ -156,16 +163,19 @@ public class CreateRoomScreen implements Screen {
                 if (nbPlayer > 1){
                     nbPlayer -= 1;
                     label1.setText(nbPlayer);
+                    if (nbPlayer == 1){
+                        fixedChrono(true);
+                        hourTF.setText(addZero(0));
+                        minTF.setText(addZero(0));
+                        secTF.setText(addZero(game.getRules().getCountdown()));
+                    }
                 }else if (nbPlayer <= 1){
-                    /*if (nbPlayer ==1){
-                        label4.setVisible(false);
-                        roomName.setVisible(false);
-                    }else{
-                        label4.setVisible(true);
-                        roomName.setVisible(true);
-                    } tat not it viually*/
                     nbPlayer = 10;
                     label1.setText(nbPlayer);
+                    fixedChrono(false);
+                    hourTF.setText(addZero(hour));
+                    minTF.setText(addZero(min));
+                    secTF.setText(addZero(sec));
                 }
             }
         });
@@ -187,9 +197,20 @@ public class CreateRoomScreen implements Screen {
                     label1.setText(nbPlayer);
                     //label4.setVisible(true);
                     //roomName.setVisible(true);
+                    if (nbPlayer == 2){
+                        fixedChrono(false);
+                        hourTF.setText(addZero(hour));
+                        minTF.setText(addZero(min));
+                        secTF.setText(addZero(sec));
+                    }
                 }else if (nbPlayer >= 10){
                     nbPlayer =1;
                     label1.setText(nbPlayer);
+                    System.out.println("coucou "+plusHour.getColor());
+                    fixedChrono(true);
+                    hourTF.setText(addZero(0));
+                    minTF.setText(addZero(0));
+                    secTF.setText(addZero(game.getRules().getCountdown()));
                     //    label4.setVisible(false);
                     //    roomName.setVisible(false);
                 }
@@ -206,6 +227,28 @@ public class CreateRoomScreen implements Screen {
         viewTask.setOrigin(viewTask.getWidth()/2, viewTask.getHeight()/2);
         viewTask.setRotation(rotation);
         viewTask.setScale(0.4f);
+        viewTask.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                if (rotation == 180){
+                    rotation = 90;
+                    //System.out.println("opn");
+                    innerTable.setVisible(true);
+                    //scrollPane.setScrollingDisabled(true, false);
+                    //scrollPane.setScrollY(0);
+
+                }else{
+                    rotation = 180;
+                    //System.out.println("clo");
+                    //table.removeActor(innerTable);
+                    innerTable.setVisible(false);
+                    //scrollPane.setScrollingDisabled(true, true);
+                    //scrollPane.setScrollY(-100);
+                }
+                viewTask.setRotation(rotation);
+            }
+        });
+        table.add(viewTask);
 
         lDuration = cbutton.createLabel(40,language.getSelecTime());
 
@@ -213,7 +256,7 @@ public class CreateRoomScreen implements Screen {
         plusHour.setTransform(true);
         plusHour.setOrigin(plusHour.getWidth()/2, plusHour.getHeight()/2);
         plusHour.setRotation(-90);
-        plusHour.setScale(0.2f);
+        plusHour.setScale(0.4f);
         plusHour.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -230,7 +273,7 @@ public class CreateRoomScreen implements Screen {
         plusMin.setTransform(true);
         plusMin.setOrigin(plusMin.getWidth()/2, plusMin.getHeight()/2);
         plusMin.setRotation(-90);
-        plusMin.setScale(0.2f);
+        plusMin.setScale(0.4f);
         plusMin.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -247,7 +290,7 @@ public class CreateRoomScreen implements Screen {
         plusSec.setTransform(true);
         plusSec.setOrigin(plusSec.getWidth()/2, plusSec.getHeight()/2);
         plusSec.setRotation(-90);
-        plusSec.setScale(0.2f);
+        plusSec.setScale(0.4f);
         plusSec.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -296,7 +339,7 @@ public class CreateRoomScreen implements Screen {
         minusHour.setTransform(true);
         minusHour.setOrigin(minusHour.getWidth()/2, minusHour.getHeight()/2);
         minusHour.setRotation(90);
-        minusHour.setScale(0.2f);
+        minusHour.setScale(0.4f);
         minusHour.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -313,7 +356,7 @@ public class CreateRoomScreen implements Screen {
         minusMin.setTransform(true);
         minusMin.setOrigin(minusMin.getWidth()/2, minusMin.getHeight()/2);
         minusMin.setRotation(90);
-        minusMin.setScale(0.2f);
+        minusMin.setScale(0.4f);
         minusMin.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -330,7 +373,7 @@ public class CreateRoomScreen implements Screen {
         minusSec.setTransform(true);
         minusSec.setOrigin(minusSec.getWidth()/2, minusSec.getHeight()/2);
         minusSec.setRotation(90);
-        minusSec.setScale(0.2f);
+        minusSec.setScale(0.4f);
         minusSec.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -344,23 +387,23 @@ public class CreateRoomScreen implements Screen {
             }
         });
 
-        lTap = cbutton.createLabel(20,language.getTap());
-        checkTap = cbutton.createCBox("");
+        lTap = cbutton.createLabel(40,language.getTap());
+        checkTap = cbutton.createCBox("","tap");
         checkTap.setOrigin(checkTap.getWidth()/2, checkTap.getHeight()/2);
         checkTap.setTransform(true);
         checkTap.setScale(0.5f);
         checkTap.setChecked(true);
 
-        lSwipe = cbutton.createLabel(20,language.getSwipe());
-        checkSwipe = cbutton.createCBox("");
+        lSwipe = cbutton.createLabel(40,language.getSwipe());
+        checkSwipe = cbutton.createCBox("","swipe");
         checkSwipe.setOrigin(checkSwipe.getWidth()/2, checkSwipe.getHeight()/2);
         checkSwipe.setTransform(true);
         checkSwipe.setScale(0.5f);
         checkSwipe.setChecked(true);
 
 
-        lShake = cbutton.createLabel(20,language.getShake());
-        checkShake = cbutton.createCBox("");
+        lShake = cbutton.createLabel(40,language.getShake());
+        checkShake = cbutton.createCBox("","shake");
         checkShake.setOrigin(checkShake.getWidth()/2, checkShake.getHeight()/2);
         checkShake.setTransform(true);
         checkShake.setScale(0.5f);
@@ -396,33 +439,15 @@ public class CreateRoomScreen implements Screen {
         innerTable.add(lShake);
         innerTable.add(checkShake).colspan(4);
 
-
-        viewTask.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (rotation == 180){
-                    rotation = 90;
-                    System.out.println("opn");
-                    innerTable.setVisible(true);
-                    //scrollPane.setScrollingDisabled(true, false);
-                    //scrollPane.setScrollY(0);
-
-                }else{
-                    rotation = 180;
-                    System.out.println("clo");
-                    //table.removeActor(innerTable);
-                    innerTable.setVisible(false);
-                    //scrollPane.setScrollingDisabled(true, true);
-                    //scrollPane.setScrollY(-100);
-                }
-                viewTask.setRotation(rotation);
-            }
-        });
-        table.add(viewTask);
-
         table.row();
         table.add(innerTable).colspan(3);//
         innerTable.setVisible(false);
+
+        trackingTasks = new CheckBox[3];
+        trackingTasks[0] = checkTap;
+        trackingTasks[1] = checkSwipe;
+        trackingTasks[2] = checkShake;
+        //trackingTasks[] = ;
         //scrollPane.setScrollingDisabled(true, true);
         //scrollPane.setScrollY(-100);
 
@@ -451,6 +476,22 @@ public class CreateRoomScreen implements Screen {
                 //game.getRules().setTestPlayer();
 
                 //game.getRules().setDifficulty(difficulty.getText().toString());
+                int nbchall = 0;
+                for (int i = 0;i< trackingTasks.length;i++){
+                    if (trackingTasks[i].isChecked()){
+                        nbchall++;
+                    }
+                }
+                challenges = new String[nbchall];
+                for (int j = 0;j< trackingTasks.length;j++){
+                    if (trackingTasks[j].isChecked()){
+                        challenges[j] = trackingTasks[j].getName();
+                        System.out.println(trackingTasks[j].getName());
+                    }
+                }
+
+
+                game.getRules().setCountdown(hour,min,sec);
                 game.getRules().setNbPlayer(nbPlayer);
                 game.getRules().setRoomName(roomName.getText());
                 switch(nbPlayer){
@@ -521,6 +562,43 @@ public class CreateRoomScreen implements Screen {
             return "0"+n;
         }else{
             return Integer.toString(n);
+        }
+    }
+    private void tintChrono(float r,float g,float b,float a){
+        plusHour.setColor(r,g,b,a);
+        plusMin.setColor(r,g,b,a);
+        plusSec.setColor(r,g,b,a);
+
+        hourTF.setColor(r,g,b,a);
+        minTF.setColor(r,g,b,a);
+        secTF.setColor(r,g,b,a);
+
+        minusHour.setColor(r,g,b,a);
+        minusMin.setColor(r,g,b,a);
+        minusSec.setColor(r,g,b,a);
+    }
+
+    private void setDisabledChrono(boolean bool){
+        plusHour.setDisabled(bool);
+        plusMin.setDisabled(bool);
+        plusSec.setDisabled(bool);
+
+        hourTF.setDisabled(bool);
+        minTF.setDisabled(bool);
+        secTF.setDisabled(bool);
+
+        minusHour.setDisabled(bool);
+        minusMin.setDisabled(bool);
+        minusSec.setDisabled(bool);
+    }
+
+    private void fixedChrono(boolean fixed){
+        if (fixed){
+            tintChrono(0.7f,0.6f,0.5f,1);
+            setDisabledChrono(true);
+        }else{
+            tintChrono(2,2,2,1);
+            setDisabledChrono(false);
         }
     }
 
