@@ -11,7 +11,6 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 public class Bomb extends Actor {
-    private Drawable dBomb;
     private Image iBomb;
     private Color tint;
     private String[] state;
@@ -26,9 +25,10 @@ public class Bomb extends Actor {
         skin = new Skin();
         skin.addRegions(bombdife);
         tint = new Color(1f, 0.4f, 0.4f, 1f);
-        dBomb = skin.getDrawable("Bomb_in_game_back");
+        //dBomb = skin.getDrawable("Bomb_in_game_back");
         //iBomb = new Image(dBomb);
-        iBomb = new Image(bombdife.findRegion("Bomb_in_game_back"));
+        iBomb = new Image(bombdife.findRegion("Boomb_in_game"));
+
         state = new String[3];
         state[0]="";
         state[1]="";
@@ -52,10 +52,10 @@ public class Bomb extends Actor {
     public void tick(int s){
         if (time_since_last_tick <2) {
             time_since_last_tick += 1;
-            iBomb.setColor(tint);
+            iBomb.setColor(0.2f,0.8f,1f,1f);
         }else{
             time_since_last_tick = 0;
-            iBomb.setColor(1f,1f,1f,1f);
+            iBomb.setColor(tint);
         }
 
     }
@@ -63,6 +63,7 @@ public class Bomb extends Actor {
     public Image getiBomb() {
         return iBomb;
     }
+
 
     public Animation<TextureRegion> getTickingbomb() {
         return tickingbomb;

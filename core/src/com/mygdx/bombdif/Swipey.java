@@ -3,7 +3,7 @@ package com.mygdx.bombdif;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
-public class Swipey extends ChallengeEasy{
+public class Swipey extends Challenge{
     private String instruction;
     //private InputListener swipe;
 

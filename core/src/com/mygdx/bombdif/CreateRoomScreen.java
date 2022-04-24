@@ -443,10 +443,8 @@ public class CreateRoomScreen implements Screen {
         table.add(innerTable).colspan(3);//
         innerTable.setVisible(false);
 
-        trackingTasks = new CheckBox[3];
-        trackingTasks[0] = checkTap;
-        trackingTasks[1] = checkSwipe;
-        trackingTasks[2] = checkShake;
+
+        trackingTasks = new CheckBox[]{checkTap, checkSwipe, checkShake};
         //trackingTasks[] = ;
         //scrollPane.setScrollingDisabled(true, true);
         //scrollPane.setScrollY(-100);
@@ -476,35 +474,29 @@ public class CreateRoomScreen implements Screen {
                 //game.getRules().setTestPlayer();
 
                 //game.getRules().setDifficulty(difficulty.getText().toString());
-                int nbchall = 0;
+                challenges = new String[trackingTasks.length];
                 for (int i = 0;i< trackingTasks.length;i++){
                     if (trackingTasks[i].isChecked()){
-                        nbchall++;
-                    }
-                }
-                challenges = new String[nbchall];
-                for (int j = 0;j< trackingTasks.length;j++){
-                    if (trackingTasks[j].isChecked()){
-                        challenges[j] = trackingTasks[j].getName();
-                        System.out.println(trackingTasks[j].getName());
+                        challenges[i] = trackingTasks[i].getName();
+                        //System.out.println(trackingTasks[i].getName());
                     }
                 }
 
-
+                game.getRules().setChallenge(challenges);
                 game.getRules().setCountdown(hour,min,sec);
                 game.getRules().setNbPlayer(nbPlayer);
                 game.getRules().setRoomName(roomName.getText());
                 switch(nbPlayer){
                     case 1:
-                        System.out.println("Entrer dans singleplayer");
+                        System.out.println("cratroomcrn: Entrer dans singleplayer");
                         game.setScreen(new GameScreen(game));
                         dispose();
                         break;
                     case 2:
-                        System.out.println("oh boy la decouverte du bluetooth ou wifi direct");
+                        System.out.println("cratroomcrn: oh boy la decouverte du bluetooth ou wifi direct");
                         break;
                     case 3:
-                        System.out.println("do i even want to make it blow on only two people for this case and not up");
+                        System.out.println("cratroomcrn: do i even want to make it blow on only two people for this case and not up");
                         break;
                     default:
                         game.setScreen(new WaitingRoomScreen(game));
@@ -595,7 +587,25 @@ public class CreateRoomScreen implements Screen {
     private void fixedChrono(boolean fixed){
         if (fixed){
             tintChrono(0.7f,0.6f,0.5f,1);
-            setDisabledChrono(true);
+            setDisabledChrono(false);//set to true onc3 im done twsting the chrono change
+            /*
+
+
+
+
+
+            REALLLY THINK ABOUT CHANGING IT BACK PLEASE
+
+
+
+
+
+
+
+
+
+
+             */
         }else{
             tintChrono(2,2,2,1);
             setDisabledChrono(false);

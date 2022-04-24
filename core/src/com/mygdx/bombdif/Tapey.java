@@ -3,7 +3,7 @@ package com.mygdx.bombdif;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 
-public class Tapey extends ChallengeEasy{
+public class Tapey extends Challenge{
     private String[] instruction;
     private int iter;
     private int step;

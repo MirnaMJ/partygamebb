@@ -75,6 +75,18 @@ public class GameRulesManager {
     }
 
     public void setChallenge(String[] challenge) {
-        this.challenge = challenge;
+        int nbchallenge = 0;
+        for (int i = 0; i< challenge.length;i++){
+            if (challenge[i]!= null){
+                nbchallenge++;
+            }
+            System.out.println("am rul manar: "+challenge[i]);
+        }
+        if (nbchallenge != 0) {
+            this.challenge = challenge;
+        }else {
+            this.challenge = new String[]{"tap", "swipe", "shake"};
+        }
+
     }
 }

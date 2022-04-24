@@ -11,9 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
@@ -32,7 +34,9 @@ public class GameScreen implements Screen {
     private Language language;
     private CustomUiBdf customUi;
     private Bomb bomb;
-    private Label test;
+    private Stack stack;
+    private Container container;
+    private Label consigne;
     private Window window;
     private TextureRegion currentFrame;
     private float stateTime;
@@ -57,25 +61,6 @@ public class GameScreen implements Screen {
 
         bomb = new Bomb();
         customUi = new CustomUiBdf(game);
-        //tickingbomb = bomb.getTickingbomb();
-
-        /*int choice = (int) (Math.random() * 1);//Min + (int)(Math.random() * ((Max - Min) + 1))
-        if (game.getRules().getDifficulty().equals(language.getEasy())){
-            switch(choice){
-                case 0:
-                    prompt = new Swipey(language);
-                    System.out.println("gamescreen: prompt 0");
-                    break;
-                default:
-                    prompt = new Tapey(language);
-                    System.out.println("gamescreen: prompt d3fault");
-                    break;
-            }
-
-        }else {
-            prompt = new Tapey(language);
-            System.out.println("gamescreen: if rules jot easy ");
-        }*/
         selecChallenge();
 
         chrono = new Chronom(game.getRules().getCountdown());
@@ -97,31 +82,13 @@ public class GameScreen implements Screen {
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
 
-        table = new Table();
-        //table.debug();
-        stage.addActor(table);
-        table.setFillParent(true);
+        stack = new Stack();
+        stage.addActor(stack);
+        stack.setFillParent(true);
 
-        table.row();
-
-        timerL = customUi.createLabel(80,chrono.display());
-        table.add(timerL).top().padTop(50);//.expand().top().pad(20)
-
-        table.row();
-        bombI = bomb.getiBomb();
-        table.add(bombI).expand().fill().padLeft(100).padRight(100);//
-
-        table.row();
-
-        inputFlag = 0;
         inputSpace = customUi.createButton("back");
-        //
-        //touch down
-        //touch dragged keep where the drag started to be detected
-        // touch up look how long the drag was and if iwas long enough will consider it a drag
-        // tap is flag =0
-        // drag is flag=1
-        inputSpace.addListener( new InputListener(){
+        inputFlag = 0;
+        inputSpace.addListener(new InputListener(){
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 if (Math.abs(posX-x)>dragSensitivity || Math.abs(posY-y)>dragSensitivity) {
@@ -152,21 +119,31 @@ public class GameScreen implements Screen {
             }
         });
 
-        //test = customUi.createLabel(20,"azrtyuiop");
-        /*window = customUi.createWindow("");
-        window.add(inputSpace).fill().row();
 
-        inst = customUi.createLabel(40, prompt.getInstruc());
-        window.add(inst);
-        table.add(window).expand().fill();*/
+        table = new Table();
+        table.debug();
+        table.row();
+
+        timerL = customUi.createLabel(80,chrono.display());
+        table.add(timerL).top().padTop(50);//.expand().top().pad(20)
+
+        table.row();
+        bombI = bomb.getiBomb();
+        table.add(bombI).expand().fill();//.padLeft(100).padRight(100)
+
+        table.row();
+        consigne = customUi.createLabel(40, prompt.getInstruc());
+        table.add(consigne).expand();//.fill()
 
 
+        //First add actual content
+        stack.add(table);
+        //Second add wrapped overlay input pac
+        container = new Container(inputSpace).fill().bottom().left();
+        //container.add();
+        stack.add(container);
 
-        //table.add(inputSpace);
 
-        //table.row();
-
-        //table.add(inst).padBottom(10);
 
 
         // time to 0
@@ -218,7 +195,7 @@ public class GameScreen implements Screen {
         }
         if (prompt.isDone()){
             selecChallenge();
-            inst.setText(prompt.getInstruc());
+            consigne.setText(prompt.getInstruc());
             chrono.bonusSec(1);
         }
         stateTime = chrono.getSec();
