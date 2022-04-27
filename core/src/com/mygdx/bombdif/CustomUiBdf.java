@@ -83,7 +83,7 @@ public class CustomUiBdf {
         ButtonStyle0.down = skin.getDrawable("Left_arrow");
 
         ButtonStyle1 = new ImageButton.ImageButtonStyle();
-        tintColor1 = new Color(0.2f, 1f, 0.2f, 1f);
+        tintColor1 = new Color(0.2f, 0.8f, 0.4f, 1f);
         ButtonStyle1.up = skin.newDrawable("Retry_button");
         ButtonStyle1.down = skin.newDrawable("Retry_button",tintColor1);
 

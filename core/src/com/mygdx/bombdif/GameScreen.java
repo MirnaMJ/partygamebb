@@ -39,7 +39,9 @@ public class GameScreen implements Screen {
     private Label consigne;
     private Window window;
     private TextureRegion currentFrame;
+    private String[] challenges;
     private float stateTime;
+    private float secTime;
     private Chronom chrono;
     private boolean display=true;
     private Image bombI;
@@ -61,6 +63,7 @@ public class GameScreen implements Screen {
 
         bomb = new Bomb();
         customUi = new CustomUiBdf(game);
+        challenges = game.getRules().getChallenge();
         selecChallenge();
 
         chrono = new Chronom(game.getRules().getCountdown());
@@ -121,7 +124,7 @@ public class GameScreen implements Screen {
 
 
         table = new Table();
-        table.debug();
+        //table.debug();
         table.row();
 
         timerL = customUi.createLabel(80,chrono.display());
@@ -148,6 +151,8 @@ public class GameScreen implements Screen {
 
         // time to 0
         stateTime = 0;
+        //check if im at the next s3c
+        secTime = 0;
 
     }
 
@@ -161,7 +166,7 @@ public class GameScreen implements Screen {
         ScreenUtils.clear(0, 0, 0.1f, 1);
         camera.update();
 
-        //stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
+        stateTime += Gdx.graphics.getDeltaTime(); // Accumulate elapsed animation time
         //currentFrame = tickingbomb.getKeyFrame(stateTime, true);
 
         game.getBatch().setProjectionMatrix(camera.combined);
@@ -171,7 +176,7 @@ public class GameScreen implements Screen {
         game.getBatch().end()*/
 
         //animation bomb
-        if (chrono.getSec()!= stateTime){
+        if (chrono.getSec()!= secTime){
             bomb.tick(chrono.getSec());
         }
 
@@ -198,12 +203,13 @@ public class GameScreen implements Screen {
             consigne.setText(prompt.getInstruc());
             chrono.bonusSec(1);
         }
-        stateTime = chrono.getSec();
+        secTime = chrono.getSec();
 
         stage.draw();
 
         if (chrono.ended()){
-            //function animation wit mo particl all ovr crn
+            System.out.println("gamescreen: chrono rallonge de: "+(int)(stateTime-game.getRules().getCountdown())+"s");
+            game.getRules().setScore((int)(stateTime-game.getRules().getCountdown()));
             game.setScreen(new EndGameScreen(game));
             dispose();
 
@@ -211,26 +217,18 @@ public class GameScreen implements Screen {
     }
 
     private void selecChallenge(){
-        int choice = (int) (Math.random() * 3);//Min + (int)(Math.random() * ((Max - Min) + 1))
-        if (game.getRules().getDifficulty().equals(language.getEasy())){
-            switch(choice){
-                case 0:
-                    prompt = new Swipey(language);
-                    System.out.println("gamescreen: prompt 0");
-                    break;
-                case 1:
-                    prompt = new Shakey(language);
-                    System.out.println("gamescreen: prompt 1");
-                    break;
-                default:
-                    prompt = new Tapey(language);
-                    System.out.println("gamescreen: prompt default");
-                    break;
-            }
-
-        }else {
+        int choice = (int) (Math.random() * challenges.length);//Min + (int)(Math.random() * ((Max - Min) + 1))
+        System.out.println("gamescreen: choice "+choice);
+        if (challenges[choice].equals("tap")) {
             prompt = new Tapey(language);
-            System.out.println("gamescreen: if rules not easy ");
+        }else if (challenges[choice].equals("swipe")) {
+            prompt = new Swipey(language);
+        }else if (challenges[choice].equals("shake")) {
+            prompt = new Shakey(language);
+        }else{
+            prompt = new Tapey(language);
+            System.out.println("gamescreen: nothing was selected");
+
         }
     }
 
@@ -256,7 +254,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        game.dispose();
         stage.dispose();
     }
 }

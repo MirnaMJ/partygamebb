@@ -1,5 +1,7 @@
 package com.mygdx.bombdif;
 
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+
 public class Language {
     private String language;
     private String create;
@@ -11,6 +13,8 @@ public class Language {
     private String selecTime;
     private String tap;
     private String swipe;
+    private String single;
+    private String multi;
     private String shake;
     private String enterName;
     private String chooseName;
@@ -22,6 +26,7 @@ public class Language {
     private String instrucTap;
     private String instrucShake;
     private String nTimes;
+    private String newHighscore;
 
     public Language(String lang) {
         language = lang;
@@ -46,6 +51,8 @@ public class Language {
                 tap = "Tappe";
                 swipe = "Glisse";
                 shake = "Secoue";
+                single = "Un joueur";
+                multi = "Multijoueurs";
                 enterName = "Entrer le nom de la salle à rejoindre";
                 chooseName = "Entrer le nom de \nla salle à créer";
                 nbPlayer = "Nombre de joueur";
@@ -56,6 +63,7 @@ public class Language {
                 instrucTap = "TAPPE L'ECRAN ";
                 instrucShake = "SECOUE LE TELEPHONE!";
                 nTimes = " FOIS!";
+                newHighscore = "Nouveau Records!!!";
                 break;
             case "English":
                 create = "Create room";
@@ -67,6 +75,8 @@ public class Language {
                 tap = "Tap";
                 swipe = "Swipe";
                 shake = "Shake";
+                single = "Singleplayer";
+                multi = "Multiplayer";
                 enterName = "Enter the room's name to join:";
                 chooseName = "   Name the room \nyou are going to host";
                 nbPlayer = "Number of player";
@@ -77,6 +87,7 @@ public class Language {
                 instrucTap = "TAP THE SCREEN ";
                 instrucShake = "SHAKE YOUR PHONE!";
                 nTimes = " TIMES!";
+                newHighscore = "New HighScore!!";
                 break;
             default:
                 create = "";
@@ -88,6 +99,8 @@ public class Language {
                 tap = "";
                 swipe = "";
                 shake = "";
+                single = "";
+                multi = "";
                 enterName = "";
                 chooseName = "";
                 nbPlayer = "";
@@ -98,6 +111,7 @@ public class Language {
                 instrucTap = "";
                 instrucShake = "";
                 nTimes = "";
+                newHighscore = "";
         }
     }
 
@@ -121,6 +135,14 @@ public class Language {
     }
     public String getHard() {
         return "hard";
+    }
+
+    public String getSingle() {
+        return single;
+    }
+
+    public String getMulti() {
+        return multi;
     }
 
     public String getEnterName() {
@@ -192,4 +214,8 @@ public class Language {
     }
 
     public String getRoom(){return room;}
+
+    public String getNewHighscore() {
+        return newHighscore;
+    }
 }

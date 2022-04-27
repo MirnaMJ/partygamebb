@@ -7,9 +7,11 @@ public class GameRulesManager {
     private String testPlayer;
     private int hour = 0;
     private int min = 0;
-    private int sec = 20;
+    private int sec = 10;
     private int countdown;
     private String[] challenge;
+    private int score;
+    private int[] hmsScore;
 
     public GameRulesManager(Language lang){
         nbPlayer = 2;
@@ -47,6 +49,18 @@ public class GameRulesManager {
         return roomName;
     }
 
+    public String[] getChallenge() {
+        return challenge;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int[] getHmsScore() {
+        return hmsScore;
+    }
+
     public String getTestPlayer() {
         return testPlayer;
     }
@@ -63,6 +77,28 @@ public class GameRulesManager {
         this.roomName = roomName;
     }
 
+    public void setScore(int score) {
+        this.score = score;
+        hmsScore = new int[]{0, 0, 0};
+        if (score/3600 >= 1){
+            hmsScore[0] = (int) Math.floor(score/3600);
+            hmsScore[2] = score - hmsScore[0]*3600;
+            if (hmsScore[2]/60 >= 1){
+                hmsScore[1] = (int) Math.floor(hmsScore[2]/60);
+                hmsScore[2] -= hmsScore[1]*60;
+            }else {
+                hmsScore[2] = 0;
+            }
+        }else if (score/60 >= 1){
+            hmsScore[0] = 0;
+            hmsScore[1] = (int) Math.floor(score/60);
+            hmsScore[2] = score - min*60;
+        }else {
+            hmsScore[1] = 0;
+            hmsScore[2] = score;
+        }
+    }
+
     public void setTestPlayer(String testPlayer) {
         this.testPlayer = testPlayer;
     }
@@ -74,19 +110,22 @@ public class GameRulesManager {
         this.countdown = hour*3600+min*60+sec;
     }
 
-    public void setChallenge(String[] challenge) {
-        int nbchallenge = 0;
-        for (int i = 0; i< challenge.length;i++){
-            if (challenge[i]!= null){
-                nbchallenge++;
+    public void setChallenge(String[] challenge, int nb) {
+        if (nb != 0) {
+            this.challenge = new String[nb];
+            int j =0;
+            for (int i = 0; i< challenge.length;i++){
+                if (challenge[i]!= null){
+                    this.challenge[j] = challenge[i];
+                    j++;
+                }
             }
-            System.out.println("am rul manar: "+challenge[i]);
-        }
-        if (nbchallenge != 0) {
-            this.challenge = challenge;
+            System.out.println(this.challenge[0]);
         }else {
             this.challenge = new String[]{"tap", "swipe", "shake"};
         }
+
+
 
     }
 }
