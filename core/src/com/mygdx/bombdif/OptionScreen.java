@@ -69,6 +69,7 @@ public class OptionScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 //action omtin omtin
                 game.setScreen(new TitleScreen(game));
+                game.getPrefs().flush();
                 dispose();
             }
         });
@@ -92,9 +93,11 @@ public class OptionScreen implements Screen {
                 if (language.getLanguage().equals("Français")) {
                     language.setLanguage("English");
                     updateLabel();
+                    game.getPrefs().putString("language","English");
                 }else if (language.getLanguage().equals("English")){
                     language.setLanguage("Français");
                     updateLabel();
+                    game.getPrefs().putString("language","Français");
                 }
             }
         });

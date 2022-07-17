@@ -3,6 +3,7 @@ package com.mygdx.bombdif;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,6 +19,7 @@ public class Bombdife extends Game {
 	//private BitmapFont font140;
 	private Language language;
 	private GameRulesManager rules;
+	private Preferences prefs;
 	
 	@Override
 	public void create () {
@@ -32,8 +34,11 @@ public class Bombdife extends Game {
 		font80 = generator.generateFont(parameter); // font size 80 pixels
 		//parameter.size = 120;
 		//font140 = generator.generateFont(parameter); // font size 120 pixels
-		language = new Language("Français");
-		rules = new GameRulesManager(language);
+		prefs = Gdx.app.getPreferences("My Preferences");
+        /*String name = prefs.getString("name", "No name stored");
+        prefs.putBoolean("soundOn", true);*/
+		language = new Language(prefs.getString("language","English"));//Français
+		rules = new GameRulesManager(language,prefs);
 		this.setScreen(new TitleScreen(this));
 		// might need to check presnecepsnece of accelerometer? boolean available = Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer);
 
@@ -68,12 +73,20 @@ public class Bombdife extends Game {
 		return font80;
 	}
 
+	public Preferences getPrefs() {
+		return prefs;
+	}
+
 	//public BitmapFont getFont140() {
 	//	return font140;
 	//}
 
 	@Override
 	public void dispose () {
+		prefs.putInteger("highscoreNumH", 0);
+		prefs.putInteger("highscoreNumMN", 0);
+		prefs.putInteger("highscoreNumSEC", 0);
+		prefs.flush();
 		batch.dispose();
 		font20.dispose();
 		font40.dispose();

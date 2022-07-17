@@ -56,6 +56,7 @@ public class EndGameScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new TitleScreen(game));
+                game.getPrefs().flush();
                 dispose();
             }
         });
@@ -71,7 +72,30 @@ public class EndGameScreen implements Screen {
                 +addZero(game.getRules().getHmsScore()[2]));
         table.add(newScore).expand();
         table.row();
-        oldScore = customUi.createLabel(40,"00:00:00");
+        oldScore = customUi.createLabel(40,addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
+                +addZero(game.getPrefs().getInteger("highscoreNumMN"))+":"
+                +addZero(game.getPrefs().getInteger("highscoreNumSEC")));
+
+        int[] old = {game.getPrefs().getInteger("highscoreNumH"),game.getPrefs().getInteger("highscoreNumMN"),game.getPrefs().getInteger("highscoreNumSEC")};
+
+        if (compareTime(old,game.getRules().getHmsScore())){
+            System.out.println("endgamescre3n: "+addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
+                    +addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
+                    +addZero(game.getPrefs().getInteger("highscoreNumH")));
+            System.out.println(game.getRules().getHmsScore()[0]*3600+game.getRules().getHmsScore()[1]*60+game.getRules().getHmsScore()[2]);
+            game.getPrefs().putInteger("highscoreNumH", game.getRules().getHmsScore()[0]);
+            game.getPrefs().putInteger("highscoreNumMN", game.getRules().getHmsScore()[1]);
+            game.getPrefs().putInteger("highscoreNumSEC", game.getRules().getHmsScore()[2]);
+            game.getPrefs().flush();
+        }else{
+            newHighscore.setVisible(false);
+            System.out.println("nothing registered");
+            System.out.println(game.getRules().getHmsScore()[0]*3600+game.getRules().getHmsScore()[1]*60+game.getRules().getHmsScore()[2]);
+            System.out.println("endgamescreen in tiny: "+addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
+                    +addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
+                    +addZero(game.getPrefs().getInteger("highscoreNumH")));
+        }
+        //oldScore = customUi.createLabel(40,"00:42:00");
         table.add(oldScore).expand();
 
         //newHighscore.setVisible(false);
@@ -81,6 +105,7 @@ public class EndGameScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 game.setScreen(new GameScreen(game));
+                game.getPrefs().flush();
                 dispose();
             }
         });
@@ -95,7 +120,7 @@ public class EndGameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        ScreenUtils.clear(0.4f, 0, 0.1f, 1);
+        ScreenUtils.clear(0f, 0, 0.1f, 1);
         camera.update();
 
         stage.draw();
@@ -113,6 +138,32 @@ public class EndGameScreen implements Screen {
         }else{
             return Integer.toString(n);
         }
+    }
+
+    private boolean compareTime(int[] old,int[] recent){
+        if (old[0] < recent[0]) {
+            return true;
+        } else if (old[0]>recent[0]) {
+            return false;
+        } else {
+            if (old[1] < recent[1]){
+                return true;
+            }else if (old[1]>recent[1]){
+                return false;
+            }else{
+                if (old[2] < recent[2]){
+                    System.out.println("Endgamescreen: more score in recent");
+                    return true;
+                }else if (old[2]>=recent[2]) {
+                    System.out.println("Endgamescreen: old "+old[2]);
+                    System.out.println("Endgamescreen: recent "+recent[2]);
+                    System.out.println("Endgamescreen: more score in old");
+                    return false;
+                }
+            }
+        }
+        System.out.println("Endgamescreen: i might have a problem to know if a higher score was found");
+        return true;
     }
 
     @Override

@@ -1,5 +1,8 @@
 package com.mygdx.bombdif;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Preferences;
+
 public class GameRulesManager {
     private int nbPlayer;
     private String difficulty;
@@ -11,14 +14,28 @@ public class GameRulesManager {
     private int countdown;
     private String[] challenge;
     private int score;
+    private String highscore;
     private int[] hmsScore;
 
-    public GameRulesManager(Language lang){
-        nbPlayer = 2;
-        testPlayer = "Mineko";
+    public GameRulesManager(Language lang, Preferences prefs){
+        //prefs.putString("name", "Donald Duck");
+
+        /*String name = prefs.getString("name", "No name stored");
+        prefs.putBoolean("soundOn", true);*/
+        //prefs.putInteger("nbPlayer",2);
+        //prefs.putString("highscore","");
+        //System.out.println("gamerulesmanager "+prefs.getInteger("highscoreH"));
+        prefs.putInteger("highscoreNumH",0);
+        prefs.putInteger("highscoreNumMN", 0);
+        prefs.putInteger("highscoreNumSEC", 0);
+        nbPlayer = prefs.getInteger("nbPlayer",2);
+        testPlayer = prefs.getString("testPlayer","Mineko");
+        highscore = prefs.getString("highscore","00:00:00");
+        prefs.flush();
         difficulty = lang.getInter();
         roomName = "";
         countdown = hour*3600+min*60+sec;
+
     }
 
     public int getCountdown() {
