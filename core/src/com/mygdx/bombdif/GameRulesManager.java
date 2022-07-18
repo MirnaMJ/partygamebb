@@ -18,19 +18,25 @@ public class GameRulesManager {
     private int[] hmsScore;
 
     public GameRulesManager(Language lang, Preferences prefs){
-        //prefs.putString("name", "Donald Duck");
+        //prfs.putString("name", "Donald Duck");
 
         /*String name = prefs.getString("name", "No name stored");
         prefs.putBoolean("soundOn", true);*/
         //prefs.putInteger("nbPlayer",2);
         //prefs.putString("highscore","");
         //System.out.println("gamerulesmanager "+prefs.getInteger("highscoreH"));
-        prefs.putInteger("highscoreNumH",0);
-        prefs.putInteger("highscoreNumMN", 0);
-        prefs.putInteger("highscoreNumSEC", 0);
+        if (!prefs.contains("highscoreNumSEC")){
+            System.out.println("amrulmanar:   creatin pref");
+            prefs.putInteger("highscoreNumH",0);
+            prefs.putInteger("highscoreNumMN", 0);
+            prefs.putInteger("highscoreNumSEC", 0);
+
+        }else {
+            System.out.println("amrulmanar: not creatin pref");
+        }
         nbPlayer = prefs.getInteger("nbPlayer",2);
         testPlayer = prefs.getString("testPlayer","Mineko");
-        highscore = prefs.getString("highscore","00:00:00");
+        highscore = prefs.getString("highscore");
         prefs.flush();
         difficulty = lang.getInter();
         roomName = "";
@@ -109,7 +115,7 @@ public class GameRulesManager {
         }else if (score/60 >= 1){
             hmsScore[0] = 0;
             hmsScore[1] = (int) Math.floor(score/60);
-            hmsScore[2] = score - min*60;
+            hmsScore[2] = score - hmsScore[1]*60;
         }else {
             hmsScore[1] = 0;
             hmsScore[2] = score;

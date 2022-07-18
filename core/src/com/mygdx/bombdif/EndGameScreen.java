@@ -80,20 +80,19 @@ public class EndGameScreen implements Screen {
 
         if (compareTime(old,game.getRules().getHmsScore())){
             System.out.println("endgamescre3n: "+addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
-                    +addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
-                    +addZero(game.getPrefs().getInteger("highscoreNumH")));
+                    +addZero(game.getPrefs().getInteger("highscoreNumMN"))+":"
+                    +addZero(game.getPrefs().getInteger("highscoreNumSEC")));
             System.out.println(game.getRules().getHmsScore()[0]*3600+game.getRules().getHmsScore()[1]*60+game.getRules().getHmsScore()[2]);
             game.getPrefs().putInteger("highscoreNumH", game.getRules().getHmsScore()[0]);
             game.getPrefs().putInteger("highscoreNumMN", game.getRules().getHmsScore()[1]);
             game.getPrefs().putInteger("highscoreNumSEC", game.getRules().getHmsScore()[2]);
-            game.getPrefs().flush();
         }else{
             newHighscore.setVisible(false);
             System.out.println("nothing registered");
             System.out.println(game.getRules().getHmsScore()[0]*3600+game.getRules().getHmsScore()[1]*60+game.getRules().getHmsScore()[2]);
-            System.out.println("endgamescreen in tiny: "+addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
-                    +addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
-                    +addZero(game.getPrefs().getInteger("highscoreNumH")));
+            System.out.println("endgamescreen in big: "+addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
+                    +addZero(game.getPrefs().getInteger("highscoreNumMN"))+":"
+                    +addZero(game.getPrefs().getInteger("highscoreNumSEC")));
         }
         //oldScore = customUi.createLabel(40,"00:42:00");
         table.add(oldScore).expand();

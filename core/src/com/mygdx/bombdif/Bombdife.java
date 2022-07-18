@@ -83,9 +83,9 @@ public class Bombdife extends Game {
 
 	@Override
 	public void dispose () {
-		prefs.putInteger("highscoreNumH", 0);
-		prefs.putInteger("highscoreNumMN", 0);
-		prefs.putInteger("highscoreNumSEC", 0);
+		//prefs.putInteger("highscoreNumH", 0);
+		//prefs.putInteger("highscoreNumMN", 0);
+		//prefs.putInteger("highscoreNumSEC", 0);
 		prefs.flush();
 		batch.dispose();
 		font20.dispose();
