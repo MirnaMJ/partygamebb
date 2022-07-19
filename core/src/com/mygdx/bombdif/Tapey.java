@@ -34,13 +34,14 @@ public class Tapey extends Challenge{
         return instruction[0]+(iter-step)+instruction[1];
     }
 
-    public void updateState(int flag ) {
+    public boolean updateState(int flag ) {
         if (flag == 0){
             step+=1;
             if (iter == step){
                 this.setDone();
+                return true;
             }
-        }
+        }return false;
     }
 
     public boolean checkShake(){

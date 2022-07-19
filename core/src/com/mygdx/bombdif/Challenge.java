@@ -18,7 +18,7 @@ public abstract class Challenge {
     }
 
     public abstract String getInstruc();
-    public abstract void updateState( int flag);
+    public abstract boolean updateState( int flag);
     public abstract boolean checkShake();
 
 

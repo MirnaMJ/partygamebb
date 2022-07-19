@@ -95,13 +95,20 @@ public class GameScreen implements Screen {
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 if (Math.abs(posX-x)>dragSensitivity || Math.abs(posY-y)>dragSensitivity) {
-                    //System.out.println("gamescreen: drag  , "+x+" , "+y+", "+pointer);
-                    prompt.updateState(inputFlag);
+                    //System.out.println("gamescreen: drag  , "+x+" , "+y+", "+pointer); it has been dragged
+                    //prompt.updateState(inputFlag);
+                    if (!prompt.updateState(inputFlag)){
+                        System.out.println("shouldnt drag");
+                    }
                     inputFlag=0;
                 }else {
-                    //System.out.println("gamescreen: jut touch  , "+x+" , "+y+", "+pointer);
+                    //System.out.println("gamescreen: jut touch  , "+x+" , "+y+", "+pointer); i dont see enough of dragg between posx and x so just touch
                     inputFlag=0;
-                    prompt.updateState(inputFlag);
+                    //prompt.updateState(inputFlag);
+                    if (!prompt.updateState(inputFlag)){
+                        System.out.println("shouldnt tap");
+                        //Gdx.input.vibrate(2000);
+                    }
                 }
             }
             @Override
@@ -182,19 +189,24 @@ public class GameScreen implements Screen {
 
         //gameloop
         if (prompt.checkShake()){
-            if ((Math.abs(Gdx.input.getAccelerometerX())>10 && Math.abs(Gdx.input.getAccelerometerX())<20) ||
-                    ((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5) ||
-                    (Gdx.input.getAccelerometerZ()>14 && Gdx.input.getAccelerometerZ()<20))){
+            if ((Math.abs(Gdx.input.getAccelerometerX())>5 && Math.abs(Gdx.input.getAccelerometerX())<25) ||
+                    ((Gdx.input.getAccelerometerZ()>-25 && Gdx.input.getAccelerometerZ()<0) ||
+                    (Gdx.input.getAccelerometerZ()>10 && Gdx.input.getAccelerometerZ()<25))){
                 /*
                     ((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5) ||
                     (Gdx.input.getAccelerometerZ()>11 && Gdx.input.getAccelerometerZ()<20)) */
                 inputFlag = 2;
-                prompt.updateState(inputFlag);
-                System.out.println(Math.abs(Gdx.input.getAccelerometerX())>10);
-                System.out.println(Math.abs(Gdx.input.getAccelerometerX())<20);
+                //prompt.updateState(inputFlag);
+                if (!prompt.updateState(inputFlag)){
+                    System.out.println("shouldnt shake");
+                    //Gdx.input.vibrate(2000);
+
+                }
+                System.out.println("-10<x<10 is "+(Math.abs(Gdx.input.getAccelerometerX())>10));
+                System.out.println("x<-20 ou x>20 is "+(Math.abs(Gdx.input.getAccelerometerX())<20));
                 System.out.println("x: "+Gdx.input.getAccelerometerX());
-                System.out.println((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5));
-                System.out.println((Gdx.input.getAccelerometerZ()>14 && Gdx.input.getAccelerometerZ()<20));
+                System.out.println("-20<z<-5 is "+(Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5));
+                System.out.println("14<z<20 is "+(Gdx.input.getAccelerometerZ()>14 && Gdx.input.getAccelerometerZ()<20));
                 System.out.println("z: "+Gdx.input.getAccelerometerZ());
             }
         }

@@ -20,11 +20,11 @@ public class Shakey extends Challenge{
     }
 
     @Override
-    public void updateState(int flag) {
+    public boolean updateState(int flag) {
         if (flag==2){
             this.setDone();
-
-        }
+            return true;
+        }return false;
     }
 
     public boolean checkShake(){

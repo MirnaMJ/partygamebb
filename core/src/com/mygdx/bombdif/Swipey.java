@@ -28,10 +28,11 @@ public class Swipey extends Challenge{
     //public InputListener getInputListener() {
     //    return swipe;}
 
-    public void updateState(int flag ) {
+    public boolean updateState(int flag ) {
         if (flag == 1){
             this.setDone();
-        }
+            return true;
+        }return false;
     }
 
     public boolean checkShake(){
