@@ -2,11 +2,14 @@ package com.mygdx.bombdif;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
+import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.input.GestureDetector;
+import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.InputListener;
@@ -23,7 +26,7 @@ import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
-public class GameScreen implements Screen {
+public class GameScreen implements Screen, GestureDetector.GestureListener {
     private Stage stage;
     private Table table;
     private Label timerL;
@@ -52,6 +55,8 @@ public class GameScreen implements Screen {
     private float dragSensitivity= 20;
     private float posX;
     private float posY;
+    private Timer.Task timer;
+
 
     public GameScreen(Bombdife game){
         this.game = game;
@@ -63,16 +68,20 @@ public class GameScreen implements Screen {
 
         bomb = new Bomb();
         customUi = new CustomUiBdf(game);
+        inputFlag = 0;
         challenges = game.getRules().getChallenge();
         selecChallenge();
 
         chrono = new Chronom(game.getRules().getCountdown());
-        Timer.schedule(new Timer.Task(){
+        timer = Timer.schedule(new Timer.Task(){
                            @Override
                            public void run() {
                                if (display) {
                                    display = chrono.updateTimer();
                                    timerL.setText(chrono.display());
+                               }else {
+                                   System.out.println("else of chronoin time.scedule");
+                                   timer.cancel();
                                }
                            }
                        }
@@ -82,31 +91,45 @@ public class GameScreen implements Screen {
 
 
         //ta
+        InputMultiplexer im = new InputMultiplexer();
+        GestureDetector gd = new GestureDetector(this);
         stage = new Stage();
-        Gdx.input.setInputProcessor(stage);
+
+        im.addProcessor(gd);
+        im.addProcessor(stage);
+
+        Gdx.input.setInputProcessor(im);
 
         stack = new Stack();
         stage.addActor(stack);
         stack.setFillParent(true);
 
+
         inputSpace = customUi.createButton("back");
-        inputFlag = 0;
-        inputSpace.addListener(new InputListener(){
+        /*
+        *no task =0
+        * tap=1
+        * swipe=2
+        * shake=3
+        *
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 if (Math.abs(posX-x)>dragSensitivity || Math.abs(posY-y)>dragSensitivity) {
-                    //System.out.println("gamescreen: drag  , "+x+" , "+y+", "+pointer); it has been dragged
-                    //prompt.updateState(inputFlag);
-                    if (!prompt.updateState(inputFlag)){
-                        System.out.println("shouldnt drag");
+                    System.out.println("gamescreen: drag  , "+x+" , "+y+", "+pointer); //it has been dragged
+                    System.out.println("posX: "+posX+" et aussi posY: "+posY);
+                    if (prompt.getId().equals("swipe")){
+                        prompt.updateState();
+                    }else{
+                        System.out.println("dont swipe");
                     }
-                    inputFlag=0;
                 }else {
                     //System.out.println("gamescreen: jut touch  , "+x+" , "+y+", "+pointer); i dont see enough of dragg between posx and x so just touch
-                    inputFlag=0;
-                    //prompt.updateState(inputFlag);
-                    if (!prompt.updateState(inputFlag)){
+                    if (prompt.getId().equals("tap")){
+                        prompt.updateState();
+                    }else{
                         System.out.println("shouldnt tap");
+                        System.out.println("pos x et x "+posX+" "+x);
+                        System.out.println("pos y et y "+posY+" "+y);
                         //Gdx.input.vibrate(2000);
                     }
                 }
@@ -120,14 +143,13 @@ public class GameScreen implements Screen {
             @Override
             public void touchDragged(InputEvent event, float x, float y, int pointer) {
                 super.touchDragged(event, x, y, pointer);
-                if (inputFlag==0){
-                    posX = x;
-                    posY = y;
-                }
-                inputFlag = 1;
+                posX = x;
+                posY = y;
 
             }
-        });
+
+         */
+        inputSpace.addListener(new InputListener(){});
 
 
         table = new Table();
@@ -188,34 +210,33 @@ public class GameScreen implements Screen {
         }
 
         //gameloop
-        if (prompt.checkShake()){
-            if ((Math.abs(Gdx.input.getAccelerometerX())>5 && Math.abs(Gdx.input.getAccelerometerX())<25) ||
+        //if (prompt.checkShake()){
+            if (Gdx.input.getAccelerometerZ()>11 || Gdx.input.getAccelerometerZ()<-10.5){
+
+                /*(Math.abs(Gdx.input.getAccelerometerX())>5 && Math.abs(Gdx.input.getAccelerometerX())<25) ||
                     ((Gdx.input.getAccelerometerZ()>-25 && Gdx.input.getAccelerometerZ()<0) ||
-                    (Gdx.input.getAccelerometerZ()>10 && Gdx.input.getAccelerometerZ()<25))){
+                    (Gdx.input.getAccelerometerZ()>10 && Gdx.input.getAccelerometerZ()<25))*/
+
+
                 /*
                     ((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5) ||
                     (Gdx.input.getAccelerometerZ()>11 && Gdx.input.getAccelerometerZ()<20)) */
-                inputFlag = 2;
+                //inputFlag = 2;
                 //prompt.updateState(inputFlag);
-                if (!prompt.updateState(inputFlag)){
-                    System.out.println("shouldnt shake");
-                    //Gdx.input.vibrate(2000);
 
+                if (prompt.getId().equals("shake")) {
+                    prompt.updateState();
+                }else {
+                    System.out.println("shouldnt shake");
+                    System.out.println("z: " + Gdx.input.getAccelerometerZ());
+                    System.out.println("abovz: " + (Gdx.input.getAccelerometerZ() > 11.65 || Gdx.input.getAccelerometerZ() < -10.5));
+                    //Gdx.input.vibrate(2000);
                 }
-                System.out.println("-10<x<10 is "+(Math.abs(Gdx.input.getAccelerometerX())>10));
-                System.out.println("x<-20 ou x>20 is "+(Math.abs(Gdx.input.getAccelerometerX())<20));
-                System.out.println("x: "+Gdx.input.getAccelerometerX());
-                System.out.println("-20<z<-5 is "+(Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5));
-                System.out.println("14<z<20 is "+(Gdx.input.getAccelerometerZ()>14 && Gdx.input.getAccelerometerZ()<20));
-                System.out.println("z: "+Gdx.input.getAccelerometerZ());
+
             }
-        }
-        if (prompt.isDone()){
-            selecChallenge();
-            consigne.setText(prompt.getInstruc());
-            chrono.bonusSec(1);
-        }
-        secTime = chrono.getSec();
+
+        //}
+
 
         stage.draw();
 
@@ -223,13 +244,21 @@ public class GameScreen implements Screen {
             System.out.println("gamescreen: chrono rallonge de: "+(int)(stateTime-game.getRules().getCountdown())+"s");
             game.getRules().setScore((int)(stateTime-game.getRules().getCountdown()));
             game.setScreen(new EndGameScreen(game));
+            //timer.cancel();
             dispose();
-
+        }else{
+            if (prompt.isDone()){
+                selecChallenge();
+                consigne.setText(prompt.getInstruc());
+                chrono.bonusSec(1);
+            }
         }
+        secTime = chrono.getSec();
     }
 
     private void selecChallenge(){
         int choice = (int) (Math.random() * challenges.length);//Min + (int)(Math.random() * ((Max - Min) + 1))
+        inputFlag = choice+1;
         System.out.println("gamescreen: choice "+choice);
         if (challenges[choice].equals("tap")) {
             prompt = new Tapey(language);
@@ -243,6 +272,72 @@ public class GameScreen implements Screen {
 
         }
     }
+
+
+
+    @Override
+    public boolean touchDown(float x, float y, int pointer, int button) {
+        return true;
+    }
+
+    @Override
+    public boolean tap(float x, float y, int count, int button) {
+        if (prompt.getId().equals("tap")){
+            for (int i = 0;i< count;i++) {
+                System.out.println(count);
+                prompt.updateState();
+            }
+        }else{
+            System.out.println("shouldnt tap");
+            System.out.println("pos x et x "+posX+" "+x);
+            System.out.println("pos y et y "+posY+" "+y);
+            Gdx.input.vibrate(200);
+        }
+        return true;
+    }
+
+    @Override
+    public boolean longPress(float x, float y) {
+        return false;
+    }
+
+    @Override
+    public boolean fling(float velocityX, float velocityY, int button) {
+        if (prompt.getId().equals("swipe")){
+            prompt.updateState();
+        }else{
+            System.out.println("dont swipe");
+        }
+        return true;
+    }
+
+    @Override
+    public boolean pan(float x, float y, float deltaX, float deltaY) {
+        return false;
+    }
+
+    @Override
+    public boolean panStop(float x, float y, int pointer, int button) {
+        return false;
+    }
+
+    @Override
+    public boolean zoom(float initialDistance, float distance) {
+        return false;
+    }
+
+    @Override
+    public boolean pinch(Vector2 initialPointer1, Vector2 initialPointer2, Vector2 pointer1, Vector2 pointer2) {
+        return false;
+    }
+
+    @Override
+    public void pinchStop() {
+
+    }
+
+
+
 
     @Override
     public void resize(int width, int height) {
@@ -267,5 +362,6 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+
     }
 }

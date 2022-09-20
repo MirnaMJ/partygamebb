@@ -6,9 +6,11 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class Shakey extends Challenge{
     private String instruction;
+    private String id;
     public Shakey(Language lan){
         super();
         instruction = lan.getInstrucShake();
+        id = "shake";
         float accelX = Gdx.input.getAccelerometerX();
         float accelY = Gdx.input.getAccelerometerY();
         float accelZ = Gdx.input.getAccelerometerZ();
@@ -20,14 +22,13 @@ public class Shakey extends Challenge{
     }
 
     @Override
-    public boolean updateState(int flag) {
-        if (flag==2){
+    public void updateState() {
             this.setDone();
-            return true;
-        }return false;
     }
 
-    public boolean checkShake(){
-        return true;
+    @Override
+    public String getId() {
+        return id;
     }
+
 }

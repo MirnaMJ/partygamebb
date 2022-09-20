@@ -360,7 +360,7 @@ public class CreateSingleRoomScreen implements Screen {
                     if (trackingTasks[i].isChecked()){
                         challenges[i] = trackingTasks[i].getName();
                         nbChallenge++;
-                        System.out.println(nbChallenge);
+                        System.out.println("createsingleroom"+nbChallenge);
                     }
                 }
 

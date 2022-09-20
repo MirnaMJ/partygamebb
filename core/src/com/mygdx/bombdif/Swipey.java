@@ -5,11 +5,12 @@ import com.badlogic.gdx.scenes.scene2d.InputListener;
 
 public class Swipey extends Challenge{
     private String instruction;
-    //private InputListener swipe;
+    private String id;
 
     public Swipey(Language lang){
         super();
         instruction = lang.getInstrucSwipe();
+        id = "swipe";
         /*swipe = new InputListener(){
 
             @Override
@@ -28,14 +29,12 @@ public class Swipey extends Challenge{
     //public InputListener getInputListener() {
     //    return swipe;}
 
-    public boolean updateState(int flag ) {
-        if (flag == 1){
-            this.setDone();
-            return true;
-        }return false;
+    public void updateState() {
+        this.setDone();
     }
 
-    public boolean checkShake(){
-        return false;
+    public String getId() {
+        return id;
     }
+
 }

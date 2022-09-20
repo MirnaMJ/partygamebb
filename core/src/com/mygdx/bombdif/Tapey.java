@@ -7,11 +7,13 @@ public class Tapey extends Challenge{
     private String[] instruction;
     private int iter;
     private int step;
+    private String id;
     //private InputListener tap;
 
     public Tapey(Language lang){
         super();
         instruction = new String[2];
+        id = "tap";
         instruction[0] = lang.getInstrucTap();
         instruction[1] = lang.getnTimes();
         step = 0;
@@ -34,17 +36,16 @@ public class Tapey extends Challenge{
         return instruction[0]+(iter-step)+instruction[1];
     }
 
-    public boolean updateState(int flag ) {
-        if (flag == 0){
-            step+=1;
-            if (iter == step){
-                this.setDone();
-                return true;
-            }
-        }return false;
+    public void updateState() {
+        step+=1;
+        if (iter == step){
+            this.setDone();
+        }
     }
 
-    public boolean checkShake(){
-        return false;
+    @Override
+    public String getId() {
+        return id;
     }
+
 }
