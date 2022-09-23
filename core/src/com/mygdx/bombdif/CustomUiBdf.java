@@ -3,6 +3,7 @@ package com.mygdx.bombdif;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
@@ -15,6 +16,8 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
+
+import java.util.concurrent.TimeUnit;
 
 public class CustomUiBdf {
     public Bombdife game;
@@ -56,7 +59,6 @@ public class CustomUiBdf {
     private Color tintColor1;
     private Color tintColor2;
     private Color tintColor3;
-
 
 
     public CustomUiBdf(Bombdife game) {
@@ -230,4 +232,5 @@ public class CustomUiBdf {
         checkBox.setName(name);
         return checkBox;
     }
+
 }

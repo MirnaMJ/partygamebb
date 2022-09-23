@@ -1,11 +1,8 @@
 package com.mygdx.bombdif;
 
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-
 public class Tapey extends Challenge{
     private String[] instruction;
-    private int iter;
+    private int goal;
     private int step;
     private String id;
     //private InputListener tap;
@@ -17,8 +14,8 @@ public class Tapey extends Challenge{
         instruction[0] = lang.getInstrucTap();
         instruction[1] = lang.getnTimes();
         step = 0;
-        iter = 1 + (int)(Math.random() * 5);//Min + (int)(Math.random() * ((Max - Min) + 1))
-        /*tap = new InputListener(){
+        goal = 1 + (int)(Math.random() * 5);//Min + (int)(Math.random() * ((Max - Min) + 1))
+        /*tap = new InputListener(){1 a 5
             @Override
             public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
                 updateState();
@@ -33,12 +30,12 @@ public class Tapey extends Challenge{
     //public InputListener getInputListener(){return tap;}
 
     public String getInstruc(){
-        return instruction[0]+(iter-step)+instruction[1];
+        return instruction[0]+(goal -step)+instruction[1];
     }
 
     public void updateState() {
         step+=1;
-        if (iter == step){
+        if (goal <= step){
             this.setDone();
         }
     }

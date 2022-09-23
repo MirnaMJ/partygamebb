@@ -6,6 +6,7 @@ import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.input.GestureDetector;
@@ -25,6 +26,8 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+
+import java.util.concurrent.TimeUnit;
 
 public class GameScreen implements Screen, GestureDetector.GestureListener {
     private Stage stage;
@@ -53,9 +56,9 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     private ImageButton inputSpace;
     private int inputFlag;
     private float dragSensitivity= 20;
-    private float posX;
-    private float posY;
     private Timer.Task timer;
+    private FloatingText bonus;
+    private float posYbonus;
 
 
     public GameScreen(Bombdife game){
@@ -105,51 +108,17 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         stack.setFillParent(true);
 
 
-        inputSpace = customUi.createButton("back");
+        //inputSpace = customUi.createButton("back");
         /*
         *no task =0
         * tap=1
         * swipe=2
         * shake=3
         *
-            @Override
-            public void touchUp (InputEvent event, float x, float y, int pointer, int button) {
-                if (Math.abs(posX-x)>dragSensitivity || Math.abs(posY-y)>dragSensitivity) {
-                    System.out.println("gamescreen: drag  , "+x+" , "+y+", "+pointer); //it has been dragged
-                    System.out.println("posX: "+posX+" et aussi posY: "+posY);
-                    if (prompt.getId().equals("swipe")){
-                        prompt.updateState();
-                    }else{
-                        System.out.println("dont swipe");
-                    }
-                }else {
-                    //System.out.println("gamescreen: jut touch  , "+x+" , "+y+", "+pointer); i dont see enough of dragg between posx and x so just touch
-                    if (prompt.getId().equals("tap")){
-                        prompt.updateState();
-                    }else{
-                        System.out.println("shouldnt tap");
-                        System.out.println("pos x et x "+posX+" "+x);
-                        System.out.println("pos y et y "+posY+" "+y);
-                        //Gdx.input.vibrate(2000);
-                    }
-                }
-            }
-            @Override
-            public boolean touchDown (InputEvent event, float x, float y, int pointer, int button) {
-                //System.out.println("gamescreen:   , "+x+" , "+y+", "+pointer);
-                return true;
-            }
 
-            @Override
-            public void touchDragged(InputEvent event, float x, float y, int pointer) {
-                super.touchDragged(event, x, y, pointer);
-                posX = x;
-                posY = y;
-
-            }
 
          */
-        inputSpace.addListener(new InputListener(){});
+        //inputSpace.addListener(new InputListener(){});
 
 
         table = new Table();
@@ -164,6 +133,16 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         table.add(bombI).expand().fill();//.padLeft(100).padRight(100)
 
         table.row();
+        //SWText = customUi.createSWText(text);
+        long animationDuration = TimeUnit.SECONDS.toMillis(2);
+        BitmapFont fontw = game.getFont20();
+        bonus = new FloatingText(fontw,"+1s",animationDuration);
+        //bonus.setPosition(10, 10);
+
+        bonus.setDeltaY(100);
+        table.add(bonus);
+
+        table.row();
         consigne = customUi.createLabel(40, prompt.getInstruc());
         table.add(consigne).expand();//.fill()
 
@@ -176,6 +155,10 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         stack.add(container);
 
 
+        Vector2 coords = new Vector2(bonus.getX(), bonus.getY());
+        bonus.localToStageCoordinates(/*in/out*/coords);
+        bonus.getStage().stageToScreenCoordinates(/*in/out*/coords);
+        posYbonus=coords.y;
 
 
         // time to 0
@@ -211,14 +194,16 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
         //gameloop
         //if (prompt.checkShake()){
-            if (Gdx.input.getAccelerometerZ()>11 || Gdx.input.getAccelerometerZ()<-10.5){
+            if ((Math.abs(Gdx.input.getAccelerometerX())>10 && Math.abs(Gdx.input.getAccelerometerX())<20) ||
+                    ((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5) ||
+                            (Gdx.input.getAccelerometerZ()>14 && Gdx.input.getAccelerometerZ()<20))){
 
-                /*(Math.abs(Gdx.input.getAccelerometerX())>5 && Math.abs(Gdx.input.getAccelerometerX())<25) ||
-                    ((Gdx.input.getAccelerometerZ()>-25 && Gdx.input.getAccelerometerZ()<0) ||
-                    (Gdx.input.getAccelerometerZ()>10 && Gdx.input.getAccelerometerZ()<25))*/
+                /**/
 
 
-                /*
+                /*Gdx.input.getAccelerometerZ()>11 || Gdx.input.getAccelerometerZ()<-10.5
+                *
+              *
                     ((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5) ||
                     (Gdx.input.getAccelerometerZ()>11 && Gdx.input.getAccelerometerZ()<20)) */
                 //inputFlag = 2;
@@ -230,12 +215,13 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
                     System.out.println("shouldnt shake");
                     System.out.println("z: " + Gdx.input.getAccelerometerZ());
                     System.out.println("abovz: " + (Gdx.input.getAccelerometerZ() > 11.65 || Gdx.input.getAccelerometerZ() < -10.5));
-                    //Gdx.input.vibrate(2000);
+                    Gdx.input.vibrate(150);
                 }
 
             }
 
         //}
+
 
 
         stage.draw();
@@ -248,9 +234,18 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             dispose();
         }else{
             if (prompt.isDone()){
+                if (!bonus.isAnimated()) {
+                    bonus.animate();
+                }
+                stage.act();
+                stage.draw();
                 selecChallenge();
                 consigne.setText(prompt.getInstruc());
                 chrono.bonusSec(1);
+            }else {
+                if (!bonus.isAnimated()) {
+                    bonus.setPosition(bonus.getX(), posYbonus);
+                }
             }
         }
         secTime = chrono.getSec();
@@ -283,15 +278,10 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     @Override
     public boolean tap(float x, float y, int count, int button) {
         if (prompt.getId().equals("tap")){
-            for (int i = 0;i< count;i++) {
-                System.out.println(count);
-                prompt.updateState();
-            }
+            prompt.updateState();
         }else{
             System.out.println("shouldnt tap");
-            System.out.println("pos x et x "+posX+" "+x);
-            System.out.println("pos y et y "+posY+" "+y);
-            Gdx.input.vibrate(200);
+            Gdx.input.vibrate(150);
         }
         return true;
     }
@@ -307,6 +297,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             prompt.updateState();
         }else{
             System.out.println("dont swipe");
+            Gdx.input.vibrate(150);
         }
         return true;
     }
@@ -362,6 +353,5 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     @Override
     public void dispose() {
         stage.dispose();
-
     }
 }
