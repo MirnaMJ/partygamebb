@@ -15,6 +15,9 @@ public class FloatingText extends Actor {
     private float deltaY;
     private boolean animated = false;
     private long animationStart;
+    private float ogTrans;
+    private float ogPos;
+    private boolean flag=true;
 
     public FloatingText(BitmapFont fontw, String text, long animationDuration) {
         this.fontw = fontw;
@@ -30,17 +33,22 @@ public class FloatingText extends Actor {
             if (isDisposable()) {
                 dispose();
                 return;
-            }
-            if (isFinished()){
-
             }*/
 
             float elapsed = System.currentTimeMillis() - animationStart;
 
             // The text will be fading.
-            fontw.setColor(getColor().r, getColor().g, getColor().b, parentAlpha * (1 - elapsed / animationDuration));
+            if (elapsed == 0) {
+                fontw.setColor(getColor().r, getColor().g, getColor().b, ogTrans);
+                fontw.draw(batch, text, getX() , ogPos);
+            }else {
+                fontw.setColor(getColor().r, getColor().g, getColor().b, parentAlpha * (1 - elapsed / animationDuration));
+                fontw.draw(batch, text, getX() + deltaX * elapsed / 1000f, getY() + deltaY * elapsed / 1000f);
+            }
 
-            fontw.draw(batch, text, getX() + deltaX * elapsed / 1000f, getY() + deltaY * elapsed / 1000f);
+            if (isFinished()){
+                animated = false;
+            }
         }
     }
 
@@ -55,6 +63,11 @@ public class FloatingText extends Actor {
     public void animate() {
         animated = true;
         animationStart = System.currentTimeMillis();
+        if (flag){
+            ogTrans = 1;
+            ogPos = getY();
+            flag = false;
+        }
     }
 
     public boolean isAnimated() {

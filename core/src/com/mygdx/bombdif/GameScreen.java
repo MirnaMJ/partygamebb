@@ -122,7 +122,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
 
         table = new Table();
-        //table.debug();
+        table.debug();
         table.row();
 
         timerL = customUi.createLabel(80,chrono.display());
@@ -134,12 +134,12 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
         table.row();
         //SWText = customUi.createSWText(text);
-        long animationDuration = TimeUnit.SECONDS.toMillis(2);
+        long animationDuration = TimeUnit.SECONDS.toMillis(1);
         BitmapFont fontw = game.getFont40();
         bonus = new FloatingText(fontw,"+1s",animationDuration);
         //bonus.setPosition(10, 10);
 
-        bonus.setDeltaY(200);
+        bonus.setDeltaY(400);
         table.add(bonus);
 
         table.row();
@@ -237,9 +237,9 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             dispose();
         }else{
             if (prompt.isDone()){
-                if (!bonus.isAnimated()) {
+                //if (!bonus.isAnimated()) {
                     bonus.animate();
-                }
+                //}
                 stage.act();
                 stage.draw();
                 selecChallenge();
