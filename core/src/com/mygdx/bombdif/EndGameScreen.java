@@ -109,7 +109,7 @@ public class EndGameScreen implements Screen {
             }
         });
         table.add(retry).padBottom(10);
-        Gdx.graphics.setContinuousRendering(false);
+        //Gdx.graphics.setContinuousRendering(false);
     }
 
     @Override

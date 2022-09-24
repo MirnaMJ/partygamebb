@@ -47,11 +47,8 @@ public class Chronom {
         }
     }
 
-    public boolean updateTimer(){
+    public void updateTimer(){
         sec_total-=1;
-        if (sec_total <=0){
-            return false;
-        }return true;
     }
 
     public boolean ended(){

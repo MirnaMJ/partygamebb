@@ -49,14 +49,14 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     private float stateTime;
     private float secTime;
     private Chronom chrono;
-    private boolean display=true;
+    //private boolean display=true;
     private Image bombI;
     private Label inst;
     private Challenge prompt;
     private ImageButton inputSpace;
     private int inputFlag;
     private float dragSensitivity= 20;
-    private Timer.Task timer;
+    //private Timer.Task timer;
     private FloatingText bonus;
     private float posYbonus;
 
@@ -76,7 +76,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         selecChallenge();
 
         chrono = new Chronom(game.getRules().getCountdown());
-        timer = Timer.schedule(new Timer.Task(){
+        /*timer = Timer.schedule(new Timer.Task(){
                            @Override
                            public void run() {
                                if (display) {
@@ -90,7 +90,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
                        }
                 , 1        //    (delay)
                 , 1f     //    (seconds)
-        );
+        );*/
 
 
         //ta
@@ -135,11 +135,11 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         table.row();
         //SWText = customUi.createSWText(text);
         long animationDuration = TimeUnit.SECONDS.toMillis(2);
-        BitmapFont fontw = game.getFont20();
+        BitmapFont fontw = game.getFont40();
         bonus = new FloatingText(fontw,"+1s",animationDuration);
         //bonus.setPosition(10, 10);
 
-        bonus.setDeltaY(100);
+        bonus.setDeltaY(200);
         table.add(bonus);
 
         table.row();
@@ -155,17 +155,17 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         stack.add(container);
 
 
-        Vector2 coords = new Vector2(bonus.getX(), bonus.getY());
-        bonus.localToStageCoordinates(/*in/out*/coords);
-        bonus.getStage().stageToScreenCoordinates(/*in/out*/coords);
-        posYbonus=coords.y;
+        /*Vector2 coords = new Vector2(bonus.getX(), bonus.getY());
+        bonus.localToStageCoordinates(/*in/outcoords);
+        bonus.getStage().stageToScreenCoordinates(/*in/outcoords);
+        posYbonus=coords.y;*/
 
 
         // time to 0
         stateTime = 0;
         //check if im at the next s3c
         secTime = 0;
-
+        Gdx.graphics.setContinuousRendering(true);
     }
 
     @Override
@@ -188,8 +188,11 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         game.getBatch().end()*/
 
         //animation bomb
-        if (chrono.getSec()!= secTime){
-            bomb.tick(chrono.getSec());
+        if (!(chrono.ended()) && stateTime-secTime >= 1){
+            bomb.tick();
+            chrono.updateTimer();
+            timerL.setText(chrono.display());
+
         }
 
         //gameloop
@@ -242,13 +245,14 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
                 selecChallenge();
                 consigne.setText(prompt.getInstruc());
                 chrono.bonusSec(1);
-            }else {
-                if (!bonus.isAnimated()) {
-                    bonus.setPosition(bonus.getX(), posYbonus);
-                }
+                timerL.setText(chrono.display());
+
             }
         }
-        secTime = chrono.getSec();
+        if (stateTime-secTime >= 1){
+            secTime = stateTime;
+
+        }
     }
 
     private void selecChallenge(){

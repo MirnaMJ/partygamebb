@@ -39,6 +39,7 @@ public class Bomb extends Actor {
         urgenceState[2]="";
 
         time_since_last_tick = 0;
+        iBomb.setColor(0.2f,0.8f,1f,1f);
         /*
          *
          * Animation
@@ -49,7 +50,7 @@ public class Bomb extends Actor {
 
     }
 
-    public void tick(int s){
+    public void tick(){
         if (time_since_last_tick <2) {
             time_since_last_tick += 1;
             iBomb.setColor(0.2f,0.8f,1f,1f);
