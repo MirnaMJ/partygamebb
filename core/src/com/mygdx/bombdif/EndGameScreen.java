@@ -2,6 +2,7 @@ package com.mygdx.bombdif;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -27,6 +28,7 @@ public class EndGameScreen implements Screen {
     private Label newScore;
     private Label oldScore;
     private ImageButton retry;
+    private Sound buttonSound;
 
     public EndGameScreen(final Bombdife game){
 
@@ -34,6 +36,7 @@ public class EndGameScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
 
         language = game.getLanguage();
         customUi = new CustomUiBdf(game);
@@ -55,6 +58,7 @@ public class EndGameScreen implements Screen {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new TitleScreen(game));
                 game.getPrefs().flush();
                 dispose();
@@ -103,6 +107,7 @@ public class EndGameScreen implements Screen {
         retry.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new GameScreen(game));
                 game.getPrefs().flush();
                 dispose();
@@ -183,5 +188,6 @@ public class EndGameScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        buttonSound.dispose();
     }
 }

@@ -4,6 +4,7 @@ import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Preferences;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -18,6 +19,7 @@ public class Bombdife extends Game {
 	private BitmapFont font80;
 	//private BitmapFont font140;
 	private Language language;
+	public Music menuMusic;
 	private GameRulesManager rules;
 	private Preferences prefs;
 	
@@ -39,6 +41,9 @@ public class Bombdife extends Game {
         prefs.putBoolean("soundOn", true);*/
 		language = new Language(prefs.getString("language","English"));//Français
 		rules = new GameRulesManager(language,prefs);
+		menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menu_chill.wav"));
+		menuMusic.setLooping(true);
+		menuMusic.setVolume(getPrefs().getFloat("volumeS"));
 		this.setScreen(new TitleScreen(this));
 		// might need to check presnecepsnece of accelerometer? boolean available = Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer);
 
@@ -93,5 +98,6 @@ public class Bombdife extends Game {
 		font80.dispose();
 		//font140.dispose();
 		generator.dispose();
+		menuMusic.dispose();
 	}
 }

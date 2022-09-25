@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.InputAdapter;
 import com.badlogic.gdx.InputMultiplexer;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
@@ -58,7 +59,9 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     private float dragSensitivity= 20;
     //private Timer.Task timer;
     private FloatingText bonus;
-    private float posYbonus;
+    private Sound tickingSound;
+    private Sound tockingSound;
+    private Sound boomSound;
 
 
     public GameScreen(Bombdife game){
@@ -68,6 +71,10 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
         language = game.getLanguage();
+
+        tickingSound = Gdx.audio.newSound(Gdx.files.internal("tick.wav"));
+        tockingSound = Gdx.audio.newSound(Gdx.files.internal("tick2.wav"));
+        boomSound = Gdx.audio.newSound(Gdx.files.internal("atari_boom6.wav"));
 
         bomb = new Bomb();
         customUi = new CustomUiBdf(game);
@@ -122,7 +129,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
 
         table = new Table();
-        table.debug();
+        //table.debug();
         table.row();
 
         timerL = customUi.createLabel(80,chrono.display());
@@ -170,6 +177,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
     @Override
     public void show() {
+        game.menuMusic.pause();
 
     }
 
@@ -187,11 +195,12 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         game.getBatch().draw(currentFrame, 10, 10,camera.viewportWidth-20,camera.viewportWidth); // Draw current frame at (x, y)
         game.getBatch().end()*/
 
-        //animation bomb
+        //animation bomb, count seconds
         if (!(chrono.ended()) && stateTime-secTime >= 1){
             bomb.tick();
             chrono.updateTimer();
             timerL.setText(chrono.display());
+            tickingSound.play(game.getPrefs().getFloat("volumeS"));
 
         }
 
@@ -231,6 +240,8 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
         if (chrono.ended()){
             System.out.println("gamescreen: chrono rallonge de: "+(int)(stateTime-game.getRules().getCountdown())+"s");
+            boomSound.play(game.getPrefs().getFloat("volumeS"));
+            Gdx.input.vibrate(250);
             game.getRules().setScore((int)(stateTime-game.getRules().getCountdown()));
             game.setScreen(new EndGameScreen(game));
             //timer.cancel();
@@ -238,7 +249,8 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         }else{
             if (prompt.isDone()){
                 //if (!bonus.isAnimated()) {
-                    bonus.animate();
+                bonus.animate();
+                //tockingSound.play(game.getPrefs().getFloat("volumeS"));
                 //}
                 stage.act();
                 stage.draw();
@@ -357,5 +369,8 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     @Override
     public void dispose() {
         stage.dispose();
+        tickingSound.dispose();
+        tockingSound.dispose();
+        boomSound.dispose();
     }
 }

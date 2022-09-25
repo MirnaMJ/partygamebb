@@ -2,6 +2,7 @@ package com.mygdx.bombdif;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
@@ -24,15 +25,13 @@ public class OptionScreen implements Screen {
     private CustomUiBdf cbutton;
     private Label label0;
     private Label label1;
-    //private Label.LabelStyle labelStyle;
     private Stage stage;
     private Table table;
-    //private TextureAtlas bombdif;
     private ImageButton back;
     private TextButton lingua;
-    //private Skin skin;
-    //private Slider.SliderStyle sliderStyle;
     private Slider volume;
+    private Sound buttonSound;
+    private float vol;
 
     public OptionScreen(final Bombdife game){
         this.game = game;
@@ -42,16 +41,9 @@ public class OptionScreen implements Screen {
 
         language = game.getLanguage();
 
-        //bombdif = new TextureAtlas(Gdx.files.internal("bombdif.atlas"));
-        //skin = new Skin();
-        //skin.addRegions(bombdif);
-        cbutton = new CustomUiBdf(game);
-        //labelStyle = new Label.LabelStyle();
-        //labelStyle.font = game.font40;
+        buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
 
-        //sliderStyle = new Slider.SliderStyle();
-        //sliderStyle.background = skin.getDrawable("bar");
-        //sliderStyle.knob = skin.getDrawable("iconbomb");
+        cbutton = new CustomUiBdf(game);
 
         stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
@@ -68,8 +60,11 @@ public class OptionScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //action omtin omtin
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new TitleScreen(game));
+                game.getPrefs().putFloat("volumeS", vol/10);
                 game.getPrefs().flush();
+                game.menuMusic.setVolume(game.getPrefs().getFloat("volumeS"));
                 dispose();
             }
         });
@@ -79,9 +74,7 @@ public class OptionScreen implements Screen {
         table.add(back).top().left();//.expand().right().pad(10);//size of button via size of cell
 
         table.row();
-        //label
         label0 = cbutton.createLabel(40,language.getTongue());
-        //label0 = new Label(language.getTongue(),labelStyle);
         table.add(label0);//.top().padLeft(80).expand().padTop(20).left()
 
         table.row();
@@ -99,20 +92,21 @@ public class OptionScreen implements Screen {
                     updateLabel();
                     game.getPrefs().putString("language","Français");
                 }
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
             }
         });
         table.add(lingua).padBottom(60).top().expand();//.pad(10).bottom();.colspan(2)
 
         table.row();
-        //label
+
         label1 = cbutton.createLabel(40,language.getVolume());
-        //label1 = new Label(language.getVolume(),labelStyle);
         table.add(label1).expand().top();//.colspan(2)
 
         table.row();
         volume = cbutton.createSlider(0,10,1f,false,"bombCursor");
-        //volume = new Slider(0, 10, 1f, false, sliderStyle );
-        table.add(volume).padBottom(70).fill(true,false).padLeft(20f).padRight(20f);//.colspan(2).pad(10).padRight(380).padTop(270).bottom();
+        table.add(volume).padBottom(70).fill(true,false).padLeft(20f).padRight(20f);
+        volume.setValue(game.getPrefs().getFloat("volumeS")*10);
+        vol = volume.getValue();
 
 
     }
@@ -129,6 +123,11 @@ public class OptionScreen implements Screen {
         ScreenUtils.clear(0, 0, 0, 1);
         camera.update();
         stage.draw();
+        if (vol != volume.getValue()){
+            buttonSound.play();
+            vol = volume.getValue();
+            buttonSound.play(vol/10f,1f,0f);//([0,1],[0.5,1,2],[-1,1]
+        }
 
     }
 
@@ -160,5 +159,6 @@ public class OptionScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        buttonSound.dispose();
     }
 }

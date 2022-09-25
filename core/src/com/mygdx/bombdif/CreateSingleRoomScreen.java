@@ -2,6 +2,7 @@ package com.mygdx.bombdif;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
@@ -64,6 +65,7 @@ public class CreateSingleRoomScreen implements Screen {
     private CheckBox[] trackingTasks;
     private String[] challenges;
 
+    private Sound buttonSound;
 
     public CreateSingleRoomScreen(final Bombdife game){
         this.game = game;
@@ -71,6 +73,7 @@ public class CreateSingleRoomScreen implements Screen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
+        buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
         language = game.getLanguage();
 
         nbPlayer = 1;
@@ -117,6 +120,7 @@ public class CreateSingleRoomScreen implements Screen {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new TitleScreen(game));
                 dispose();
             }
@@ -293,6 +297,13 @@ public class CreateSingleRoomScreen implements Screen {
         checkTap.setTransform(true);
         checkTap.setScale(0.5f);
         checkTap.setChecked(true);
+        checkTap.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //action omtin omtin
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
+            }
+        });
 
         lSwipe = cbutton.createLabel(40,language.getSwipe());
         checkSwipe = cbutton.createCBox("","swipe");
@@ -300,6 +311,13 @@ public class CreateSingleRoomScreen implements Screen {
         checkSwipe.setTransform(true);
         checkSwipe.setScale(0.5f);
         checkSwipe.setChecked(true);
+        checkSwipe.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //action omtin omtin
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
+            }
+        });
 
 
         lShake = cbutton.createLabel(40,language.getShake());
@@ -308,6 +326,13 @@ public class CreateSingleRoomScreen implements Screen {
         checkShake.setTransform(true);
         checkShake.setScale(0.5f);
         checkShake.setChecked(true);
+        checkShake.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //action omtin omtin
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
+            }
+        });
 
         innerTable = new Table();
         //innerTable.debug();
@@ -355,6 +380,7 @@ public class CreateSingleRoomScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 //game.getRules().setDifficulty(difficulty.getText().toString());
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 challenges = new String[trackingTasks.length];
                 for (int i = 0;i< trackingTasks.length;i++){
                     if (trackingTasks[i].isChecked()){
@@ -495,6 +521,7 @@ public class CreateSingleRoomScreen implements Screen {
 
     @Override
     public void dispose() {
+        buttonSound.dispose();
         stage.dispose();
     }
 }

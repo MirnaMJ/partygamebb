@@ -2,6 +2,7 @@ package com.mygdx.bombdif;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -28,6 +29,7 @@ public class TitleScreen implements Screen {
     private TextureAtlas bombdif;
     private TextureRegion bomb;
     private Image imageBomb;
+    private Sound buttonSound;
 
     public TitleScreen(final Bombdife game) {
         this.game = game;
@@ -42,6 +44,8 @@ public class TitleScreen implements Screen {
         bombdif = new TextureAtlas(Gdx.files.internal("bombdif.atlas"));
         bomb = bombdif.findRegion("Logo");
         imageBomb = new Image(bomb);
+
+        buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
 
         cbutton = new CustomUiBdf(game);
 
@@ -62,6 +66,7 @@ public class TitleScreen implements Screen {
         single.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new CreateSingleRoomScreen(game));
                 dispose();
             }
@@ -73,6 +78,7 @@ public class TitleScreen implements Screen {
         multi.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new JCRoomScreen(game));
                 dispose();
             }
@@ -84,6 +90,7 @@ public class TitleScreen implements Screen {
         option.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new OptionScreen(game));
                 dispose();
             }
@@ -106,7 +113,7 @@ public class TitleScreen implements Screen {
 
     @Override
     public void show() {
-
+        game.menuMusic.play();
     }
 
     @Override
@@ -134,5 +141,6 @@ public class TitleScreen implements Screen {
     public void dispose() {
         stage.dispose();
         bombdif.dispose();
+        buttonSound.dispose();
     }
 }

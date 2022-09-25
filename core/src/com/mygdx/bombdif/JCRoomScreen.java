@@ -2,6 +2,7 @@ package com.mygdx.bombdif;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
@@ -25,6 +26,7 @@ public class JCRoomScreen implements Screen {
     private ImageButton back;
     private TextButton create;
     private TextButton join;
+    private Sound buttonSound;
 
     public JCRoomScreen(final Bombdife game){
 
@@ -33,6 +35,7 @@ public class JCRoomScreen implements Screen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
+        buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
         language = game.getLanguage();
         customUi = new CustomUiBdf(game);
         stage = new Stage();
@@ -52,6 +55,7 @@ public class JCRoomScreen implements Screen {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new TitleScreen(game));
                 dispose();
             }
@@ -64,6 +68,7 @@ public class JCRoomScreen implements Screen {
         create.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 //game.setScreen(new CreateRoomScreen(game));
                 //dispose();
                 System.out.println("wont do that until im ready to touch bluetooth");
@@ -76,6 +81,7 @@ public class JCRoomScreen implements Screen {
         join.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new FindRoomScreen(game));
                 dispose();
             }
@@ -123,5 +129,6 @@ public class JCRoomScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        buttonSound.dispose();
     }
 }

@@ -2,6 +2,7 @@ package com.mygdx.bombdif;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -30,6 +31,7 @@ public class FindRoomScreen implements Screen {
     private TextField roomName;
     private Stage stage;
     private Table table;
+    private Sound buttonSound;
 
     public FindRoomScreen(final Bombdife game){
         this.game = game;
@@ -37,6 +39,7 @@ public class FindRoomScreen implements Screen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
+        buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
         language = game.getLanguage();
 
         cbutton = new CustomUiBdf(game);
@@ -57,6 +60,7 @@ public class FindRoomScreen implements Screen {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new TitleScreen(game));
                 dispose();
             }
@@ -71,6 +75,12 @@ public class FindRoomScreen implements Screen {
         table.row();
         roomName = cbutton.createTField("","basic0");
         //roomName = new TextField("",textFStyle);
+        /*roomName.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
+            }
+        });*/
         table.add(roomName).expand().top().padLeft(20).padRight(20);//.fill(true,false)
 
         table.row();
@@ -78,6 +88,7 @@ public class FindRoomScreen implements Screen {
         ok.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 System.out.println(roomName.getText());
             }
         });
@@ -121,6 +132,7 @@ public class FindRoomScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        buttonSound.dispose();
         //bombdif.dispose();
         //skin.dispose();
 
