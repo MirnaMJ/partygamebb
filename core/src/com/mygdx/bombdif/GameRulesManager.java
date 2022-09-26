@@ -10,7 +10,7 @@ public class GameRulesManager {
     private String testPlayer;
     private int hour = 0;
     private int min = 0;
-    private int sec = 20;
+    private int sec = 10;
     private int countdown;
     private String[] challenge;
     private int score;
@@ -19,6 +19,7 @@ public class GameRulesManager {
     private float volumeS;
     private float volumeM;
     private boolean vibe;
+    private int miss;
 
     public GameRulesManager(Language lang, Preferences prefs){
         //prfs.putString("name", "Donald Duck");
@@ -33,6 +34,7 @@ public class GameRulesManager {
             prefs.putInteger("highscoreNumH",0);
             prefs.putInteger("highscoreNumMN", 0);
             prefs.putInteger("highscoreNumSEC", 0);
+            prefs.putInteger("mistake", 0);
             prefs.putFloat("volumeS", 0.7f);
             prefs.putFloat("volumeM", 0.3f);
             prefs.putBoolean("vibe", true);
@@ -50,6 +52,7 @@ public class GameRulesManager {
         difficulty = lang.getInter();
         roomName = "";
         countdown = hour*3600+min*60+sec;
+
 
     }
 
@@ -95,6 +98,10 @@ public class GameRulesManager {
 
     public String getTestPlayer() {
         return testPlayer;
+    }
+
+    public int getMiss() {
+        return miss;
     }
 
     public void setDifficulty(String difficulty) {
@@ -158,4 +165,7 @@ public class GameRulesManager {
         }
     }
 
+    public void setMiss(int miss) {
+        this.miss = miss;
+    }
 }

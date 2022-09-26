@@ -62,6 +62,8 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     private Sound tickingSound;
     private Sound tockingSound;
     private Sound boomSound;
+    private boolean vibe;
+    private int miss = 0;
 
 
     public GameScreen(Bombdife game){
@@ -71,6 +73,8 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
         language = game.getLanguage();
+
+        vibe = game.getPrefs().getBoolean("vibe");
 
         tickingSound = Gdx.audio.newSound(Gdx.files.internal("tick.wav"));
         tockingSound = Gdx.audio.newSound(Gdx.files.internal("tick2.wav"));
@@ -227,7 +231,10 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
                     System.out.println("shouldnt shake");
                     System.out.println("z: " + Gdx.input.getAccelerometerZ());
                     System.out.println("abovz: " + (Gdx.input.getAccelerometerZ() > 11.65 || Gdx.input.getAccelerometerZ() < -10.5));
-                    Gdx.input.vibrate(150);
+                    miss+=1;
+                    if (vibe) {
+                        Gdx.input.vibrate(150);
+                    }
                 }
 
             }
@@ -241,8 +248,11 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         if (chrono.ended()){
             System.out.println("gamescreen: chrono rallonge de: "+(int)(stateTime-game.getRules().getCountdown())+"s");
             boomSound.play(game.getPrefs().getFloat("volumeS"));
-            Gdx.input.vibrate(250);
+            if (vibe) {
+                Gdx.input.vibrate(250);
+            }
             game.getRules().setScore((int)(stateTime-game.getRules().getCountdown()));
+            game.getRules().setMiss(miss);
             game.setScreen(new EndGameScreen(game));
             //timer.cancel();
             dispose();
@@ -297,7 +307,10 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             prompt.updateState();
         }else{
             System.out.println("shouldnt tap");
-            Gdx.input.vibrate(150);
+            miss+=1;
+            if (vibe) {
+                Gdx.input.vibrate(150);
+            }
         }
         return true;
     }
@@ -313,7 +326,10 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             prompt.updateState();
         }else{
             System.out.println("dont swipe");
-            Gdx.input.vibrate(150);
+            miss+=1;
+            if (vibe) {
+                Gdx.input.vibrate(150);
+            }
         }
         return true;
     }

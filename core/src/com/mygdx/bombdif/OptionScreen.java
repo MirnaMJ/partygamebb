@@ -39,6 +39,7 @@ public class OptionScreen implements Screen {
     private Sound buttonSound;
     private float vol;
     private float volM;
+    private TextButton hScore;
 
     public OptionScreen(final Bombdife game){
         this.game = game;
@@ -69,9 +70,6 @@ public class OptionScreen implements Screen {
                 //action omtin omtin
                 buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new TitleScreen(game));
-                game.getPrefs().putFloat("volumeS", vol);
-                game.getPrefs().putFloat("volumeM", volM);
-                game.getPrefs().flush();
                 //game.menuMusic.setVolume(game.getPrefs().getFloat("volumeM"));
                 dispose();
             }
@@ -135,7 +133,7 @@ public class OptionScreen implements Screen {
 
         table.row();
         vibration = cbutton.createCBox("", "viby");
-        vibration.setChecked(true);
+        vibration.setChecked(game.getPrefs().getBoolean("vibe"));
         vibration.setOrigin(vibration.getWidth()/2, vibration.getHeight()/2);
         vibration.setTransform(true);
         vibration.setScale(0.6f);
@@ -153,6 +151,16 @@ public class OptionScreen implements Screen {
 
         label4 = cbutton.createLabel(20,language.getVibe());
         table.add(label4).expand().left();
+
+        table.row();
+        hScore = cbutton.createTButton(language.getHighscore(), "back");
+        hScore.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
+            }
+        });
+        table.add(hScore);//.pad(10).bottom();.padBottom(60).top().expand().colspan(2)
     }
 
     public void updateLabel(){
@@ -207,6 +215,10 @@ public class OptionScreen implements Screen {
 
     @Override
     public void dispose() {
+        game.getPrefs().putFloat("volumeS", vol);
+        game.getPrefs().putFloat("volumeM", volM);
+        game.getPrefs().putBoolean("vibe", vibration.isChecked());
+        game.getPrefs().flush();
         stage.dispose();
         buttonSound.dispose();
     }

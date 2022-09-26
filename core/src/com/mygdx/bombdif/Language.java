@@ -27,6 +27,8 @@ public class Language {
     private String instrucShake;
     private String nTimes;
     private String newHighscore;
+    private String highscore;
+    private String miss;
     private String sound;
     private String music;
     private String vibe;
@@ -67,6 +69,8 @@ public class Language {
                 instrucShake = "SECOUE LE TELEPHONE!";
                 nTimes = " FOIS!";
                 newHighscore = "Nouveau Records!!!";
+                highscore = "Record";
+                miss = "Erreur";
                 sound = "Son";
                 music = "Musique";
                 vibe = "Vibreur";
@@ -94,6 +98,8 @@ public class Language {
                 instrucShake = "SHAKE YOUR PHONE!";
                 nTimes = " TIMES!";
                 newHighscore = "New HighScore!!";
+                highscore = "Record";
+                miss = "Mistake";
                 sound = "Sound";
                 music = "Music";
                 vibe = "Vibrator";
@@ -121,6 +127,8 @@ public class Language {
                 instrucShake = "";
                 nTimes = "";
                 newHighscore = "";
+                highscore = "";
+                miss = "";
                 sound = "";
                 music = "";
                 vibe = "";
@@ -241,5 +249,13 @@ public class Language {
 
     public String getVibe() {
         return vibe;
+    }
+
+    public String getHighscore() {
+        return highscore;
+    }
+
+    public String getMiss() {
+        return miss;
     }
 }
