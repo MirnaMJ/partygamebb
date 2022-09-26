@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -25,13 +26,19 @@ public class OptionScreen implements Screen {
     private CustomUiBdf cbutton;
     private Label label0;
     private Label label1;
+    private Label label2;
+    private Label label3;
+    private Label label4;
     private Stage stage;
     private Table table;
     private ImageButton back;
     private TextButton lingua;
     private Slider volume;
+    private Slider volumeM;
+    private CheckBox vibration;
     private Sound buttonSound;
     private float vol;
+    private float volM;
 
     public OptionScreen(final Bombdife game){
         this.game = game;
@@ -62,9 +69,10 @@ public class OptionScreen implements Screen {
                 //action omtin omtin
                 buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new TitleScreen(game));
-                game.getPrefs().putFloat("volumeS", vol/10);
+                game.getPrefs().putFloat("volumeS", vol);
+                game.getPrefs().putFloat("volumeM", volM);
                 game.getPrefs().flush();
-                game.menuMusic.setVolume(game.getPrefs().getFloat("volumeS"));
+                //game.menuMusic.setVolume(game.getPrefs().getFloat("volumeM"));
                 dispose();
             }
         });
@@ -75,7 +83,7 @@ public class OptionScreen implements Screen {
 
         table.row();
         label0 = cbutton.createLabel(40,language.getTongue());
-        table.add(label0);//.top().padLeft(80).expand().padTop(20).left()
+        table.add(label0).colspan(2);//.top().padLeft(80).expand().padTop(20).left()
 
         table.row();
 
@@ -95,27 +103,64 @@ public class OptionScreen implements Screen {
                 buttonSound.play(game.getPrefs().getFloat("volumeS"));
             }
         });
-        table.add(lingua).padBottom(60).top().expand();//.pad(10).bottom();.colspan(2)
+        table.add(lingua).padBottom(60).top().expand().colspan(2);//.pad(10).bottom();
 
         table.row();
 
         label1 = cbutton.createLabel(40,language.getVolume());
-        table.add(label1).expand().top();//.colspan(2)
+        table.add(label1).expand().top().left().colspan(2).padLeft(10);//
 
         table.row();
-        volume = cbutton.createSlider(0,10,1f,false,"bombCursor");
-        table.add(volume).padBottom(70).fill(true,false).padLeft(20f).padRight(20f);
-        volume.setValue(game.getPrefs().getFloat("volumeS")*10);
+
+        label2 = cbutton.createLabel(40, language.getSound());
+        table.add(label2).colspan(2);//.expand().top()
+
+        table.row();
+        volume = cbutton.createSlider(0,1,0.1f,false,"bombCursor");
+        table.add(volume).fill(true,false).padLeft(30f).padRight(20f).colspan(2);//.padBottom(70)
+        volume.setValue(game.getPrefs().getFloat("volumeS"));
         vol = volume.getValue();
 
 
+        table.row();
+
+        label3 = cbutton.createLabel(40, language.getMusic());
+        table.add(label3).colspan(2);//.top()
+
+        table.row();
+        volumeM = cbutton.createSlider(0,1,0.05f,false,"bombCursor");
+        table.add(volumeM).fill(true,false).padLeft(20f).padRight(20f).colspan(2);//.padBottom(70)
+        volumeM.setValue(game.getPrefs().getFloat("volumeM"));
+        volM = volumeM.getValue();
+
+        table.row();
+        vibration = cbutton.createCBox("", "viby");
+        vibration.setChecked(true);
+        vibration.setOrigin(vibration.getWidth()/2, vibration.getHeight()/2);
+        vibration.setTransform(true);
+        vibration.setScale(0.6f);
+        vibration.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //action omtin omtin
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
+                if (vibration.isChecked()){
+                    Gdx.input.vibrate(150);
+                }
+            }
+        });
+        table.add(vibration);//.left().expand()
+
+        label4 = cbutton.createLabel(20,language.getVibe());
+        table.add(label4).expand().left();
     }
 
     public void updateLabel(){
         label0.setText(language.getTongue());
         lingua.setText(language.getLanguage());
-        //label1.setText(language.getVolume());
-
+        label2.setText(language.getSound());
+        label3.setText(language.getMusic());
+        label4.setText(language.getVibe());
     }
 
     @Override
@@ -124,11 +169,15 @@ public class OptionScreen implements Screen {
         camera.update();
         stage.draw();
         if (vol != volume.getValue()){
-            buttonSound.play();
+            //buttonSound.play();
             vol = volume.getValue();
-            buttonSound.play(vol/10f,1f,0f);//([0,1],[0.5,1,2],[-1,1]
+            buttonSound.play(vol,1f,0f);//([0,1],[0.5,1,2],[-1,1]
         }
 
+        if (volM != volumeM.getValue()){
+            volM = volumeM.getValue();
+            game.menuMusic.setVolume(volM);
+        }
     }
 
     @Override

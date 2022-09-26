@@ -17,6 +17,8 @@ public class GameRulesManager {
     private String highscore;
     private int[] hmsScore;
     private float volumeS;
+    private float volumeM;
+    private boolean vibe;
 
     public GameRulesManager(Language lang, Preferences prefs){
         //prfs.putString("name", "Donald Duck");
@@ -31,7 +33,9 @@ public class GameRulesManager {
             prefs.putInteger("highscoreNumH",0);
             prefs.putInteger("highscoreNumMN", 0);
             prefs.putInteger("highscoreNumSEC", 0);
-            prefs.putFloat("volumeS", 3);
+            prefs.putFloat("volumeS", 0.7f);
+            prefs.putFloat("volumeM", 0.3f);
+            prefs.putBoolean("vibe", true);
 
         }else {
             System.out.println("amrulmanar: not creatin pref");
@@ -40,6 +44,8 @@ public class GameRulesManager {
         testPlayer = prefs.getString("testPlayer","Mineko");
         highscore = prefs.getString("highscore");
         volumeS = prefs.getFloat("volumeS");
+        volumeM = prefs.getFloat("volumeM");
+        vibe = prefs.getBoolean("vibe");
         prefs.flush();
         difficulty = lang.getInter();
         roomName = "";
@@ -89,10 +95,6 @@ public class GameRulesManager {
 
     public String getTestPlayer() {
         return testPlayer;
-    }
-
-    public float getVolumeS() {
-        return volumeS;
     }
 
     public void setDifficulty(String difficulty) {

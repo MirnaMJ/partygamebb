@@ -43,7 +43,7 @@ public class Bombdife extends Game {
 		rules = new GameRulesManager(language,prefs);
 		menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menu_chill.wav"));
 		menuMusic.setLooping(true);
-		menuMusic.setVolume(getPrefs().getFloat("volumeS"));
+		menuMusic.setVolume(getPrefs().getFloat("volumeM"));
 		this.setScreen(new TitleScreen(this));
 		// might need to check presnecepsnece of accelerometer? boolean available = Gdx.input.isPeripheralAvailable(Peripheral.Accelerometer);
 

@@ -27,6 +27,9 @@ public class Language {
     private String instrucShake;
     private String nTimes;
     private String newHighscore;
+    private String sound;
+    private String music;
+    private String vibe;
 
     public Language(String lang) {
         language = lang;
@@ -64,6 +67,9 @@ public class Language {
                 instrucShake = "SECOUE LE TELEPHONE!";
                 nTimes = " FOIS!";
                 newHighscore = "Nouveau Records!!!";
+                sound = "Son";
+                music = "Musique";
+                vibe = "Vibreur";
                 break;
             case "English":
                 create = "Create room";
@@ -88,6 +94,9 @@ public class Language {
                 instrucShake = "SHAKE YOUR PHONE!";
                 nTimes = " TIMES!";
                 newHighscore = "New HighScore!!";
+                sound = "Sound";
+                music = "Music";
+                vibe = "Vibrator";
                 break;
             default:
                 create = "";
@@ -112,6 +121,9 @@ public class Language {
                 instrucShake = "";
                 nTimes = "";
                 newHighscore = "";
+                sound = "";
+                music = "";
+                vibe = "";
         }
     }
 
@@ -217,5 +229,17 @@ public class Language {
 
     public String getNewHighscore() {
         return newHighscore;
+    }
+
+    public String getSound() {
+        return sound;
+    }
+
+    public String getMusic() {
+        return music;
+    }
+
+    public String getVibe() {
+        return vibe;
     }
 }
