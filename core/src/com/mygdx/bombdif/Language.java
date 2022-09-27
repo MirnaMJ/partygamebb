@@ -69,8 +69,8 @@ public class Language {
                 instrucShake = "SECOUE LE TELEPHONE!";
                 nTimes = " FOIS!";
                 newHighscore = "Nouveau Records!!!";
-                highscore = "Record";
-                miss = "Erreur";
+                highscore = "Record actuel";
+                miss = "Erreurs";
                 sound = "Son";
                 music = "Musique";
                 vibe = "Vibreur";
@@ -98,8 +98,8 @@ public class Language {
                 instrucShake = "SHAKE YOUR PHONE!";
                 nTimes = " TIMES!";
                 newHighscore = "New HighScore!!";
-                highscore = "Record";
-                miss = "Mistake";
+                highscore = "Current High score";
+                miss = "Mistakes";
                 sound = "Sound";
                 music = "Music";
                 vibe = "Vibrator";

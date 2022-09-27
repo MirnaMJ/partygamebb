@@ -91,13 +91,21 @@ public class EndGameScreen implements Screen {
             game.getPrefs().putInteger("highscoreNumMN", game.getRules().getHmsScore()[1]);
             game.getPrefs().putInteger("highscoreNumSEC", game.getRules().getHmsScore()[2]);
             game.getPrefs().putInteger("mistake", game.getRules().getMiss());
-        }else{
+        }else if (old[0] == game.getPrefs().getInteger("highscoreNumH")& old[1] == game.getPrefs().getInteger("highscoreNumMN") & old[2] == game.getPrefs().getInteger("highscoreNumSEC")){
+            newHighscore.setVisible(false);
+            if (game.getRules().getMiss()>game.getPrefs().getInteger("mistake")){
+                game.getPrefs().putInteger("mistake", game.getRules().getMiss());
+                System.out.println("endgame screen : mistake registered");
+            }
+            System.out.println("nothing registered");
+        } else {
             newHighscore.setVisible(false);
             System.out.println("nothing registered");
             System.out.println(game.getRules().getHmsScore()[0]*3600+game.getRules().getHmsScore()[1]*60+game.getRules().getHmsScore()[2]);
             System.out.println("endgamescreen : "+addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
                     +addZero(game.getPrefs().getInteger("highscoreNumMN"))+":"
                     +addZero(game.getPrefs().getInteger("highscoreNumSEC")));
+
         }
         //oldScore = customUi.createLabel(40,"00:42:00");
         table.add(oldScore).expand();
