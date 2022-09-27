@@ -29,6 +29,11 @@ public class EndGameScreen implements Screen {
     private Label oldScore;
     private ImageButton retry;
     private Sound buttonSound;
+    private Sound recordSound;
+    private float secTime;
+    private float stateTime;
+    private int turn = 0;
+    private boolean flag = false;
 
     public EndGameScreen(final Bombdife game){
 
@@ -37,6 +42,7 @@ public class EndGameScreen implements Screen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
+        recordSound = Gdx.audio.newSound(Gdx.files.internal("tick2.wav"));
 
         language = game.getLanguage();
         customUi = new CustomUiBdf(game);
@@ -60,7 +66,6 @@ public class EndGameScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new TitleScreen(game));
-                game.getPrefs().flush();
                 dispose();
             }
         });
@@ -91,11 +96,13 @@ public class EndGameScreen implements Screen {
             game.getPrefs().putInteger("highscoreNumMN", game.getRules().getHmsScore()[1]);
             game.getPrefs().putInteger("highscoreNumSEC", game.getRules().getHmsScore()[2]);
             game.getPrefs().putInteger("mistake", game.getRules().getMiss());
+            flag = true;
         }else if (old[0] == game.getPrefs().getInteger("highscoreNumH")& old[1] == game.getPrefs().getInteger("highscoreNumMN") & old[2] == game.getPrefs().getInteger("highscoreNumSEC")){
             newHighscore.setVisible(false);
             if (game.getRules().getMiss()>game.getPrefs().getInteger("mistake")){
                 game.getPrefs().putInteger("mistake", game.getRules().getMiss());
                 System.out.println("endgame screen : mistake registered");
+                flag = true;
             }
             System.out.println("nothing registered");
         } else {
@@ -124,6 +131,9 @@ public class EndGameScreen implements Screen {
         });
         table.add(retry).padBottom(10);
         //Gdx.graphics.setContinuousRendering(false);
+        stateTime = 0;
+        secTime = 0;
+
     }
 
     @Override
@@ -135,6 +145,21 @@ public class EndGameScreen implements Screen {
     public void render(float delta) {
         ScreenUtils.clear(0f, 0, 0.1f, 1);
         camera.update();
+
+        stateTime += Gdx.graphics.getDeltaTime();
+        if (stateTime > 1 && stateTime < 6 && flag){
+            if (stateTime-secTime>= 0.2){
+                System.out.println(stateTime);
+                turn += 1;
+                secTime = stateTime;
+                if (turn<5){
+                    recordSound.play(game.getPrefs().getFloat("volumeS"));
+                }else{
+                    flag = false;
+                }
+
+            }
+        }
 
         stage.draw();
     }
@@ -196,7 +221,9 @@ public class EndGameScreen implements Screen {
 
     @Override
     public void dispose() {
+        game.getPrefs().flush();
         stage.dispose();
         buttonSound.dispose();
+        recordSound.dispose();
     }
 }

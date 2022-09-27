@@ -6,7 +6,9 @@ import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
@@ -15,6 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
+import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.Drawable;
 
 import java.util.concurrent.TimeUnit;
@@ -41,11 +44,13 @@ public class CustomUiBdf {
     private Drawable tableStyle0;
     private Drawable tableStyle1;
 
-    private Window.WindowStyle windowStyle;
-    private Window window;
+    //private Window.WindowStyle windowStyle;
+    //private Window window;
 
     private CheckBox checkBox;
     private CheckBox.CheckBoxStyle checkBoxStyle;
+
+    //private Dialog dialog;
 
     private Skin skin;
     private TextureAtlas bombdife;
@@ -134,6 +139,10 @@ public class CustomUiBdf {
         checkBoxStyle.font = game.getFont20();
         checkBoxStyle.fontColor = new Color(0.81f, 0.81f, 0.81f, 1f);
 
+        /*windowStyle = new Window.WindowStyle();
+        windowStyle.background = skin.getDrawable("Text_background");
+        windowStyle.titleFont = game.getFont20();
+        windowStyle.stageBackground = skin.getDrawable("Text_background");*/
     }
 
 
@@ -232,5 +241,10 @@ public class CustomUiBdf {
         checkBox.setName(name);
         return checkBox;
     }
+
+    /*public Dialog createDialog(){
+        dialog = new Dialog("",windowStyle);
+        return dialog;
+    }*/
 
 }

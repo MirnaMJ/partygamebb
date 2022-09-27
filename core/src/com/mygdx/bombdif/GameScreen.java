@@ -60,7 +60,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     //private Timer.Task timer;
     private FloatingText bonus;
     private Sound tickingSound;
-    private Sound tockingSound;
+    //private Sound tockingSound;
     private Sound boomSound;
     private boolean vibe;
     private int miss = 0;
@@ -77,7 +77,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         vibe = game.getPrefs().getBoolean("vibe");
 
         tickingSound = Gdx.audio.newSound(Gdx.files.internal("tick.wav"));
-        tockingSound = Gdx.audio.newSound(Gdx.files.internal("tick2.wav"));
+        //tockingSound = Gdx.audio.newSound(Gdx.files.internal("tick2.wav"));
         boomSound = Gdx.audio.newSound(Gdx.files.internal("atari_boom6.wav"));
 
         bomb = new Bomb();
@@ -386,7 +386,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     public void dispose() {
         stage.dispose();
         tickingSound.dispose();
-        tockingSound.dispose();
+        //tockingSound.dispose();
         boomSound.dispose();
     }
 }

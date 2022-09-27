@@ -28,6 +28,8 @@ public class JCRoomScreen implements Screen {
     private TextButton join;
     private Sound buttonSound;
 
+
+
     public JCRoomScreen(final Bombdife game){
 
         this.game = game;

@@ -6,9 +6,11 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
@@ -19,6 +21,7 @@ public class ScoreRecordScreen implements Screen {
 
     final Bombdife game;
     private ImageButton back;
+    private TextButton deleteScore;
     private TextField score;
     private OrthographicCamera camera;
     private FitViewport viewport;
@@ -29,7 +32,10 @@ public class ScoreRecordScreen implements Screen {
     private Table table;
     private Label label0;
     private Label label1;
-    private Label label2;
+    private Dialog dialog;
+    private Label prompt;
+    private TextButton lb;
+    private TextButton rb;
 
     public ScoreRecordScreen(final Bombdife game){
 
@@ -59,6 +65,7 @@ public class ScoreRecordScreen implements Screen {
             public void changed(ChangeEvent event, Actor actor) {
                 //action omtin omtin
                 buttonSound.play(game.getPrefs().getFloat("volumeS"));
+                game.getPrefs().flush();
                 game.setScreen(new OptionScreen(game));
                 dispose();
             }
@@ -84,6 +91,23 @@ public class ScoreRecordScreen implements Screen {
         label1 = cbutton.createLabel(40, language.getMiss()+" : "+game.getPrefs().getInteger("mistake"));
         label1.setColor(1f,0.05f,0.1f,1);
         table.add(label1).expand().top();
+
+        table.row();
+        deleteScore = cbutton.createTButton("Fetus deletus","noback");
+        deleteScore.setColor(0.8f,0.05f,0.1f,1);
+        deleteScore.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
+                game.getPrefs().putInteger("highscoreNumH", 0);
+                game.getPrefs().putInteger("highscoreNumMN", 0);
+                game.getPrefs().putInteger("highscoreNumSEC", 0);
+                game.getPrefs().putInteger("mistake", 0);
+                score.setText("00:00:00");
+                label1.setText(language.getMiss()+" : 0");
+            }
+        });
+        table.add(deleteScore).bottom().right();
 
         Gdx.graphics.setContinuousRendering(false);
     }
