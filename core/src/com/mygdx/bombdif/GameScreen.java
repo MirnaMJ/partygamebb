@@ -253,8 +253,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             }
             game.getRules().setScore((int)(stateTime-game.getRules().getCountdown()));
             game.getRules().setMiss(miss);
-            game.setScreen(new EndGameScreen(game));
-            //timer.cancel();
+            game.setScreen(new TransitionGameEndScreen(game,prompt.getInstruc()));
             dispose();
         }else{
             if (prompt.isDone()){

@@ -34,6 +34,7 @@ public class EndGameScreen implements Screen {
     private float stateTime;
     private int turn = 0;
     private boolean flag = false;
+    private float transparence = 0;
 
     public EndGameScreen(final Bombdife game){
 
@@ -73,6 +74,7 @@ public class EndGameScreen implements Screen {
 
         table.row();
         newHighscore = customUi.createLabel(40, language.getNewHighscore());
+        newHighscore.setColor(1,1,1,0);
         table.add(newHighscore).expand();
 
         table.row();
@@ -147,9 +149,13 @@ public class EndGameScreen implements Screen {
         camera.update();
 
         stateTime += Gdx.graphics.getDeltaTime();
+        if (stateTime-secTime>= 0.2 && transparence<1){
+            transparence += 0.1;
+            newHighscore.setColor(1,1,1,transparence);
+            System.out.println(stateTime);
+        }
         if (stateTime > 1 && stateTime < 6 && flag){
             if (stateTime-secTime>= 0.2){
-                System.out.println(stateTime);
                 turn += 1;
                 secTime = stateTime;
                 if (turn<5){

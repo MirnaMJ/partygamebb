@@ -95,6 +95,7 @@ public class ScoreRecordScreen implements Screen {
         table.row();
         deleteScore = cbutton.createTButton("Fetus deletus","noback");
         deleteScore.setColor(0.8f,0.05f,0.1f,1);
+        deleteScore.getLabel().setColor(0.8f,0.05f,0.1f,1);
         deleteScore.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {

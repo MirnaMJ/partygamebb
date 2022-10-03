@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+import com.badlogic.gdx.graphics.g2d.ParticleEffect;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
@@ -36,6 +37,8 @@ public class JCRoomScreen implements Screen {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+
+
 
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
         language = game.getLanguage();
@@ -90,7 +93,7 @@ public class JCRoomScreen implements Screen {
         });
         table.add(join).padTop(pad).expand();//.fill().padLeft(pad).padRight(pad)
 
-        Gdx.graphics.setContinuousRendering(false);
+        //Gdx.graphics.setContinuousRendering(true);
     }
 
     @Override
@@ -104,6 +107,11 @@ public class JCRoomScreen implements Screen {
         camera.update();
         stage.draw();
         //game.getBatch().setProjectionMatrix(camera.combined);
+
+        /*if (pe.isComplete()) {
+            pe.reset();
+        }*/
+
 
     }
 
