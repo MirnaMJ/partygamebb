@@ -99,16 +99,27 @@ public class EndGameScreen implements Screen {
             game.getPrefs().putInteger("highscoreNumSEC", game.getRules().getHmsScore()[2]);
             game.getPrefs().putInteger("mistake", game.getRules().getMiss());
             flag = true;
-        }else if (old[0] == game.getPrefs().getInteger("highscoreNumH")& old[1] == game.getPrefs().getInteger("highscoreNumMN") & old[2] == game.getPrefs().getInteger("highscoreNumSEC")){
+        }else if (old[0] == game.getRules().getHmsScore()[0] && old[1] == game.getRules().getHmsScore()[1] && old[2] == game.getRules().getHmsScore()[2]){
             newHighscore.setVisible(false);
-            if (game.getRules().getMiss()>game.getPrefs().getInteger("mistake")){
+            if (game.getRules().getMiss()<game.getPrefs().getInteger("mistake")){
                 game.getPrefs().putInteger("mistake", game.getRules().getMiss());
                 System.out.println("endgame screen : mistake registered");
+                System.out.println("old[0] == game.getRules().getHmsScore()[0]"+old[0]+" "+game.getRules().getHmsScore()[0]);
+
+                System.out.println("old[1] == game.getRules().getHmsScore()[1]"+old[1]+" "+game.getRules().getHmsScore()[1]);
+
+                System.out.println("old[2] == game.getRules().getHmsScore()[2]"+old[2]+" "+game.getRules().getHmsScore()[2]);
                 flag = true;
             }
             System.out.println("nothing registered");
         } else {
             newHighscore.setVisible(false);
+            System.out.println("game.getRules().getMiss()>game.getPrefs().getInteger(mistake)"+game.getRules().getMiss()+" "+game.getPrefs().getInteger("mistake"));
+            System.out.println("old[0] == game.getRules().getHmsScore()[0]"+old[0]+" "+game.getRules().getHmsScore()[0]);
+
+            System.out.println("old[1] == game.getRules().getHmsScore()[1]"+old[1]+" "+game.getRules().getHmsScore()[1]);
+
+            System.out.println("old[2] == game.getRules().getHmsScore()[2]"+old[2]+" "+game.getRules().getHmsScore()[2]);
             System.out.println("nothing registered");
             System.out.println(game.getRules().getHmsScore()[0]*3600+game.getRules().getHmsScore()[1]*60+game.getRules().getHmsScore()[2]);
             System.out.println("endgamescreen : "+addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
@@ -149,7 +160,7 @@ public class EndGameScreen implements Screen {
         camera.update();
 
         stateTime += Gdx.graphics.getDeltaTime();
-        if (stateTime-secTime>= 0.2 && transparence<1){
+        if (stateTime-secTime>= 0.2 && transparence<1 && newHighscore.isVisible()){
             transparence += 0.1;
             newHighscore.setColor(1,1,1,transparence);
             System.out.println(stateTime);
@@ -198,7 +209,7 @@ public class EndGameScreen implements Screen {
                 if (old[2] < recent[2]){
                     System.out.println("Endgamescreen: more score in recent");
                     return true;
-                }else if (old[2]>=recent[2]) {
+                }else if (old[2]>recent[2]) {
                     System.out.println("Endgamescreen: old "+old[2]);
                     System.out.println("Endgamescreen: recent "+recent[2]);
                     System.out.println("Endgamescreen: more score in old");
@@ -207,7 +218,7 @@ public class EndGameScreen implements Screen {
             }
         }
         System.out.println("Endgamescreen: i might have a problem to know if a higher score was found");
-        return true;
+        return false;
     }
 
     @Override

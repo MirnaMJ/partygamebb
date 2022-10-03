@@ -64,6 +64,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     private Sound boomSound;
     private boolean vibe;
     private int miss = 0;
+    private float tLastShake=0;
 
 
     public GameScreen(Bombdife game){
@@ -205,16 +206,17 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             chrono.updateTimer();
             timerL.setText(chrono.display());
             tickingSound.play(game.getPrefs().getFloat("volumeS"));
+            System.out.println("au carr x+y+z: " + (Math.pow(Gdx.input.getAccelerometerX(),2)+Math.pow(Gdx.input.getAccelerometerY(),2)+Math.pow(Gdx.input.getAccelerometerZ(),2)));
 
         }
 
         //gameloop
         //if (prompt.checkShake()){
-            if ((Math.abs(Gdx.input.getAccelerometerX())>10 && Math.abs(Gdx.input.getAccelerometerX())<20) ||
-                    ((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5) ||
-                            (Gdx.input.getAccelerometerZ()>14 && Gdx.input.getAccelerometerZ()<20))){
+            if ((Math.pow(Gdx.input.getAccelerometerX(),2)+Math.pow(Gdx.input.getAccelerometerY(),2)+Math.pow(Gdx.input.getAccelerometerZ(),2)) > 180){
 
-                /**/
+                /*(Math.abs(Gdx.input.getAccelerometerX())>10 && Math.abs(Gdx.input.getAccelerometerX())<20) ||
+                    ((Gdx.input.getAccelerometerZ()>-20 && Gdx.input.getAccelerometerZ()<-5) ||
+                            (Gdx.input.getAccelerometerZ()>14 && Gdx.input.getAccelerometerZ()<20))*/
 
 
                 /*Gdx.input.getAccelerometerZ()>11 || Gdx.input.getAccelerometerZ()<-10.5
@@ -225,15 +227,20 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
                 //inputFlag = 2;
                 //prompt.updateState(inputFlag);
 
-                if (prompt.getId().equals("shake")) {
-                    prompt.updateState();
-                }else {
-                    System.out.println("shouldnt shake");
-                    System.out.println("z: " + Gdx.input.getAccelerometerZ());
-                    System.out.println("abovz: " + (Gdx.input.getAccelerometerZ() > 11.65 || Gdx.input.getAccelerometerZ() < -10.5));
-                    miss+=1;
-                    if (vibe) {
-                        Gdx.input.vibrate(150);
+                if ((stateTime-tLastShake >= 0.3)) {
+                    tLastShake = stateTime;
+                    if (prompt.getId().equals("shake")) {
+                        prompt.updateState();
+                    } else {
+                        System.out.println("shouldnt shake");
+                        System.out.println("x: " + Gdx.input.getAccelerometerX());
+                        System.out.println("z: " + Gdx.input.getAccelerometerZ());
+                        System.out.println("abovz: " + (((Gdx.input.getAccelerometerZ() > -20 && Gdx.input.getAccelerometerZ() < -6.1) ||
+                                (Gdx.input.getAccelerometerZ() > 14 && Gdx.input.getAccelerometerZ() < 20))));
+                        miss += 1;
+                        if (vibe) {
+                            Gdx.input.vibrate(150);
+                        }
                     }
                 }
 
