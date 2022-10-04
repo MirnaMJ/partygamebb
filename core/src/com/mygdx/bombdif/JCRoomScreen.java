@@ -38,8 +38,6 @@ public class JCRoomScreen implements Screen {
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
-
-
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
         language = game.getLanguage();
         customUi = new CustomUiBdf(game);
@@ -74,9 +72,8 @@ public class JCRoomScreen implements Screen {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
                 buttonSound.play(game.getPrefs().getFloat("volumeS"));
-                //game.setScreen(new CreateRoomScreen(game));
-                //dispose();
-                System.out.println("wont do that until im ready to touch bluetooth");
+                game.setScreen(new CreateRoomScreen(game));
+                dispose();
             }
         });
         table.add(create).padTop(100);//size of button via size of cell.padLeft(pad).padRight(pad)

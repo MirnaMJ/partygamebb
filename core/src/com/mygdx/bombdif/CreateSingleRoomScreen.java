@@ -494,25 +494,7 @@ public class CreateSingleRoomScreen implements Screen {
     private void fixedChrono(boolean fixed){
         if (fixed){
             tintChrono(0.7f,0.6f,0.5f,1);
-            setDisabledChrono(true);//set to true onc3 im done twsting the chrono change
-            /*
-
-
-
-
-
-            REALLLY THINK ABOUT CHANGING IT BACK PLEASE
-
-
-
-
-
-
-
-
-
-
-             */
+            setDisabledChrono(true);
         }else{
             tintChrono(2,2,2,1);
             setDisabledChrono(false);

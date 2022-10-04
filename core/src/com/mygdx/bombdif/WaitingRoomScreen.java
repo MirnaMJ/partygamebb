@@ -2,6 +2,7 @@ package com.mygdx.bombdif;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -29,12 +30,14 @@ public class WaitingRoomScreen implements Screen {
     private Table header;
     private Label labelWait;
     private TextButton start;
+    private Sound buttonSound;
 
     public WaitingRoomScreen(final Bombdife game){
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
 
         language = game.getLanguage();
 
@@ -44,7 +47,7 @@ public class WaitingRoomScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         table = new Table();
-        //table.debug();
+        table.debug();
         stage.addActor(table);
         table.setFillParent(true);
 
@@ -53,11 +56,12 @@ public class WaitingRoomScreen implements Screen {
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new CreateRoomScreen(game));
                 dispose();
             }
         });
-        table.add(back).top().left().expand();
+        table.add(back).top().left();//.expand()
 
         table.row();
         labelRoomName = customUi.createLabel(40,language.getRoom()+game.getRules().getRoomName());
@@ -94,6 +98,7 @@ public class WaitingRoomScreen implements Screen {
         start.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
                 game.setScreen(new GameScreen(game));
                 dispose();
             }
@@ -138,6 +143,7 @@ public class WaitingRoomScreen implements Screen {
 
     @Override
     public void dispose() {
+        buttonSound.dispose();
         stage.dispose();
     }
 }

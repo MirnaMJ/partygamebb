@@ -53,7 +53,7 @@ public class Language {
                 tongue = "Langue";
                 diff = "Liste des taches";
                 selecTime = "Durée du décompte";
-                tap = "Tappe";
+                tap = "Tape";
                 swipe = "Glisse";
                 shake = "Secoue";
                 single = "Un joueur";
@@ -65,7 +65,7 @@ public class Language {
                 room = "Salle ";
                 start = "COMMENCER";
                 instrucSwipe = "GLISSE TON DOIGT SUR\n L'ECRAN";
-                instrucTap = "TAPPE L'ECRAN ";
+                instrucTap = "TAPE L'ECRAN ";
                 instrucShake = "SECOUE LE TELEPHONE!";
                 nTimes = " FOIS!";
                 newHighscore = "Nouveau Records!!!";

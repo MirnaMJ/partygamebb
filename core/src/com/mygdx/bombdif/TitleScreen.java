@@ -84,7 +84,7 @@ public class TitleScreen implements Screen {
             }
         });
         multi.setColor(0.1f, 0.1f,0.15f,1);
-        multi.setDisabled(true);
+        //multi.setDisabled(true);
         multi.getLabel().setColor(0.4f,0.4f, 0.4f,1);
         table.add(multi).padTop(pad);//.fill().padLeft(pad).padRight(pad)
 
