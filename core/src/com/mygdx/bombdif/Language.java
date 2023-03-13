@@ -14,6 +14,7 @@ public class Language {
     private String tap;
     private String swipe;
     private String single;
+    private String pointTo;
     private String multi;
     private String shake;
     private String enterName;
@@ -25,6 +26,15 @@ public class Language {
     private String instrucSwipe;
     private String instrucTap;
     private String instrucShake;
+    private String instrucCompass;
+    private String n;
+    private String sud;
+    private String ea;
+    private String o;
+    private String no;
+    private String ne;
+    private String se;
+    private String so;
     private String nTimes;
     private String newHighscore;
     private String highscore;
@@ -56,7 +66,8 @@ public class Language {
                 tap = "Tape";
                 swipe = "Glisse";
                 shake = "Secoue";
-                single = "Un joueur";
+                pointTo = "Direction";
+                single = "Jouer";
                 multi = "Multijoueurs";
                 enterName = "Entrer le nom de la salle à rejoindre";
                 chooseName = "Entrer le nom de \nla salle à créer";
@@ -67,6 +78,15 @@ public class Language {
                 instrucSwipe = "GLISSE TON DOIGT SUR\n L'ECRAN";
                 instrucTap = "TAPE L'ECRAN ";
                 instrucShake = "SECOUE LE TELEPHONE!";
+                instrucCompass = "POINTE ";
+                n = "LE NORD";
+                sud = "LE SUD";
+                ea = "L'EST";
+                o = "L'OUEST";
+                no = "AU NORD OUEST";
+                ne = "AU NORD EST";
+                se = "AU SUD EST";
+                so = "AU SUD OUEST";
                 nTimes = " FOIS!";
                 newHighscore = "Nouveau Records!!!";
                 highscore = "Record actuel";
@@ -85,7 +105,8 @@ public class Language {
                 tap = "Tap";
                 swipe = "Swipe";
                 shake = "Shake";
-                single = "Singleplayer";
+                pointTo = "Point to";
+                single = "Play";
                 multi = "Multiplayer";
                 enterName = "Enter the room's name to join:";
                 chooseName = "   Name the room \nyou are going to host";
@@ -97,6 +118,15 @@ public class Language {
                 instrucTap = "TAP THE SCREEN ";
                 instrucShake = "SHAKE YOUR PHONE!";
                 nTimes = " TIMES!";
+                instrucCompass = "POINT ";
+                n = "NORTH";
+                sud = "SOUTH";
+                ea = "EAST";
+                o = "WEST";
+                no = "NORTH WEST";
+                ne = "NORTH EAST";
+                se = "SOUTH EAST";
+                so = "SOUTH WEST";
                 newHighscore = "New HighScore!!";
                 highscore = "Current High score";
                 miss = "Mistakes";
@@ -114,6 +144,7 @@ public class Language {
                 tap = "";
                 swipe = "";
                 shake = "";
+                pointTo = "";
                 single = "";
                 multi = "";
                 enterName = "";
@@ -126,6 +157,15 @@ public class Language {
                 instrucTap = "";
                 instrucShake = "";
                 nTimes = "";
+                instrucCompass = "";
+                n = "";
+                sud = "";
+                ea = "";
+                o = "";
+                no = "";
+                ne = "";
+                se = "";
+                so = "";
                 newHighscore = "";
                 highscore = "";
                 miss = "";
@@ -185,6 +225,42 @@ public class Language {
         return instrucTap;
     }
 
+    public String getInstrucCompass(){
+        return instrucCompass;
+    }
+
+    public String getN() {
+        return n;
+    }
+
+    public String getNe() {
+        return ne;
+    }
+
+    public String getEa() {
+        return ea;
+    }
+
+    public String getSe() {
+        return se;
+    }
+
+    public String getSud() {
+        return sud;
+    }
+
+    public String getSo() {
+        return so;
+    }
+
+    public String getO() {
+        return o;
+    }
+
+    public String getNo() {
+        return no;
+    }
+
     public String getTap() {
         return tap;
     }
@@ -195,6 +271,10 @@ public class Language {
 
     public String getShake() {
         return shake;
+    }
+
+    public String getPointTo(){
+        return pointTo;
     }
 
     public String getJoin() {

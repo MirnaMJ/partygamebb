@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.scenes.scene2d.Actor;
 
 public class FloatingText extends Actor {
-    private final String text;
+    private String text;//it was final im nosure what it change to takenit away
     private final long animationDuration;
     private BitmapFont fontw;
     private float deltaX;
@@ -18,6 +18,8 @@ public class FloatingText extends Actor {
     private float ogTrans;
     private float ogPos;
     private boolean flag=true;
+    private float green;
+    private float blue;
 
     public FloatingText(BitmapFont fontw, String text, long animationDuration) {
         this.fontw = fontw;
@@ -39,10 +41,10 @@ public class FloatingText extends Actor {
 
             // The text will be fading.
             if (elapsed == 0) {
-                fontw.setColor(getColor().r, getColor().g, getColor().b, ogTrans);
+                fontw.setColor(getColor().r, green, blue, ogTrans);
                 fontw.draw(batch, text, getX() , ogPos);
             }else {
-                fontw.setColor(getColor().r, getColor().g, getColor().b, parentAlpha * (1 - elapsed / animationDuration));
+                fontw.setColor(getColor().r, green, blue, parentAlpha * (1 - elapsed / animationDuration));
                 fontw.draw(batch, text, getX() + deltaX * elapsed / 1000f, getY() + deltaY * elapsed / 1000f);
             }
 
@@ -58,6 +60,18 @@ public class FloatingText extends Actor {
 
     public void setDeltaY(float deltaY) {
         this.deltaY = deltaY;
+    }
+
+    public void setAs(String mbus){
+        if (mbus.equals("bonus")){
+            green=getColor().g;
+            blue=getColor().b;
+            this.text = "+1s";
+        }else{
+            green=0;
+            blue=0;
+            this.text = "-2s";
+        }
     }
 
     public void animate() {

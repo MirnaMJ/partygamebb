@@ -31,4 +31,9 @@ public class Shakey extends Challenge{
         return id;
     }
 
+    @Override
+    public float[] currentZone(float azimuth) {
+        return new float[0];
+    }
+
 }

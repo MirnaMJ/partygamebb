@@ -52,7 +52,7 @@ public class Chronom {
     }
 
     public boolean ended(){
-        if (sec_total == 0){
+        if (sec_total <= 0){
             counting = false;
             return true;
         }else {

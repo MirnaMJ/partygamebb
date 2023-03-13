@@ -45,4 +45,9 @@ public class Tapey extends Challenge{
         return id;
     }
 
+    @Override
+    public float[] currentZone(float azimuth) {
+        return new float[0];
+    }
+
 }

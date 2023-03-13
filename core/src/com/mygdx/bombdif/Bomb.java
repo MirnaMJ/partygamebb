@@ -65,6 +65,10 @@ public class Bomb extends Actor {
         return iBomb;
     }
 
+    public void setBombColor(float r, float g, float b){
+        iBomb.setColor(r,g,b,1f);
+    }
+
 
     public Animation<TextureRegion> getTickingbomb() {
         return tickingbomb;

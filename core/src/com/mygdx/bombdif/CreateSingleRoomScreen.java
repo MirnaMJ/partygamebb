@@ -61,6 +61,8 @@ public class CreateSingleRoomScreen implements Screen {
     private CheckBox checkSwipe;
     private Label lShake;
     private CheckBox checkShake;
+    private Label lCompass;
+    private CheckBox checkCompass;
 
     private CheckBox[] trackingTasks;
     private String[] challenges;
@@ -334,6 +336,20 @@ public class CreateSingleRoomScreen implements Screen {
             }
         });
 
+        lCompass = cbutton.createLabel(40,language.getPointTo());
+        checkCompass = cbutton.createCBox("","pointTo");
+        checkCompass.setOrigin(checkCompass.getWidth()/2, checkCompass.getHeight()/2);
+        checkCompass.setTransform(true);
+        checkCompass.setScale(0.5f);
+        checkCompass.setChecked(true);
+        checkCompass.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //action omtin omtin
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
+            }
+        });
+
         innerTable = new Table();
         //innerTable.debug();
 
@@ -363,12 +379,15 @@ public class CreateSingleRoomScreen implements Screen {
         innerTable.row();
         innerTable.add(lShake);
         innerTable.add(checkShake).colspan(4);
+        innerTable.row();
+        innerTable.add(lCompass);
+        innerTable.add(checkCompass).colspan(4);
 
         table.row();
         table.add(innerTable).colspan(3);
 
 
-        trackingTasks = new CheckBox[]{checkTap, checkSwipe, checkShake};
+        trackingTasks = new CheckBox[]{checkTap, checkSwipe, checkShake,checkCompass};
         //trackingTasks[] = ;
         //scrollPane.setScrollingDisabled(true, true);
         //scrollPane.setScrollY(-100);

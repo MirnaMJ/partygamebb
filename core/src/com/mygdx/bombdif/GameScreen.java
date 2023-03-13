@@ -52,6 +52,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     private Chronom chrono;
     //private boolean display=true;
     private Image bombI;
+    private float[] bombColor;
     private Label inst;
     private Challenge prompt;
     private ImageButton inputSpace;
@@ -121,15 +122,6 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
 
         //inputSpace = customUi.createButton("back");
-        /*
-        *no task =0
-        * tap=1
-        * swipe=2
-        * shake=3
-        *
-
-
-         */
         //inputSpace.addListener(new InputListener(){});
 
 
@@ -149,6 +141,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         long animationDuration = TimeUnit.SECONDS.toMillis(1);
         BitmapFont fontw = game.getFont40();
         bonus = new FloatingText(fontw,"+1s",animationDuration);
+        bonus.setAs("bonus");
         //bonus.setPosition(10, 10);
 
         bonus.setDeltaY(400);
@@ -202,11 +195,13 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
         //animation bomb, count seconds
         if (!(chrono.ended()) && stateTime-secTime >= 1){
-            bomb.tick();
+            if (!(prompt.getId().equals("compass"))){
+                bomb.tick();
+            }
             chrono.updateTimer();
             timerL.setText(chrono.display());
             tickingSound.play(game.getPrefs().getFloat("volumeS"));
-            System.out.println("au carr x+y+z: " + (Math.pow(Gdx.input.getAccelerometerX(),2)+Math.pow(Gdx.input.getAccelerometerY(),2)+Math.pow(Gdx.input.getAccelerometerZ(),2)));
+            //System.out.println("amcrn: x ptc, y ro, z azmut: " + Gdx.input.getPitch() +" "+Gdx.input.getRoll()+" "+ Gdx.input.getAzimuth());
 
         }
 
@@ -237,7 +232,12 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
                         System.out.println("z: " + Gdx.input.getAccelerometerZ());
                         System.out.println("abovz: " + (((Gdx.input.getAccelerometerZ() > -20 && Gdx.input.getAccelerometerZ() < -6.1) ||
                                 (Gdx.input.getAccelerometerZ() > 14 && Gdx.input.getAccelerometerZ() < 20))));
+
+                        bonus.setAs("malus");
+                        bonus.animate();
                         miss += 1;
+                        chrono.updateTimer();
+                        chrono.updateTimer();//take a second out when mistake made
                         if (vibe) {
                             Gdx.input.vibrate(150);
                         }
@@ -249,6 +249,16 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         //}
 
 
+        if (prompt.getId().equals("compass")){
+            prompt.updateState();
+            if (!(prompt.isDone())){
+                //ask compassey for sum?
+                bombColor = prompt.currentZone(Gdx.input.getAzimuth());
+                bomb.setBombColor(bombColor[0],bombColor[1],bombColor[2]);
+                //System.out.println("hy is nothing happening on color bomb "+ bombColor[1]);
+            }
+        }
+
 
         stage.draw();
 
@@ -258,13 +268,19 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             if (vibe) {
                 Gdx.input.vibrate(250);
             }
-            game.getRules().setScore((int)(stateTime-game.getRules().getCountdown()));
+
+            if(stateTime-game.getRules().getCountdown()<0){
+                game.getRules().setScore(0);
+            }else{
+                game.getRules().setScore((int)(stateTime-game.getRules().getCountdown()));
+            }
             game.getRules().setMiss(miss);
             game.setScreen(new TransitionGameEndScreen(game,prompt.getInstruc()));
             dispose();
         }else{
             if (prompt.isDone()){
                 //if (!bonus.isAnimated()) {
+                bonus.setAs("bonus");
                 bonus.animate();
                 //tockingSound.play(game.getPrefs().getFloat("volumeS"));
                 //}
@@ -293,7 +309,10 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             prompt = new Swipey(language);
         }else if (challenges[choice].equals("shake")) {
             prompt = new Shakey(language);
-        }else{
+        }else if (challenges[choice].equals("pointTo")){
+            prompt = new Compassey(language);
+        }
+        else{
             prompt = new Tapey(language);
             System.out.println("gamescreen: nothing was selected");
 
@@ -313,7 +332,11 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             prompt.updateState();
         }else{
             System.out.println("shouldnt tap");
+            bonus.setAs("malus");
+            bonus.animate();
             miss+=1;
+            chrono.updateTimer();
+            chrono.updateTimer();//take a second out when mistake made
             if (vibe) {
                 Gdx.input.vibrate(150);
             }
@@ -332,7 +355,11 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             prompt.updateState();
         }else{
             System.out.println("dont swipe");
+            bonus.setAs("malus");
+            bonus.animate();
             miss+=1;
+            chrono.updateTimer();
+            chrono.updateTimer();//take a second out when mistake made
             if (vibe) {
                 Gdx.input.vibrate(150);
             }
