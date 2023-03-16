@@ -66,6 +66,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     private boolean vibe;
     private int miss = 0;
     private float tLastShake=0;
+    private float az;
 
 
     public GameScreen(Bombdife game){
@@ -252,8 +253,8 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         if (prompt.getId().equals("compass")){
             prompt.updateState();
             if (!(prompt.isDone())){
-                //ask compassey for sum?
-                bombColor = prompt.currentZone(Gdx.input.getAzimuth());
+                az = Gdx.input.getAzimuth();
+                bombColor = prompt.currentZone(az);
                 bomb.setBombColor(bombColor[0],bombColor[1],bombColor[2]);
                 //System.out.println("hy is nothing happening on color bomb "+ bombColor[1]);
             }

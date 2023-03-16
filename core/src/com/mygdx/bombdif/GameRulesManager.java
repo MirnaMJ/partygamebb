@@ -10,7 +10,7 @@ public class GameRulesManager {
     private String testPlayer;
     private int hour = 0;
     private int min = 0;
-    private int sec = 10;
+    private int sec = 20;
     private int countdown;
     private String[] challenge;
     private int score;

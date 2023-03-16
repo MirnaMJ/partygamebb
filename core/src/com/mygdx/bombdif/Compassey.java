@@ -26,7 +26,7 @@ public class Compassey extends Challenge{
         instruction = new String[2];
         instruction[0] = lang.getInstrucCompass();
         instruction[1] = direction[pick];
-        zones = new int[][]{{-22, 22}, {22, 67}, {67, 112}, {112, 157}, {-157, 157}, {-157, -112}, {-112, -67}, {-67, -22}};
+        zones = new int[][]{{-22, 22}, {22, 67}, {67, 112}, {112, 158}, {-158, 158}, {-158, -112}, {-112, -67}, {-67, -22}};
         colors = new float[][]{{0f,1f,0f},{1f,1f,0f},{1f,0.6f,0.4f},{1f,0.4f,0.4f}};//{green,yellow,orange,red}
         id = "compass";
     }
@@ -40,7 +40,7 @@ public class Compassey extends Challenge{
     public void updateState() {
         switch(pick) {
             case 0:
-                if ((Gdx.input.getAzimuth() <= Math.abs(22))) {
+                if ((Math.abs(Gdx.input.getAzimuth()) <= 22)) {
                     this.setDone();
                 }
                 break;
@@ -94,72 +94,28 @@ public class Compassey extends Challenge{
         int i =0;
         curZone = 99;
         while(curZone==99){
-            System.out.println("compassey: zones(i) ["+zones[i][0]+","+zones[i][1]+"] "+i);
-            System.out.println("compassey: azimuth: "+az);
-            if (Math.abs(az)>=157 ){
+            //System.out.println("compassey: zones(i) ["+zones[i][0]+","+zones[i][1]+"] "+i);
+            //System.out.println("compassey: azimuth: "+az);
+            if (Math.abs(az)>=158 ){
                 curZone = 4;
-                System.out.println("compassey: is it south? "+az);
-            }else if (zones[i][0]<=az && az<=zones[i][1]){
+                //System.out.println("compassey: is it south? "+az);
+            }else if (zones[i][0]<=az && az<=zones[i][1] && i!=4){
                 curZone = i;
-                System.out.println("compassey: current zone "+i+" "+zones[i][0]+" , "+zones[i][1]+" zones[i]");
-            }else{
-                System.out.println("compassey: couldnt find the curre zone gosh "+az);
+                //System.out.println("compassey: current zone "+i+" "+zones[i][0]+" , "+zones[i][1]+" zones[i]");
             }
             i++;
-        }
+        }//System.out.println("compassey: current zone "+curZone+" ,pick "+pick);
         for (int j=0;j< colors.length;j++){
-            if (pick+j+1 > 7){
-                switch (pick){
-                    case 5:
-                        if (curZone == 0) {
-                            return colors[2];//dont search logic im hardcoding here, do a table on what color with colum goal and line curZone if you want to check
-                        }
-                    case 6:
-                        if (pick+j+1 == 8 && curZone == 0){
-                            return colors[1];
-                        }
-                        if (pick+j+1 == 9 && curZone == 1){
-                            return colors[2];
-                        }
-                    case 7:
-                        if (pick+j+1 == 8 && curZone == 0){
-                            return colors[0];
-                        }
-                        if (pick+j+1 == 9 && curZone == 1){
-                            return colors[2];
-                        }
-                        if (pick+j+1 == 10 && curZone == 2){
-                            return colors[2];
-                        }
-                }
-            }else if (pick-(j+1) < 0){
-                switch (pick){
-                    case 0:
-                        if (pick-(j+1) == -3 && curZone == 5){
-                            return colors[2];
-                        }
-                        if (pick-(j+1) == -2 && curZone == 6){
-                            return colors[1];
-                        }
-                        if (pick-(j+1) == -1 && curZone == 7){
-                            return colors[0];
-                        }
-                    case 1:
-                        if (pick-(j+1) == -2 && curZone == 6){
-                            return colors[2];
-                        }
-                        if (pick-(j+1) == -1 && curZone == 7){
-                            return colors[1];
-                        }
-                    case 2:
-                        if (pick-(j+1) == -1 && curZone == 7){
-                            return colors[2];
-                        }
-                }
-            }else if (curZone == pick+j+1 || curZone == pick-(j+1)){
+            if (curZone == pick+j+1 || curZone == pick-(j+1)){
+                return colors[j];
+            }
+            if (pick+j+1 > 7 && pick+j+1-8 == curZone){
+                return colors[j];
+            }
+            if (pick-(j+1) < 0 && pick-(j+1)+8 == curZone){
                 return colors[j];
             }
         }
-        return new float[]{0f,0f,0f};
+        return new float[]{0.2f,0.8f,1f};
     }
 }

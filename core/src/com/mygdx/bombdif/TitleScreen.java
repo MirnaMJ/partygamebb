@@ -98,7 +98,7 @@ public class TitleScreen implements Screen {
                 dispose();
             }
         });
-        table.add(option).padTop(pad).padBottom(20);//.fill().padLeft(pad).padRight(pad)
+        table.add(option).padTop(pad).padBottom(80);//.fill().padLeft(pad).padRight(pad)
         Gdx.graphics.setContinuousRendering(false);
         //Gdx.graphics.requestRendering();
 
