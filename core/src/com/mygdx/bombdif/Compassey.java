@@ -27,7 +27,7 @@ public class Compassey extends Challenge{
         instruction[0] = lang.getInstrucCompass();
         instruction[1] = direction[pick];
         zones = new int[][]{{-22, 22}, {22, 67}, {67, 112}, {112, 158}, {-158, 158}, {-158, -112}, {-112, -67}, {-67, -22}};
-        colors = new float[][]{{0f,1f,0f},{1f,1f,0f},{1f,0.6f,0.4f},{1f,0.4f,0.4f}};//{green,yellow,orange,red}
+        colors = new float[][]{{0f,1f,0f},{0.6f,0.6f,0f},{0.6f,0.4f,0.1f},{0.4f,0.1f,0.1f}};//{green,yellow,orange,red}
         id = "compass";
     }
 
