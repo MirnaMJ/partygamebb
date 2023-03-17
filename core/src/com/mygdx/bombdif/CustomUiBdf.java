@@ -11,6 +11,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.CheckBox;
 import com.badlogic.gdx.scenes.scene2d.ui.Dialog;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.ScrollPane;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Slider;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
@@ -51,6 +52,8 @@ public class CustomUiBdf {
     private CheckBox.CheckBoxStyle checkBoxStyle;
 
     //private Dialog dialog;
+    private ScrollPane scrollPane;
+    private ScrollPane.ScrollPaneStyle scrollPaneStyle;
 
     private Skin skin;
     private TextureAtlas bombdife;
@@ -94,9 +97,9 @@ public class CustomUiBdf {
         ButtonStyle1.up = skin.newDrawable("Retry_button");
         ButtonStyle1.down = skin.newDrawable("Retry_button",tintColor1);
 
-        ButtonStyle2 = new ImageButton.ImageButtonStyle();
+        /*ButtonStyle2 = new ImageButton.ImageButtonStyle();
         ButtonStyle2.up = skin.getDrawable("Pixel_transparent");
-        ButtonStyle2.down = skin.getDrawable("Pixel_transparent");
+        ButtonStyle2.down = skin.getDrawable("Pixel_transparent");*/
 
         tintColor2 = new Color(0.21f, 0.41f, 0.41f, 1f);
         ButtonStyle3 = new ImageButton.ImageButtonStyle();
@@ -143,6 +146,9 @@ public class CustomUiBdf {
         windowStyle.background = skin.getDrawable("Text_background");
         windowStyle.titleFont = game.getFont20();
         windowStyle.stageBackground = skin.getDrawable("Text_background");*/
+
+        scrollPaneStyle = new ScrollPane.ScrollPaneStyle();
+        scrollPaneStyle.vScrollKnob = skin.getDrawable("Cursor_text");
     }
 
 
@@ -246,5 +252,10 @@ public class CustomUiBdf {
         dialog = new Dialog("",windowStyle);
         return dialog;
     }*/
+
+    public ScrollPane createScrollPane(Table actor){
+        scrollPane = new ScrollPane(actor,scrollPaneStyle);
+        return scrollPane;
+    }
 
 }

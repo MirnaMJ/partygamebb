@@ -58,7 +58,7 @@ public class TitleScreen implements Screen {
         table.setFillParent(true);
 
         table.row();
-        table.add(imageBomb).expand().fill();//.padTop(10).padLeft(50).padRight(30).padBottom(10)
+        table.add(imageBomb).expand().fill().padTop(10);//.padLeft(50).padRight(30).padBottom(10)
 
         table.row();
         int pad = 50;

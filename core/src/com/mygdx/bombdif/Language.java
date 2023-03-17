@@ -57,17 +57,17 @@ public class Language {
     private void translate(String language){
         switch (language) {
             case "Français":
-                create = "Créer une salle";
+                create = "JOUER";
                 join = "Rejoindre une salle";
                 option = "Option";
                 tongue = "Langue";
                 diff = "Liste des taches";
                 selecTime = "Durée du décompte";
                 tap = "Tape";
-                swipe = "Glisse";
+                swipe = "Balaye";
                 shake = "Secoue";
                 pointTo = "Direction";
-                single = "Jouer";
+                single = "Créer une partie";
                 multi = "Multijoueurs";
                 enterName = "Entrer le nom de la salle à rejoindre";
                 chooseName = "Entrer le nom de \nla salle à créer";
@@ -75,18 +75,18 @@ public class Language {
                 waiting = "En attente de...";
                 room = "Salle ";
                 start = "COMMENCER";
-                instrucSwipe = "GLISSE TON DOIGT SUR\n L'ECRAN";
-                instrucTap = "TAPE L'ECRAN ";
+                instrucSwipe = "BALAYE L'ECRAN!";
+                instrucTap = "TAPE ";
                 instrucShake = "SECOUE LE TELEPHONE!";
                 instrucCompass = "POINTE ";
-                n = "LE NORD";
-                sud = "LE SUD";
-                ea = "L'EST";
-                o = "L'OUEST";
-                no = "AU NORD OUEST";
-                ne = "AU NORD EST";
-                se = "AU SUD EST";
-                so = "AU SUD OUEST";
+                n = "AU NORD!";
+                sud = "AU SUD!";
+                ea = "AU EST!";
+                o = "AU OUEST";
+                no = "AU NORD OUEST!";
+                ne = "AU NORD EST!";
+                se = "AU SUD EST!";
+                so = "AU SUD OUEST!";
                 nTimes = " FOIS!";
                 newHighscore = "Nouveau Records!!!";
                 highscore = "Record actuel";
@@ -96,7 +96,7 @@ public class Language {
                 vibe = "Vibreur";
                 break;
             case "English":
-                create = "Create room";
+                create = "PLAY";
                 join = "Join room";
                 option = "Option";
                 tongue = "Language";
@@ -106,7 +106,7 @@ public class Language {
                 swipe = "Swipe";
                 shake = "Shake";
                 pointTo = "Point to";
-                single = "Play";
+                single = "Create a game";
                 multi = "Multiplayer";
                 enterName = "Enter the room's name to join:";
                 chooseName = "   Name the room \nyou are going to host";

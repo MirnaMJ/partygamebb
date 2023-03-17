@@ -106,8 +106,10 @@ public class CreateSingleRoomScreen implements Screen {
         outerTable = new Table();
         //outerTable.debug();
 
-        scrollPane = new ScrollPane(table);
-        //scrollPane.setScrollingDisabled(true, false);
+
+        scrollPane = cbutton.createScrollPane(table);
+        scrollPane.setScrollbarsVisible(true);
+        scrollPane.setScrollingDisabled(true,false);
 
         stage.addActor(outerTable);
         outerTable.setFillParent(true);
@@ -130,11 +132,6 @@ public class CreateSingleRoomScreen implements Screen {
         outerTable.add(back).top().left();;//.left().colspan(3).expand()
         outerTable.row();
         outerTable.add(scrollPane).expand();
-
-
-        table.row();
-        label2 = cbutton.createLabel(40,language.getDiff());
-        table.add(label2).colspan(2).expand();//.colspan(3).expand();
 
         lDuration = cbutton.createLabel(20,language.getSelecTime());
 
@@ -357,20 +354,25 @@ public class CreateSingleRoomScreen implements Screen {
         innerTable.row();
         innerTable.add(lDuration).colspan(5).padTop(40);//.colspan(5)
         innerTable.row();
-        innerTable.add(plusHour).colspan(2);//.colspan(2)
+        /*innerTable.add(plusHour).colspan(2);//.colspan(2)
         innerTable.add(plusMin);
         innerTable.add(plusSec).colspan(2);
-        innerTable.row();
+        innerTable.row();*/
         innerTable.add(hourTF);
         innerTable.add(sep0);
         innerTable.add(minTF);
         innerTable.add(sep1);
         innerTable.add(secTF);
         innerTable.row();
-        innerTable.add(minusHour).colspan(2);
+        label2 = cbutton.createLabel(40,language.getDiff());
+        innerTable.add(label2).colspan(4).padTop(60);//.colspan(3).expand();
+
+
+        innerTable.row();
+        /*innerTable.add(minusHour).colspan(2);
         innerTable.add(minusMin);
         innerTable.add(minusSec).colspan(2);
-        innerTable.row();
+        innerTable.row();*/
         innerTable.add(lTap);//.colspan(2)
         innerTable.add(checkTap).colspan(4);//
         innerTable.row();
