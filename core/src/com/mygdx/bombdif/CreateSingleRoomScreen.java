@@ -1,6 +1,7 @@
 package com.mygdx.bombdif;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -324,28 +325,43 @@ public class CreateSingleRoomScreen implements Screen {
         checkShake.setOrigin(checkShake.getWidth()/2, checkShake.getHeight()/2);
         checkShake.setTransform(true);
         checkShake.setScale(0.5f);
-        checkShake.setChecked(true);
-        checkShake.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                //action omtin omtin
-                buttonSound.play(game.getPrefs().getFloat("volumeS"));
-            }
-        });
+        if (false){//Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)
+            checkShake.setChecked(true);
+            checkShake.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    //action omtin omtin
+                    buttonSound.play(game.getPrefs().getFloat("volumeS"));
+                }
+            });
+        }else{
+            checkShake.setChecked(false);
+            lShake.setColor(0.3f,0.3f,0.3f,1f);
+            checkShake.getImage().setColor(0.4f,0.4f,0.4f,1f);
+            checkShake.setDisabled(true);
+        }
 
         lCompass = cbutton.createLabel(40,language.getPointTo());
         checkCompass = cbutton.createCBox("","pointTo");
         checkCompass.setOrigin(checkCompass.getWidth()/2, checkCompass.getHeight()/2);
         checkCompass.setTransform(true);
         checkCompass.setScale(0.5f);
-        checkCompass.setChecked(true);
-        checkCompass.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                //action omtin omtin
-                buttonSound.play(game.getPrefs().getFloat("volumeS"));
-            }
-        });
+        if (false){//Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass
+            checkCompass.setChecked(true);
+            checkCompass.addListener(new ChangeListener() {
+                @Override
+                public void changed(ChangeEvent event, Actor actor) {
+                    //action omtin omtin
+                    buttonSound.play(game.getPrefs().getFloat("volumeS"));
+                }
+            });
+        }else{
+            checkCompass.setChecked(false);
+            lCompass.setColor(0.3f,0.3f,0.3f,1f);
+            checkCompass.getImage().setColor(0.4f,0.4f,0.4f,1f);
+            checkCompass.setDisabled(true);
+        }
+
 
         innerTable = new Table();
         //innerTable.debug();

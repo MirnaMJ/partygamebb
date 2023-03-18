@@ -162,7 +162,7 @@ public class GameRulesManager {
             }
             System.out.println(this.challenge[0]);
         }else {
-            this.challenge = new String[]{"tap", "swipe", "shake"};
+            this.challenge = new String[]{"tap", "swipe"};
         }
     }
 

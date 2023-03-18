@@ -68,7 +68,8 @@ public class OptionScreen implements Screen {
         //table.debug();
         outerTable = new Table();
         //outerTable.debug();
-        scrollPane = new ScrollPane(table);
+        scrollPane = cbutton.createScrollPane(table);
+        scrollPane.setScrollbarsVisible(true);
 
         stage.addActor(outerTable);
         outerTable.setFillParent(true);

@@ -50,9 +50,6 @@ public class TitleScreen implements Screen {
 
         cbutton = new CustomUiBdf(game);
 
-        if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass)){
-            System.out.println("titlescreen: compass okay");
-        }
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);
