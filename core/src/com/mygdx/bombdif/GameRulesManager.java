@@ -36,6 +36,7 @@ public class GameRulesManager {
             prefs.putInteger("highscoreNumSEC", 0);
             prefs.putInteger("mistake", 0);
             prefs.putFloat("volumeS", 0.7f);
+            prefs.putFloat("volumeBS", 0.7f);
             prefs.putFloat("volumeM", 0.3f);
             prefs.putBoolean("vibe", true);
 

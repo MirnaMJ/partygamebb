@@ -40,6 +40,7 @@ public class Language {
     private String highscore;
     private String miss;
     private String sound;
+    private String bombSound = "Explosion";;
     private String music;
     private String vibe;
 
@@ -321,6 +322,10 @@ public class Language {
 
     public String getSound() {
         return sound;
+    }
+
+    public String getBombSound() {
+        return bombSound;
     }
 
     public String getMusic() {

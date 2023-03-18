@@ -32,15 +32,19 @@ public class OptionScreen implements Screen {
     private Label label2;
     private Label label3;
     private Label label4;
+    private Label label5;
     private Stage stage;
     private Table table;
     private ImageButton back;
     private TextButton lingua;
     private Slider volume;
+    private Slider volumeBomb;
     private Slider volumeM;
     private CheckBox vibration;
     private Sound buttonSound;
+    private Sound boomSound;
     private float vol;
+    private float volBomb;
     private float volM;
     private TextButton hScore;
 
@@ -53,6 +57,7 @@ public class OptionScreen implements Screen {
         language = game.getLanguage();
 
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
+        boomSound = Gdx.audio.newSound(Gdx.files.internal("atari_boom6.wav"));
 
         cbutton = new CustomUiBdf(game);
 
@@ -135,6 +140,18 @@ public class OptionScreen implements Screen {
 
         table.row();
 
+        label5 = cbutton.createLabel(40, language.getBombSound());
+        table.add(label5).colspan(2);//.expand().top()
+
+        table.row();
+        volumeBomb = cbutton.createSlider(0,1,0.1f,false,"bombCursor");
+        table.add(volumeBomb).fill(true,false).padLeft(30f).padRight(20f).colspan(2);//.padBottom(70)
+        volumeBomb.setValue(game.getPrefs().getFloat("volumeBS"));
+        volBomb = volumeBomb.getValue();
+
+
+        table.row();
+
         label3 = cbutton.createLabel(40, language.getMusic());
         table.add(label3).colspan(2);//.top()
 
@@ -202,6 +219,11 @@ public class OptionScreen implements Screen {
             buttonSound.play(vol,1f,0f);//([0,1],[0.5,1,2],[-1,1]
         }
 
+        if (volBomb != volumeBomb.getValue()){
+            volBomb = volumeBomb.getValue();
+            boomSound.play(volBomb,1f,0f);//([0,1],[0.5,1,2],[-1,1]
+        }
+
         if (volM != volumeM.getValue()){
             volM = volumeM.getValue();
             game.menuMusic.setVolume(volM);
@@ -236,10 +258,12 @@ public class OptionScreen implements Screen {
     @Override
     public void dispose() {
         game.getPrefs().putFloat("volumeS", vol);
+        game.getPrefs().putFloat("volumeBS", volBomb);
         game.getPrefs().putFloat("volumeM", volM);
         game.getPrefs().putBoolean("vibe", vibration.isChecked());
         game.getPrefs().flush();
         stage.dispose();
         buttonSound.dispose();
+        boomSound.dispose();
     }
 }

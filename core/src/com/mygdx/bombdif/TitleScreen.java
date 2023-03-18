@@ -1,6 +1,7 @@
 package com.mygdx.bombdif;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -48,6 +49,10 @@ public class TitleScreen implements Screen {
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
 
         cbutton = new CustomUiBdf(game);
+
+        if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass)){
+            System.out.println("titlescreen: compass okay");
+        }
 
         stage = new Stage();
         Gdx.input.setInputProcessor(stage);

@@ -265,7 +265,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
         if (chrono.ended()){
             System.out.println("gamescreen: chrono rallonge de: "+(int)(stateTime-game.getRules().getCountdown())+"s");
-            boomSound.play(game.getPrefs().getFloat("volumeS"));
+            boomSound.play(game.getPrefs().getFloat("volumeBS"));
             if (vibe) {
                 Gdx.input.vibrate(250);
             }
