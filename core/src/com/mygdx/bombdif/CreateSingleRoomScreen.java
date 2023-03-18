@@ -325,7 +325,7 @@ public class CreateSingleRoomScreen implements Screen {
         checkShake.setOrigin(checkShake.getWidth()/2, checkShake.getHeight()/2);
         checkShake.setTransform(true);
         checkShake.setScale(0.5f);
-        if (false){//Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)
+        if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)){//
             checkShake.setChecked(true);
             checkShake.addListener(new ChangeListener() {
                 @Override
@@ -346,7 +346,7 @@ public class CreateSingleRoomScreen implements Screen {
         checkCompass.setOrigin(checkCompass.getWidth()/2, checkCompass.getHeight()/2);
         checkCompass.setTransform(true);
         checkCompass.setScale(0.5f);
-        if (false){//Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass
+        if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass)){//
             checkCompass.setChecked(true);
             checkCompass.addListener(new ChangeListener() {
                 @Override
