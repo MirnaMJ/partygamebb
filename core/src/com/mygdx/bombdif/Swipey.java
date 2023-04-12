@@ -33,6 +33,11 @@ public class Swipey extends Challenge{
         this.setDone();
     }
 
+    @Override
+    public int getPick() {
+        return 99;
+    }
+
     public String getId() {
         return id;
     }

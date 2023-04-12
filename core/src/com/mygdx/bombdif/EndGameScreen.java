@@ -12,13 +12,16 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class EndGameScreen implements Screen {
 
     final Bombdife game;
     private OrthographicCamera camera;
-    private FitViewport viewport;
+    private ExtendViewport viewport;
     private Language language;
     private CustomUiBdf customUi;
     private Stage stage;
@@ -40,8 +43,8 @@ public class EndGameScreen implements Screen {
 
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        camera.setToOrtho(false, 480, 800);//Gdx.graphics.getWidth()Gdx.graphics.getHeight()
+        viewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight,camera);//
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
         recordSound = Gdx.audio.newSound(Gdx.files.internal("tick2.wav"));
 

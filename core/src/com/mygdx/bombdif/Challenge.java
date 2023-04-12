@@ -20,7 +20,7 @@ public abstract class Challenge {
     public abstract String getInstruc();
     public abstract void updateState();
 
-
+    public abstract int getPick();
     public abstract String getId();
 
     public abstract float[] currentZone(float azimuth);

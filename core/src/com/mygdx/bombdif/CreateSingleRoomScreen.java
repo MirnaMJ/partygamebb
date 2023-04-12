@@ -19,13 +19,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class CreateSingleRoomScreen implements Screen {
 
     final Bombdife game;
     private OrthographicCamera camera;
-    private FitViewport viewport;
+    private StretchViewport viewport;
     private Language language;
     private CustomUiBdf cbutton;
     private ImageButton back;
@@ -73,8 +77,8 @@ public class CreateSingleRoomScreen implements Screen {
     public CreateSingleRoomScreen(final Bombdife game){
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        camera.setToOrtho(false, 480,800);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight()
+        viewport = new StretchViewport(camera.viewportWidth, camera.viewportHeight,camera);//
 
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
         language = game.getLanguage();
@@ -134,7 +138,7 @@ public class CreateSingleRoomScreen implements Screen {
         outerTable.row();
         outerTable.add(scrollPane).expand();
 
-        lDuration = cbutton.createLabel(20,language.getSelecTime());
+        lDuration = cbutton.createLabel(30,language.getSelecTime());
 
         plusHour = cbutton.createButton("arrow_r");
         plusHour.setTransform(true);
@@ -372,7 +376,7 @@ public class CreateSingleRoomScreen implements Screen {
         innerTable.row();
         /*innerTable.add(plusHour).colspan(2);//.colspan(2)
         innerTable.add(plusMin);
-        innerTable.add(plusSec).colspan(2);
+        innerTable.add(plusSec).colspan(2).padRight(50);
         innerTable.row();*/
         innerTable.add(hourTF);
         innerTable.add(sep0);
@@ -389,8 +393,8 @@ public class CreateSingleRoomScreen implements Screen {
         innerTable.add(minusMin);
         innerTable.add(minusSec).colspan(2);
         innerTable.row();*/
-        innerTable.add(lTap);//.colspan(2)
-        innerTable.add(checkTap).colspan(4);//
+        innerTable.add(lTap).colspan(2);//
+        innerTable.add(checkTap).colspan(3);//
         innerTable.row();
         innerTable.add(lSwipe);
         innerTable.add(checkSwipe).colspan(4);

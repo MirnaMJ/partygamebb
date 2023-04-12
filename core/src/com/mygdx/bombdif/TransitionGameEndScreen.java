@@ -12,6 +12,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 
 public class TransitionGameEndScreen  implements Screen {
@@ -19,7 +20,7 @@ public class TransitionGameEndScreen  implements Screen {
     private Stage stage0;
     private Table table0;
     private OrthographicCamera camera;
-    private FitViewport viewport;
+    private ExtendViewport viewport;
     private Language language;
     private CustomUiBdf customUi;
     private Bomb bomb;
@@ -43,8 +44,8 @@ public class TransitionGameEndScreen  implements Screen {
 
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        camera.setToOrtho(false, 480,800);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight()
+        viewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
 
         language = game.getLanguage();
 
@@ -54,7 +55,7 @@ public class TransitionGameEndScreen  implements Screen {
         pe = new ParticleEffect();
         pe.load(Gdx.files.internal("spread1.p"),Gdx.files.internal(""));
         pe.getEmitters().first().setPosition(Gdx.graphics.getWidth()/2,0);//Gdx.graphics.getHeight()/2
-        pe.scaleEffect(10);
+        pe.scaleEffect(25);
         pe.start();
 
         stage0 = new Stage();

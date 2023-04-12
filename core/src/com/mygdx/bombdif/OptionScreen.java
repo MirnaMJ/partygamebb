@@ -17,14 +17,17 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class OptionScreen implements Screen {
     final Bombdife game;
     private Table outerTable;
     private ScrollPane scrollPane;
     private OrthographicCamera camera;
-    private FitViewport viewport;
+    private ScreenViewport viewport;
     private Language language;
     private CustomUiBdf cbutton;
     private Label label0;
@@ -52,7 +55,7 @@ public class OptionScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        viewport = new ScreenViewport( camera);//camera.viewportWidth, camera.viewportHeight,
 
         language = game.getLanguage();
 
@@ -92,14 +95,14 @@ public class OptionScreen implements Screen {
         });
         back.setTransform(true);
         back.setOrigin(back.getWidth()/2, back.getHeight()/2);
-        back.setScale(0.6f,0.6f);
+        back.setScale(0.7f,0.7f);
         outerTable.add(back).top().left();//.expand().right().pad(10);//size of button via size of cell
 
         outerTable.row();
         outerTable.add(scrollPane).expand().fill();
 
         table.row();
-        label0 = cbutton.createLabel(40,language.getTongue());
+        label0 = cbutton.createLabel(80,language.getTongue());
         table.add(label0).colspan(2);//.top().padLeft(80).expand().padTop(20).left()
 
         table.row();
@@ -124,7 +127,7 @@ public class OptionScreen implements Screen {
 
         table.row();
 
-        label1 = cbutton.createLabel(40,language.getVolume());
+        label1 = cbutton.createLabel(80,language.getVolume());
         table.add(label1).expand().top().left().colspan(2).padLeft(10);//
 
         table.row();
@@ -167,7 +170,7 @@ public class OptionScreen implements Screen {
         vibration.setChecked(game.getPrefs().getBoolean("vibe"));
         vibration.setOrigin(vibration.getWidth()/2, vibration.getHeight()/2);
         vibration.setTransform(true);
-        vibration.setScale(0.6f);
+        vibration.setScale(0.8f);
         vibration.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -180,7 +183,7 @@ public class OptionScreen implements Screen {
         });
         table.add(vibration);//.left().expand()
 
-        label4 = cbutton.createLabel(20,language.getVibe());
+        label4 = cbutton.createLabel(40,language.getVibe());
         table.add(label4).expand().left();
 
         table.row();
@@ -194,8 +197,8 @@ public class OptionScreen implements Screen {
                 dispose();
             }
         });
-        table.add(hScore).padBottom(60);//.pad(10).bottom();.top().expand().colspan(2)
-        //scrollPane.setScrollingDisabled(true, false);
+        table.add(hScore).padBottom(Gdx.graphics.getHeight()/4).expand().fill().colspan(2).padLeft(Gdx.graphics.getWidth()/64).padRight(Gdx.graphics.getWidth()/4);//.pad(10).bottom();.top().colspan(2)Gdx.graphics.getWidth()/64
+        scrollPane.setScrollingDisabled(true, false);
         //Gdx.graphics.setContinuousRendering(true);
     }
 

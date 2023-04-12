@@ -27,6 +27,11 @@ public class Shakey extends Challenge{
     }
 
     @Override
+    public int getPick() {
+        return 99;
+    }
+
+    @Override
     public String getId() {
         return id;
     }

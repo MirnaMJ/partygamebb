@@ -36,6 +36,8 @@ public class CustomUiBdf {
     private Label.LabelStyle labelStyle0;
     private Label.LabelStyle labelStyle1;
     private Label.LabelStyle labelStyle2;
+    private Label.LabelStyle labelStyle3;
+    private Label.LabelStyle labelStyle4;
 
     private TextField.TextFieldStyle textFStyle0;
     private TextField.TextFieldStyle textFStyle1;
@@ -77,13 +79,13 @@ public class CustomUiBdf {
         skin.addRegions(bombdife);
 
         textButtonStyle0 = new TextButton.TextButtonStyle();
-        textButtonStyle0.font = game.getFont20();
+        textButtonStyle0.font = game.getFont30();
         textButtonStyle0.up = skin.newDrawable("Button");
         tintColor0 = new Color(0.4f, 0.4f, 0.4f, 1f);
         textButtonStyle0.down = skin.newDrawable("Button",tintColor0);
 
         textButtonStyle1 = new TextButton.TextButtonStyle();
-        textButtonStyle1.font = game.getFont20();
+        textButtonStyle1.font = game.getFont30();
         textButtonStyle1.up = skin.getDrawable("Button");
         textButtonStyle1.down = skin.getDrawable("Button");
 
@@ -108,14 +110,18 @@ public class CustomUiBdf {
 
 
         labelStyle0  = new Label.LabelStyle();
-        labelStyle0.font = game.getFont20();
+        labelStyle0.font = game.getFont30();
         labelStyle1 = new Label.LabelStyle();
         labelStyle1.font = game.getFont40();
         labelStyle2 = new Label.LabelStyle();
         labelStyle2.font = game.getFont80();
+        labelStyle3 = new Label.LabelStyle();
+        labelStyle3.font = game.getFont100();
+        labelStyle4 = new Label.LabelStyle();
+        labelStyle4.font = game.getFont100();
 
         textFStyle0 = new TextField.TextFieldStyle();
-        textFStyle0.font = game.getFont20();
+        textFStyle0.font = game.getFont40();
         textFStyle0.fontColor = new Color(0.81f, 0.81f, 0.81f, 1f);
         textFStyle0.background = skin.getDrawable("Text_background");
         textFStyle0.cursor =  skin.getDrawable("Cursor_text");
@@ -139,7 +145,7 @@ public class CustomUiBdf {
         checkBoxStyle = new CheckBox.CheckBoxStyle();
         checkBoxStyle.checkboxOff = skin.getDrawable("Box");
         checkBoxStyle.checkboxOn = skin.getDrawable("Checked_box");
-        checkBoxStyle.font = game.getFont20();
+        checkBoxStyle.font = game.getFont40();
         checkBoxStyle.fontColor = new Color(0.81f, 0.81f, 0.81f, 1f);
 
         /*windowStyle = new Window.WindowStyle();
@@ -191,7 +197,7 @@ public class CustomUiBdf {
 
     public Label createLabel(int font, String txt){
         switch(font){
-            case 20:
+            case 30:
                 label = new Label(txt,labelStyle0);
                 return label;
             case 40:
@@ -200,8 +206,11 @@ public class CustomUiBdf {
             case 80:
                 label = new Label(txt,labelStyle2);
                 return label;
+            case 100:
+                label = new Label(txt,labelStyle3);
+                return label;
             default:
-                label = new Label(txt,labelStyle0);
+                label = new Label(txt,labelStyle4);
                 break;
 
         }

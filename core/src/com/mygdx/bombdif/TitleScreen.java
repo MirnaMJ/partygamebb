@@ -14,12 +14,15 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 public class TitleScreen implements Screen {
     final Bombdife game;
     private OrthographicCamera camera;
-    private FitViewport viewport;
+    private FillViewport viewport;
     private Language language;
     private CustomUiBdf cbutton;
     private Stage stage;
@@ -35,16 +38,17 @@ public class TitleScreen implements Screen {
     public TitleScreen(final Bombdife game) {
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        camera.setToOrtho(false, 480, 800);//Gdx.graphics.getWidth()Gdx.graphics.getHeight()
         //camera.zoom= 0.55f;
         //camera.lookAt(camera.position.add(-48,15,0));
-        viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        viewport = new FillViewport(camera.viewportWidth, camera.viewportHeight, camera);//
 
         language = game.getLanguage();
 
         bombdif = new TextureAtlas(Gdx.files.internal("bombdif.atlas"));
         bomb = bombdif.findRegion("Logo");
         imageBomb = new Image(bomb);
+        //imageBomb.setSize(1000,1000);imageBomb.getWidth()*camera.viewportWidth,imageBomb.getHeight()*camera.viewportHeight
 
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
 
@@ -60,7 +64,7 @@ public class TitleScreen implements Screen {
         table.setFillParent(true);
 
         table.row();
-        table.add(imageBomb).expand().fill().padTop(10);//.padLeft(50).padRight(30).padBottom(10)
+        table.add(imageBomb).expand().padTop(Gdx.graphics.getHeight()/8).padBottom(Gdx.graphics.getHeight()/32).padLeft(Gdx.graphics.getWidth()/16).padRight(Gdx.graphics.getWidth()/16).fill();//.fill()
 
         table.row();
         int pad = 50;
@@ -73,7 +77,7 @@ public class TitleScreen implements Screen {
                 dispose();
             }
         });
-        table.add(single).padTop(100);//size of button via size of cell.padLeft(pad).padRight(pad)
+        table.add(single).padTop(80).fill().padLeft(Gdx.graphics.getWidth()/8).padRight(Gdx.graphics.getWidth()/8);//size of button via size of cell.padLeft(pad).padRight(pad)
 
         table.row();
         multi = cbutton.createTButton(language.getMulti(), "noback");

@@ -90,6 +90,10 @@ public class Compassey extends Challenge{
         return id;
     }
 
+    public int getPick() {
+        return pick;
+    }
+
     public float[] currentZone(float az) {
         int i =0;
         curZone = 99;

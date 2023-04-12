@@ -15,7 +15,10 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextField;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
+import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 public class ScoreRecordScreen implements Screen {
 
@@ -24,7 +27,7 @@ public class ScoreRecordScreen implements Screen {
     private TextButton deleteScore;
     private TextField score;
     private OrthographicCamera camera;
-    private FitViewport viewport;
+    private ExtendViewport viewport;
     private Language language;
     private Sound buttonSound;
     private CustomUiBdf cbutton;
@@ -42,7 +45,7 @@ public class ScoreRecordScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new FitViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        viewport = new ExtendViewport(480, 800, camera);//
 
         language = game.getLanguage();
 
@@ -70,10 +73,10 @@ public class ScoreRecordScreen implements Screen {
                 dispose();
             }
         });
-        //back.setTransform(true);
-        //back.setOrigin(back.getWidth()/2, back.getHeight()/2);
-        //back.setScale(0.6f,0.6f);
-        table.add(back).top().left();//.expand().right().pad(10);//size of button via size of cell
+        back.setTransform(true);
+        back.setOrigin(back.getWidth()/2, back.getHeight()/2);
+        back.setScale(0.6f,0.6f);
+        table.add(back).top().left().pad(10);//.expand().right();//size of button via size of cell
 
         table.row();
         label0 = cbutton.createLabel(40, language.getHighscore());
@@ -93,7 +96,7 @@ public class ScoreRecordScreen implements Screen {
         table.add(label1).expand().top();
 
         table.row();
-        deleteScore = cbutton.createTButton("Fetus deletus","noback");
+        deleteScore = cbutton.createTButton("Foetus deletus","noback");
         deleteScore.setColor(0.8f,0.05f,0.1f,1);
         deleteScore.getLabel().setColor(0.8f,0.05f,0.1f,1);
         deleteScore.addListener(new ChangeListener() {
