@@ -85,7 +85,7 @@ public class TransitionGameEndScreen  implements Screen {
         table1.row();
         table1.row();
         back = customUi.createButton( "arrow_r");
-        back.setTransform(true);
+        //back.setTransform(true);
         back.setOrigin(back.getWidth()/2, back.getHeight()/2);
         table1.add(back).top().left().expand();
 

@@ -13,7 +13,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.badlogic.gdx.utils.viewport.ExtendViewport;
 import com.badlogic.gdx.utils.viewport.FillViewport;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
@@ -22,7 +24,7 @@ import com.badlogic.gdx.utils.viewport.StretchViewport;
 public class TitleScreen implements Screen {
     final Bombdife game;
     private OrthographicCamera camera;
-    private FillViewport viewport;
+    private ExtendViewport viewport;
     private Language language;
     private CustomUiBdf cbutton;
     private Stage stage;
@@ -38,10 +40,10 @@ public class TitleScreen implements Screen {
     public TitleScreen(final Bombdife game) {
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 480, 800);//Gdx.graphics.getWidth()Gdx.graphics.getHeight()
+        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());//Gdx.graphics.getWidth()Gdx.graphics.getHeight()
         //camera.zoom= 0.55f;
         //camera.lookAt(camera.position.add(-48,15,0));
-        viewport = new FillViewport(camera.viewportWidth, camera.viewportHeight, camera);//
+        viewport = new ExtendViewport(480, 800, camera);//FillViewport(camera.viewportWidth, camera.viewportHeight, camera)
 
         language = game.getLanguage();
 
@@ -59,15 +61,17 @@ public class TitleScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
 
         table = new Table();
+
         //table.debug();
         stage.addActor(table);
         table.setFillParent(true);
 
         table.row();
-        table.add(imageBomb).expand().padTop(Gdx.graphics.getHeight()/8).padBottom(Gdx.graphics.getHeight()/32).padLeft(Gdx.graphics.getWidth()/16).padRight(Gdx.graphics.getWidth()/16).fill();//.fill()
+        table.add(imageBomb).expand().fill().padBottom(Gdx.graphics.getHeight()/16).padLeft(Gdx.graphics.getWidth()/32).padRight(Gdx.graphics.getWidth()/32).padTop(Gdx.graphics.getHeight()/16);//.fill()
+        imageBomb.setScaling(Scaling.fit);
+
 
         table.row();
-        int pad = 50;
         single = cbutton.createTButton(language.getSingle(), "noback");
         single.addListener(new ChangeListener() {
             @Override
@@ -77,7 +81,7 @@ public class TitleScreen implements Screen {
                 dispose();
             }
         });
-        table.add(single).padTop(80).fill().padLeft(Gdx.graphics.getWidth()/8).padRight(Gdx.graphics.getWidth()/8);//size of button via size of cell.padLeft(pad).padRight(pad)
+        table.add(single).padBottom(Gdx.graphics.getHeight()/64);//.top().expand()size of button via size of cell.padLeft(pad).padRight(pad).fill().padLeft(Gdx.graphics.getWidth()/8).padRight(Gdx.graphics.getWidth()/8)
 
         table.row();
         multi = cbutton.createTButton(language.getMulti(), "noback");
@@ -104,9 +108,11 @@ public class TitleScreen implements Screen {
                 dispose();
             }
         });
-        table.add(option).padTop(pad).padBottom(80);//.fill().padLeft(pad).padRight(pad)
+        table.add(option).top().expand();//.expand().fill().padLeft(pad).padRight(pad).padTop(50).padBottom(80)
         Gdx.graphics.setContinuousRendering(false);
         //Gdx.graphics.requestRendering();
+        System.out.println(Math.floor(30*(Gdx.graphics.getDensity()/1.5)));//
+        System.out.println(Gdx.graphics.getDensity());
 
     }
 

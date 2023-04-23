@@ -43,6 +43,7 @@ public class Language {
     private String bombSound = "Explosion";;
     private String music;
     private String vibe;
+    private String assistColor;
 
     public Language(String lang) {
         language = lang;
@@ -68,7 +69,7 @@ public class Language {
                 swipe = "Balaye";
                 shake = "Secoue";
                 pointTo = "Direction";
-                single = "Créer une partie";
+                single = "    Créer une partie    ";
                 multi = "Multijoueurs";
                 enterName = "Entrer le nom de la salle à rejoindre";
                 chooseName = "Entrer le nom de \nla salle à créer";
@@ -90,11 +91,12 @@ public class Language {
                 so = "AU SUD OUEST!";
                 nTimes = " FOIS!";
                 newHighscore = "Nouveau Records!!!";
-                highscore = "Record actuel";
+                highscore = "  Record actuel  ";
                 miss = "Erreurs";
                 sound = "Son";
                 music = "Musique";
                 vibe = "Vibreur";
+                assistColor = "Indice direction couleur";
                 break;
             case "English":
                 create = "PLAY";
@@ -107,7 +109,7 @@ public class Language {
                 swipe = "Swipe";
                 shake = "Shake";
                 pointTo = "Point to";
-                single = "Create a game";
+                single = "    Create a game    ";
                 multi = "Multiplayer";
                 enterName = "Enter the room's name to join:";
                 chooseName = "   Name the room \nyou are going to host";
@@ -129,11 +131,12 @@ public class Language {
                 se = "SOUTH EAST";
                 so = "SOUTH WEST";
                 newHighscore = "New HighScore!!";
-                highscore = "Current High score";
+                highscore = "    Current High score    ";
                 miss = "Mistakes";
                 sound = "Sound";
                 music = "Music";
                 vibe = "Vibrator";
+                assistColor = "Color indicator for direction";
                 break;
             default:
                 create = "";
@@ -173,6 +176,7 @@ public class Language {
                 sound = "";
                 music = "";
                 vibe = "";
+                assistColor = "";
         }
     }
 
@@ -342,5 +346,9 @@ public class Language {
 
     public String getMiss() {
         return miss;
+    }
+
+    public String getAssistColor() {
+        return assistColor;
     }
 }

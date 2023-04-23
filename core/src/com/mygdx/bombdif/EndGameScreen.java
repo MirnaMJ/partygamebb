@@ -62,8 +62,8 @@ public class EndGameScreen implements Screen {
         //you latd for n cond, try not to ma it nativ wit a you lot and diplay tim it latd?
         table.row();
         back = customUi.createButton( "arrow_r");
-        back.setTransform(true);
-        back.setOrigin(back.getWidth()/2, back.getHeight()/2);
+        //back.setTransform(true);
+        //back.setOrigin(back.getWidth()/2, back.getHeight()/2);
         //back.setScale(0.6f,0.6f);
         back.addListener(new ChangeListener() {
             @Override

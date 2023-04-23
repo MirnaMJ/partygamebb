@@ -144,7 +144,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         //table.debug();
         table.row();
 
-        timerL = customUi.createLabel(100,chrono.display());
+        timerL = customUi.createLabel(80,chrono.display());
         table.add(timerL).top().padTop(50);//.expand().top().pad(20)
 
         table.row();
@@ -231,7 +231,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
         //animation bomb, count seconds
         if (!(chrono.ended()) && stateTime-secTime >= 1){
-            if (!(prompt.getId().equals("compass"))){
+            if (!(prompt.getId().equals("compass")) || !(game.getPrefs().getBoolean("colorHelp"))){
                 bomb.tick();
             }
             chrono.updateTimer();
@@ -287,7 +287,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
 
         if (prompt.getId().equals("compass")){
             prompt.updateState();
-            if (!(prompt.isDone())){
+            if (!(prompt.isDone()) && game.getPrefs().getBoolean("colorHelp")){
                 az = Gdx.input.getAzimuth();
                 bombColor = prompt.currentZone(az);
                 bomb.setBombColor(bombColor[0],bombColor[1],bombColor[2]);

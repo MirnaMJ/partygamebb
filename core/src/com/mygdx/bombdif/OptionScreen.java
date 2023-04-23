@@ -36,6 +36,7 @@ public class OptionScreen implements Screen {
     private Label label3;
     private Label label4;
     private Label label5;
+    private Label labelCol;
     private Stage stage;
     private Table table;
     private ImageButton back;
@@ -44,6 +45,7 @@ public class OptionScreen implements Screen {
     private Slider volumeBomb;
     private Slider volumeM;
     private CheckBox vibration;
+    private CheckBox assistColor;
     private Sound buttonSound;
     private Sound boomSound;
     private float vol;
@@ -55,7 +57,7 @@ public class OptionScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new ScreenViewport( camera);//camera.viewportWidth, camera.viewportHeight,
+        viewport = new ScreenViewport( camera);//camera.viewportWidth, camera.viewportHeight,ExtendViewport(480, 800, camera)
 
         language = game.getLanguage();
 
@@ -93,7 +95,7 @@ public class OptionScreen implements Screen {
                 dispose();
             }
         });
-        back.setTransform(true);
+        //back.setTransform(true);
         back.setOrigin(back.getWidth()/2, back.getHeight()/2);
         back.setScale(0.7f,0.7f);
         outerTable.add(back).top().left();//.expand().right().pad(10);//size of button via size of cell
@@ -166,11 +168,11 @@ public class OptionScreen implements Screen {
         volM = volumeM.getValue();
 
         table.row();
-        vibration = cbutton.createCBox("", "viby");
+        vibration = cbutton.createCBox(language.getVibe(), "viby");
         vibration.setChecked(game.getPrefs().getBoolean("vibe"));
-        vibration.setOrigin(vibration.getWidth()/2, vibration.getHeight()/2);
-        vibration.setTransform(true);
-        vibration.setScale(0.8f);
+        //vibration.setOrigin(vibration.getWidth()/2, vibration.getHeight()/2);
+        //vibration.setTransform(true);
+        //vibration.setScale(0.8f);
         vibration.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -181,10 +183,22 @@ public class OptionScreen implements Screen {
                 }
             }
         });
-        table.add(vibration);//.left().expand()
+        table.add(vibration).left();//.expand()
 
         label4 = cbutton.createLabel(40,language.getVibe());
-        table.add(label4).expand().left();
+        //table.add(label4).expand().left();
+
+        table.row();
+        assistColor = cbutton.createCBox(language.getAssistColor(), "color");
+        assistColor.setChecked(game.getPrefs().getBoolean("colorHelp"));
+        assistColor.addListener(new ChangeListener() {
+            @Override
+            public void changed(ChangeEvent event, Actor actor) {
+                //action omtin omtin
+                buttonSound.play(game.getPrefs().getFloat("volumeS"));
+            }
+        });
+        table.add(assistColor).left().padBottom(60);
 
         table.row();
         hScore = cbutton.createTButton(language.getHighscore(), "noback");
@@ -197,9 +211,9 @@ public class OptionScreen implements Screen {
                 dispose();
             }
         });
-        table.add(hScore).padBottom(Gdx.graphics.getHeight()/4).expand().fill().colspan(2).padLeft(Gdx.graphics.getWidth()/64).padRight(Gdx.graphics.getWidth()/4);//.pad(10).bottom();.top().colspan(2)Gdx.graphics.getWidth()/64
+        table.add(hScore);//.pad(10).bottom();.top().colspan(2)Gdx.graphics.getWidth()/64
         scrollPane.setScrollingDisabled(true, false);
-        //Gdx.graphics.setContinuousRendering(true);
+        //Gdx.graphics.setContinuousRendering(true);.expand().fill().padBottom(Gdx.graphics.getHeight()/4).colspan(2).padLeft(Gdx.graphics.getWidth()/64).padRight(Gdx.graphics.getWidth()/4)
     }
 
     public void updateLabel(){
@@ -208,6 +222,8 @@ public class OptionScreen implements Screen {
         label2.setText(language.getSound());
         label3.setText(language.getMusic());
         label4.setText(language.getVibe());
+        vibration.getLabel().setText(language.getVibe());
+        assistColor.getLabel().setText(language.getAssistColor());
         hScore.setText(language.getHighscore());
     }
 
@@ -265,6 +281,7 @@ public class OptionScreen implements Screen {
         game.getPrefs().putFloat("volumeBS", volBomb);
         game.getPrefs().putFloat("volumeM", volM);
         game.getPrefs().putBoolean("vibe", vibration.isChecked());
+        game.getPrefs().putBoolean("colorHelp", assistColor.isChecked());
         game.getPrefs().flush();
         stage.dispose();
         buttonSound.dispose();

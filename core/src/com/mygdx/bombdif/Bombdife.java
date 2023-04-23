@@ -31,13 +31,13 @@ public class Bombdife extends Game {
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
 		//parameter.size = 20;
 		//font20 = generator.generateFont(parameter); // font size 15 pixels
-		parameter.size = 30;
+		parameter.size = (int)Math.floor(30*(Gdx.graphics.getDensity()/1.5));//(int)Math.floor(30*(Gdx.graphics.getDensity()/1.5))
 		font30 = generator.generateFont(parameter); // font size 15 pixels
 		parameter.size = 40;
 		font40 = generator.generateFont(parameter); // font size 40 pixels
-		parameter.size = 80;
+		parameter.size = (int)Math.floor(80*(Gdx.graphics.getDensity()/1.5));
 		font80 = generator.generateFont(parameter); // font size 80 pixels
-		parameter.size = 100;
+		parameter.size = (int)Math.floor(100*(Gdx.graphics.getDensity()/1.5));
 		font100 = generator.generateFont(parameter); // font size 100 pixels
 		prefs = Gdx.app.getPreferences("My Preferences");
         /*String name = prefs.getString("name", "No name stored");

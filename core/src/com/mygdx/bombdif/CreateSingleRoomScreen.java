@@ -29,7 +29,7 @@ public class CreateSingleRoomScreen implements Screen {
 
     final Bombdife game;
     private OrthographicCamera camera;
-    private StretchViewport viewport;
+    private ExtendViewport viewport;
     private Language language;
     private CustomUiBdf cbutton;
     private ImageButton back;
@@ -77,8 +77,8 @@ public class CreateSingleRoomScreen implements Screen {
     public CreateSingleRoomScreen(final Bombdife game){
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 480,800);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight()
-        viewport = new StretchViewport(camera.viewportWidth, camera.viewportHeight,camera);//
+        camera.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());//480, 800
+        viewport = new ExtendViewport(480, 800,camera);//
 
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
         language = game.getLanguage();
@@ -123,7 +123,7 @@ public class CreateSingleRoomScreen implements Screen {
 
         outerTable.row();
         back = cbutton.createButton( "arrow_r");
-        back.setTransform(true);
+        //back.setTransform(true);
         back.setOrigin(back.getWidth()/2, back.getHeight()/2);
         back.setScale(0.6f,0.6f);
         back.addListener(new ChangeListener() {

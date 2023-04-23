@@ -39,6 +39,7 @@ public class GameRulesManager {
             prefs.putFloat("volumeBS", 0.7f);
             prefs.putFloat("volumeM", 0.3f);
             prefs.putBoolean("vibe", true);
+            prefs.putBoolean("colorHelp", true);
 
         }else {
             System.out.println("amrulmanar: not creatin pref");
