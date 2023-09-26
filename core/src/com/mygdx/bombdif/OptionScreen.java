@@ -27,7 +27,7 @@ public class OptionScreen implements Screen {
     private Table outerTable;
     private ScrollPane scrollPane;
     private OrthographicCamera camera;
-    private ScreenViewport viewport;
+    private FitViewport viewport;
     private Language language;
     private CustomUiBdf cbutton;
     private Label label0;
@@ -56,8 +56,8 @@ public class OptionScreen implements Screen {
     public OptionScreen(final Bombdife game){
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-        viewport = new ScreenViewport( camera);//camera.viewportWidth, camera.viewportHeight,ExtendViewport(480, 800, camera)
+        camera.setToOrtho(false, 900, 1500);
+        viewport = new FitViewport( 900, 1500, camera);//camera.viewportWidth, camera.viewportHeight,ExtendViewport(480, 800, camera)
 
         language = game.getLanguage();
 
@@ -104,32 +104,32 @@ public class OptionScreen implements Screen {
         outerTable.add(scrollPane).expand().fill();
 
         table.row();
-        label0 = cbutton.createLabel(80,language.getTongue());
+        label0 = cbutton.createLabel(70,language.getTongue());
         table.add(label0).colspan(2);//.top().padLeft(80).expand().padTop(20).left()
 
         table.row();
 
-        lingua = cbutton.createTButton(language.getLanguage(), "back");
+        lingua = cbutton.createTButton(language.getLanguage(), "noback");
         lingua.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
-                if (language.getLanguage().equals("Français")) {
-                    language.setLanguage("English");
+                if (language.getLanguage().equals("  Français  ")) {
+                    language.setLanguage("  English  ");
                     updateLabel();
-                    game.getPrefs().putString("language","English");
-                }else if (language.getLanguage().equals("English")){
-                    language.setLanguage("Français");
+                    game.getPrefs().putString("language","  English  ");
+                }else if (language.getLanguage().equals("  English  ")){
+                    language.setLanguage("  Français  ");
                     updateLabel();
-                    game.getPrefs().putString("language","Français");
+                    game.getPrefs().putString("language","  Français  ");
                 }
                 buttonSound.play(game.getPrefs().getFloat("volumeS"));
             }
         });
-        table.add(lingua).padBottom(60).top().expand().colspan(2);//.pad(10).bottom();
+        table.add(lingua).padBottom(60).top().expand().colspan(2).fill(0.4f,0.6f);//.pad(10).bottom();
 
         table.row();
 
-        label1 = cbutton.createLabel(80,language.getVolume());
+        label1 = cbutton.createLabel(70,language.getVolume());
         table.add(label1).expand().top().left().colspan(2).padLeft(10);//
 
         table.row();
@@ -211,8 +211,9 @@ public class OptionScreen implements Screen {
                 dispose();
             }
         });
-        table.add(hScore);//.pad(10).bottom();.top().colspan(2)Gdx.graphics.getWidth()/64
+        table.add(hScore).padBottom(200).expand().fill(0.5f,0.4f);//.pad(10).bottom();.top().colspan(2)Gdx.graphics.getWidth()/64
         scrollPane.setScrollingDisabled(true, false);
+        game.getMyRequestHandler().showAds(true);
         //Gdx.graphics.setContinuousRendering(true);.expand().fill().padBottom(Gdx.graphics.getHeight()/4).colspan(2).padLeft(Gdx.graphics.getWidth()/64).padRight(Gdx.graphics.getWidth()/4)
     }
 

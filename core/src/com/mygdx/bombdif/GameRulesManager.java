@@ -20,6 +20,7 @@ public class GameRulesManager {
     private float volumeM;
     private boolean vibe;
     private int miss;
+    private boolean register_score;
 
     public GameRulesManager(Language lang, Preferences prefs){
         //prfs.putString("name", "Donald Duck");
@@ -51,7 +52,7 @@ public class GameRulesManager {
         volumeM = prefs.getFloat("volumeM");
         vibe = prefs.getBoolean("vibe");
         prefs.flush();
-        difficulty = lang.getInter();
+        //difficulty = lang.getInter();
         roomName = "";
         countdown = hour*3600+min*60+sec;
 
@@ -161,7 +162,7 @@ public class GameRulesManager {
                     j++;
                 }
             }
-            System.out.println(this.challenge[0]);
+            //System.out.println(this.challenge[0]);
         }else {
             this.challenge = new String[]{"tap", "swipe"};
         }
@@ -169,5 +170,13 @@ public class GameRulesManager {
 
     public void setMiss(int miss) {
         this.miss = miss;
+    }
+
+    public void setRegister_score(boolean register_score) {
+        this.register_score = register_score;
+    }
+
+    public boolean isRegister_score() {
+        return register_score;
     }
 }

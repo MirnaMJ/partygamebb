@@ -24,6 +24,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Stack;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.Window;
 import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
+import com.badlogic.gdx.utils.Scaling;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.badlogic.gdx.utils.Timer;
 import com.badlogic.gdx.utils.viewport.ExtendViewport;
@@ -86,8 +87,9 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
     public GameScreen(Bombdife game){
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, 480,800);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight()
-        viewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
+
+        camera.setToOrtho(false,540 , 960 );
+        viewport = new ExtendViewport(580 , 980, camera);
 
         language = game.getLanguage();
 
@@ -124,7 +126,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         //ta
         InputMultiplexer im = new InputMultiplexer();
         GestureDetector gd = new GestureDetector(this);
-        stage = new Stage();
+        stage = new Stage(viewport);
 
         im.addProcessor(gd);
         im.addProcessor(stage);
@@ -150,6 +152,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         table.row();
         bombI = bomb.getiBomb();
         table.add(bombI).expand().fill();//.padLeft(100).padRight(100)
+        bombI.setScaling(Scaling.fit);
 
         table.row();
         //SWText = customUi.createSWText(text);
@@ -174,11 +177,11 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         //table0.debug();
         table0.row();
         goal = customUi.createLabel(30,"pick : "+prompt.getPick());
-        table0.add(goal).top().left();
+        //table0.add(goal).top().left();
 
         table0.row();
-        curpos = customUi.createLabel(30,"I'm at "+dir+" = "+zone+", az="+Gdx.input.getAzimuth());
-        table0.add(curpos).top().left();
+        curpos = customUi.createLabel(30,"I'm at "+dir+" = "+zone);//+\", az="+Gdx.input.getAzimuth()
+        //table0.add(curpos).top().left();
 
         container = new Container(table0).fill().bottom().left();
         //container.add();
@@ -207,6 +210,8 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         //check if im at the next s3c
         secTime = 0;
         Gdx.graphics.setContinuousRendering(true);
+
+        game.getMyRequestHandler().showAds(false);
     }
 
     @Override
@@ -296,7 +301,7 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
             //debug compass
             checkComp();
             goal.setText("pick : "+prompt.getPick());
-            curpos.setText("I'm at "+dir+" = "+zone+", az="+az);
+            curpos.setText("I'm at "+dir+" = "+zone);//+", az="+az
             //debug comp
         }
 

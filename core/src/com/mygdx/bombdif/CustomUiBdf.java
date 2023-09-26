@@ -85,7 +85,7 @@ public class CustomUiBdf {
         textButtonStyle0.down = skin.newDrawable("Button",tintColor0);
 
         textButtonStyle1 = new TextButton.TextButtonStyle();
-        textButtonStyle1.font = game.getFont30();
+        textButtonStyle1.font = game.getFont20();
         textButtonStyle1.up = skin.getDrawable("Button");
         textButtonStyle1.down = skin.getDrawable("Button");
 
@@ -116,9 +116,9 @@ public class CustomUiBdf {
         labelStyle2 = new Label.LabelStyle();
         labelStyle2.font = game.getFont80();
         labelStyle3 = new Label.LabelStyle();
-        labelStyle3.font = game.getFont100();
-        labelStyle4 = new Label.LabelStyle();
-        labelStyle4.font = game.getFont100();
+        labelStyle3.font = game.getFont70();
+        //labelStyle4 = new Label.LabelStyle();
+        //labelStyle4.font = game.getFont100();
 
         textFStyle0 = new TextField.TextFieldStyle();
         textFStyle0.font = game.getFont40();
@@ -206,7 +206,7 @@ public class CustomUiBdf {
             case 80:
                 label = new Label(txt,labelStyle2);
                 return label;
-            case 100:
+            case 70:
                 label = new Label(txt,labelStyle3);
                 return label;
             default:

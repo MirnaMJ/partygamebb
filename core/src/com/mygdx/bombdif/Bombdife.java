@@ -14,35 +14,45 @@ import com.badlogic.gdx.utils.ScreenUtils;
 public class Bombdife extends Game {
 	private SpriteBatch batch;
 	private FreeTypeFontGenerator generator;
-	//private BitmapFont font20;
+	private BitmapFont font20;
 	private BitmapFont font30;
 	private BitmapFont font40;
+	private BitmapFont font70;
 	private BitmapFont font80;
-	private BitmapFont font100;
+	//private BitmapFont font100;
 	private Language language;
 	public Music menuMusic;
 	private GameRulesManager rules;
 	private Preferences prefs;
+	private ActivityRequestHandler myRequestHandler;
+
+	public Bombdife(ActivityRequestHandler handler) {
+		myRequestHandler = handler;
+	}
 	
 	@Override
 	public void create () {
 		batch = new SpriteBatch();
 		generator = new FreeTypeFontGenerator(Gdx.files.internal("riffic.bold.ttf"));
 		FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-		//parameter.size = 20;
-		//font20 = generator.generateFont(parameter); // font size 15 pixels
-		parameter.size = (int)Math.floor(30*(Gdx.graphics.getDensity()/1.5));//(int)Math.floor(30*(Gdx.graphics.getDensity()/1.5))
+		parameter.size = 20;
+		font20 = generator.generateFont(parameter); // font size 15 pixels
+		parameter.size = 30;//(int)Math.floor(30*(Gdx.graphics.getDensity()/1.5))
 		font30 = generator.generateFont(parameter); // font size 15 pixels
 		parameter.size = 40;
 		font40 = generator.generateFont(parameter); // font size 40 pixels
-		parameter.size = (int)Math.floor(80*(Gdx.graphics.getDensity()/1.5));
+
+		parameter.size = 70;
+		font70 = generator.generateFont(parameter); // font size 80 pixels
+
+		parameter.size = 80;
 		font80 = generator.generateFont(parameter); // font size 80 pixels
-		parameter.size = (int)Math.floor(100*(Gdx.graphics.getDensity()/1.5));
-		font100 = generator.generateFont(parameter); // font size 100 pixels
+		//parameter.size = (int)Math.floor(100*(Gdx.graphics.getDensity()/1.5));
+		//font100 = generator.generateFont(parameter); // font size 100 pixels
 		prefs = Gdx.app.getPreferences("My Preferences");
         /*String name = prefs.getString("name", "No name stored");
         prefs.putBoolean("soundOn", true);*/
-		language = new Language(prefs.getString("language","English"));//Français
+		language = new Language(prefs.getString("language","  English  "));//Français
 		rules = new GameRulesManager(language,prefs);
 		menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menu_chill.wav"));
 		menuMusic.setLooping(true);
@@ -69,9 +79,9 @@ public class Bombdife extends Game {
 		return batch;
 	}
 
-	/*public BitmapFont getFont20() {
+	public BitmapFont getFont20() {
 		return font20;
-	}*/
+	}
 
 	public BitmapFont getFont30() {
 		return font30;
@@ -79,6 +89,10 @@ public class Bombdife extends Game {
 
 	public BitmapFont getFont40() {
 		return font40;
+	}
+
+	public BitmapFont getFont70() {
+		return font70;
 	}
 
 	public BitmapFont getFont80() {
@@ -89,8 +103,12 @@ public class Bombdife extends Game {
 		return prefs;
 	}
 
-	public BitmapFont getFont100() {
+	/*public BitmapFont getFont100() {
 		return font100;
+	}*/
+
+	public ActivityRequestHandler getMyRequestHandler() {
+		return myRequestHandler;
 	}
 
 	@Override
@@ -100,11 +118,12 @@ public class Bombdife extends Game {
 		//prefs.putInteger("highscoreNumSEC", 0);
 		prefs.flush();
 		batch.dispose();
-		//font20.dispose();
+		font20.dispose();
 		font30.dispose();
 		font40.dispose();
+		font70.dispose();
 		font80.dispose();
-		font100.dispose();
+		//font100.dispose();
 		generator.dispose();
 		menuMusic.dispose();
 	}

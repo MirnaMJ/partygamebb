@@ -40,10 +40,10 @@ public class TitleScreen implements Screen {
     public TitleScreen(final Bombdife game) {
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());//Gdx.graphics.getWidth()Gdx.graphics.getHeight()
+        camera.setToOrtho(false,540 , 960 );//Gdx.graphics.getWidth()Gdx.graphics.getHeight()
         //camera.zoom= 0.55f;
         //camera.lookAt(camera.position.add(-48,15,0));
-        viewport = new ExtendViewport(480, 800, camera);//FillViewport(camera.viewportWidth, camera.viewportHeight, camera)
+        viewport = new ExtendViewport(580 , 980, camera);//FillViewport(camera.viewportWidth, camera.viewportHeight, camera)
 
         language = game.getLanguage();
 
@@ -57,7 +57,7 @@ public class TitleScreen implements Screen {
         cbutton = new CustomUiBdf(game);
 
 
-        stage = new Stage();
+        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
         table = new Table();
@@ -67,7 +67,7 @@ public class TitleScreen implements Screen {
         table.setFillParent(true);
 
         table.row();
-        table.add(imageBomb).expand().fill().padBottom(Gdx.graphics.getHeight()/16).padLeft(Gdx.graphics.getWidth()/32).padRight(Gdx.graphics.getWidth()/32).padTop(Gdx.graphics.getHeight()/16);//.fill()
+        table.add(imageBomb).expand().fill();//.padTop(Gdx.graphics.getHeight()/16).padBottom(Gdx.graphics.getHeight()/16).padLeft(Gdx.graphics.getWidth()/32).padRight(Gdx.graphics.getWidth()/32)
         imageBomb.setScaling(Scaling.fit);
 
 
@@ -81,22 +81,9 @@ public class TitleScreen implements Screen {
                 dispose();
             }
         });
-        table.add(single).padBottom(Gdx.graphics.getHeight()/64);//.top().expand()size of button via size of cell.padLeft(pad).padRight(pad).fill().padLeft(Gdx.graphics.getWidth()/8).padRight(Gdx.graphics.getWidth()/8)
+        table.add(single).expand().fill(0.5f,0.4f);//.padBottom(Gdx.graphics.getHeight()/64).top().expand()size of button via size of cell.padLeft(pad).padRight(pad).fill().padLeft(Gdx.graphics.getWidth()/8).padRight(Gdx.graphics.getWidth()/8)
 
-        table.row();
-        multi = cbutton.createTButton(language.getMulti(), "noback");
-        multi.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                buttonSound.play(game.getPrefs().getFloat("volumeS"));
-                game.setScreen(new JCRoomScreen(game));
-                dispose();
-            }
-        });
-        multi.setColor(0.1f, 0.1f,0.15f,1);
-        //multi.setDisabled(true);
-        multi.getLabel().setColor(0.4f,0.4f, 0.4f,1);
-        //table.add(multi).padTop(pad);//.fill().padLeft(pad).padRight(pad)
+
 
         table.row();
         option = cbutton.createTButton(language.getOption(), "noback");
@@ -108,11 +95,12 @@ public class TitleScreen implements Screen {
                 dispose();
             }
         });
-        table.add(option).top().expand();//.expand().fill().padLeft(pad).padRight(pad).padTop(50).padBottom(80)
+        table.add(option).top().expand().fill(0.5f,0.3f);//.expand().padLeft(pad).padRight(pad).padTop(50).padBottom(80)
+
         Gdx.graphics.setContinuousRendering(false);
         //Gdx.graphics.requestRendering();
-        System.out.println(Math.floor(30*(Gdx.graphics.getDensity()/1.5)));//
-        System.out.println(Gdx.graphics.getDensity());
+
+        game.getMyRequestHandler().showAds(false);
 
     }
 

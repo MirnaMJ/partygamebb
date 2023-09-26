@@ -45,7 +45,7 @@ public class TransitionGameEndScreen  implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 480,800);//Gdx.graphics.getWidth(), Gdx.graphics.getHeight()
-        viewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight, camera);
+        viewport = new ExtendViewport(580 , 980, camera);
 
         language = game.getLanguage();
 
@@ -58,7 +58,7 @@ public class TransitionGameEndScreen  implements Screen {
         pe.scaleEffect(25);
         pe.start();
 
-        stage0 = new Stage();
+        stage0 = new Stage(viewport);
         table0 = new Table();
         //table.debug();
         stage0.addActor(table0);
@@ -77,7 +77,7 @@ public class TransitionGameEndScreen  implements Screen {
         table0.add(consigne).expand();
 
 
-        stage1 = new Stage();
+        stage1 = new Stage(viewport);
         table1 = new Table();
         //table.debug();
         stage1.addActor(table1);
@@ -107,11 +107,12 @@ public class TransitionGameEndScreen  implements Screen {
         //newHighscore.setVisible(false);
         table1.row();
         retry = customUi.createButton("retry");
-        table1.add(retry).padBottom(10);
+        table1.add(retry).padBottom(10).padBottom(200).expand();
         // time to 0
         stateTime = 0;
         //check if im at the next s3c
         secTime = 0;
+        game.getMyRequestHandler().showAds(true);
     }
     @Override
     public void show() {

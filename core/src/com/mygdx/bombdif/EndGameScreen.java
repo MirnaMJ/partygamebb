@@ -44,13 +44,13 @@ public class EndGameScreen implements Screen {
         this.game = game;
         camera = new OrthographicCamera();
         camera.setToOrtho(false, 480, 800);//Gdx.graphics.getWidth()Gdx.graphics.getHeight()
-        viewport = new ExtendViewport(camera.viewportWidth, camera.viewportHeight,camera);//
+        viewport = new ExtendViewport(580 , 980);//
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
         recordSound = Gdx.audio.newSound(Gdx.files.internal("tick2.wav"));
 
         language = game.getLanguage();
         customUi = new CustomUiBdf(game);
-        stage = new Stage();
+        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
 
         table = new Table();
@@ -63,8 +63,8 @@ public class EndGameScreen implements Screen {
         table.row();
         back = customUi.createButton( "arrow_r");
         //back.setTransform(true);
-        //back.setOrigin(back.getWidth()/2, back.getHeight()/2);
-        //back.setScale(0.6f,0.6f);
+        back.setOrigin(back.getWidth()/2, back.getHeight()/2);
+        back.setScale(0.7f,0.7f);
         back.addListener(new ChangeListener() {
             @Override
             public void changed(ChangeEvent event, Actor actor) {
@@ -92,43 +92,48 @@ public class EndGameScreen implements Screen {
 
         int[] old = {game.getPrefs().getInteger("highscoreNumH"),game.getPrefs().getInteger("highscoreNumMN"),game.getPrefs().getInteger("highscoreNumSEC")};
 
-        if (compareTime(old,game.getRules().getHmsScore())){
-            System.out.println("endgamescre3n: "+addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
-                    +addZero(game.getPrefs().getInteger("highscoreNumMN"))+":"
-                    +addZero(game.getPrefs().getInteger("highscoreNumSEC")));
-            System.out.println(game.getRules().getHmsScore()[0]*3600+game.getRules().getHmsScore()[1]*60+game.getRules().getHmsScore()[2]);
-            game.getPrefs().putInteger("highscoreNumH", game.getRules().getHmsScore()[0]);
-            game.getPrefs().putInteger("highscoreNumMN", game.getRules().getHmsScore()[1]);
-            game.getPrefs().putInteger("highscoreNumSEC", game.getRules().getHmsScore()[2]);
-            game.getPrefs().putInteger("mistake", game.getRules().getMiss());
-            flag = true;
-        }else if (old[0] == game.getRules().getHmsScore()[0] && old[1] == game.getRules().getHmsScore()[1] && old[2] == game.getRules().getHmsScore()[2]){
-            newHighscore.setVisible(false);
-            if (game.getRules().getMiss()<game.getPrefs().getInteger("mistake")){
+        if(game.getRules().isRegister_score()) {
+            if (compareTime(old, game.getRules().getHmsScore())) {
+                System.out.println("endgamescre3n: " + addZero(game.getPrefs().getInteger("highscoreNumH")) + ":"
+                        + addZero(game.getPrefs().getInteger("highscoreNumMN")) + ":"
+                        + addZero(game.getPrefs().getInteger("highscoreNumSEC")));
+                System.out.println(game.getRules().getHmsScore()[0] * 3600 + game.getRules().getHmsScore()[1] * 60 + game.getRules().getHmsScore()[2]);
+                game.getPrefs().putInteger("highscoreNumH", game.getRules().getHmsScore()[0]);
+                game.getPrefs().putInteger("highscoreNumMN", game.getRules().getHmsScore()[1]);
+                game.getPrefs().putInteger("highscoreNumSEC", game.getRules().getHmsScore()[2]);
                 game.getPrefs().putInteger("mistake", game.getRules().getMiss());
-                System.out.println("endgame screen : mistake registered");
-                System.out.println("old[0] == game.getRules().getHmsScore()[0]"+old[0]+" "+game.getRules().getHmsScore()[0]);
-
-                System.out.println("old[1] == game.getRules().getHmsScore()[1]"+old[1]+" "+game.getRules().getHmsScore()[1]);
-
-                System.out.println("old[2] == game.getRules().getHmsScore()[2]"+old[2]+" "+game.getRules().getHmsScore()[2]);
                 flag = true;
+            } else if (old[0] == game.getRules().getHmsScore()[0] && old[1] == game.getRules().getHmsScore()[1] && old[2] == game.getRules().getHmsScore()[2]) {
+                newHighscore.setVisible(false);
+                if (game.getRules().getMiss() < game.getPrefs().getInteger("mistake")) {
+                    game.getPrefs().putInteger("mistake", game.getRules().getMiss());
+                    System.out.println("endgame screen : mistake registered");
+                    System.out.println("old[0] == game.getRules().getHmsScore()[0]" + old[0] + " " + game.getRules().getHmsScore()[0]);
+
+                    System.out.println("old[1] == game.getRules().getHmsScore()[1]" + old[1] + " " + game.getRules().getHmsScore()[1]);
+
+                    System.out.println("old[2] == game.getRules().getHmsScore()[2]" + old[2] + " " + game.getRules().getHmsScore()[2]);
+                    flag = true;
+                }
+                System.out.println("nothing registered");
+            } else {
+                newHighscore.setVisible(false);
+                System.out.println("game.getRules().getMiss()>game.getPrefs().getInteger(mistake)" + game.getRules().getMiss() + " " + game.getPrefs().getInteger("mistake"));
+                System.out.println("old[0] == game.getRules().getHmsScore()[0]" + old[0] + " " + game.getRules().getHmsScore()[0]);
+
+                System.out.println("old[1] == game.getRules().getHmsScore()[1]" + old[1] + " " + game.getRules().getHmsScore()[1]);
+
+                System.out.println("old[2] == game.getRules().getHmsScore()[2]" + old[2] + " " + game.getRules().getHmsScore()[2]);
+                System.out.println("nothing registered");
+                System.out.println(game.getRules().getHmsScore()[0] * 3600 + game.getRules().getHmsScore()[1] * 60 + game.getRules().getHmsScore()[2]);
+                System.out.println("endgamescreen : " + addZero(game.getPrefs().getInteger("highscoreNumH")) + ":"
+                        + addZero(game.getPrefs().getInteger("highscoreNumMN")) + ":"
+                        + addZero(game.getPrefs().getInteger("highscoreNumSEC")));
+
             }
-            System.out.println("nothing registered");
-        } else {
+
+        }else{
             newHighscore.setVisible(false);
-            System.out.println("game.getRules().getMiss()>game.getPrefs().getInteger(mistake)"+game.getRules().getMiss()+" "+game.getPrefs().getInteger("mistake"));
-            System.out.println("old[0] == game.getRules().getHmsScore()[0]"+old[0]+" "+game.getRules().getHmsScore()[0]);
-
-            System.out.println("old[1] == game.getRules().getHmsScore()[1]"+old[1]+" "+game.getRules().getHmsScore()[1]);
-
-            System.out.println("old[2] == game.getRules().getHmsScore()[2]"+old[2]+" "+game.getRules().getHmsScore()[2]);
-            System.out.println("nothing registered");
-            System.out.println(game.getRules().getHmsScore()[0]*3600+game.getRules().getHmsScore()[1]*60+game.getRules().getHmsScore()[2]);
-            System.out.println("endgamescreen : "+addZero(game.getPrefs().getInteger("highscoreNumH"))+":"
-                    +addZero(game.getPrefs().getInteger("highscoreNumMN"))+":"
-                    +addZero(game.getPrefs().getInteger("highscoreNumSEC")));
-
         }
         //oldScore = customUi.createLabel(40,"00:42:00");
         table.add(oldScore).expand();
@@ -145,10 +150,12 @@ public class EndGameScreen implements Screen {
                 dispose();
             }
         });
-        table.add(retry).padBottom(10);
+        table.add(retry).padBottom(200).expand();
         //Gdx.graphics.setContinuousRendering(false);
         stateTime = 0;
         secTime = 0;
+
+        //game.getMyRequestHandler().showAds(true);
 
     }
 

@@ -38,7 +38,6 @@ public class CreateSingleRoomScreen implements Screen {
     private TextButton create;
     private Stage stage;
     private Table outerTable;
-    private Table table;
     private Table innerTable;
     private final ScrollPane scrollPane;
     int rotation = 180;
@@ -60,6 +59,8 @@ public class CreateSingleRoomScreen implements Screen {
     private int hour;
     private int min;
     private int sec;
+
+    private Label infoscore;
     private Label lTap;
     private CheckBox checkTap;
     private Label lSwipe;
@@ -71,14 +72,16 @@ public class CreateSingleRoomScreen implements Screen {
 
     private CheckBox[] trackingTasks;
     private String[] challenges;
+    private int available_tasks;
 
     private Sound buttonSound;
 
     public CreateSingleRoomScreen(final Bombdife game){
         this.game = game;
         camera = new OrthographicCamera();
-        camera.setToOrtho(false, Gdx.graphics.getWidth(),Gdx.graphics.getHeight());//480, 800
-        viewport = new ExtendViewport(480, 800,camera);//
+
+        camera.setToOrtho(false, 540 , 960 );
+        viewport = new ExtendViewport(580 , 980, camera);
 
         buttonSound = Gdx.audio.newSound(Gdx.files.internal("menu_tick.wav"));
         language = game.getLanguage();
@@ -101,18 +104,19 @@ public class CreateSingleRoomScreen implements Screen {
 
         cbutton = new CustomUiBdf(game);
 
-        stage = new Stage();
+        stage = new Stage(viewport);
         Gdx.input.setInputProcessor(stage);
         //Gdx.input.setCatchKey(Input.Keys.BACK, true);
 
-        table = new Table();
-        //table.debug();
+
+        innerTable = new Table();
+        //innerTable.debug();
 
         outerTable = new Table();
         //outerTable.debug();
 
 
-        scrollPane = cbutton.createScrollPane(table);
+        scrollPane = cbutton.createScrollPane(innerTable);
         scrollPane.setScrollbarsVisible(true);
         scrollPane.setScrollingDisabled(true,false);
 
@@ -134,7 +138,13 @@ public class CreateSingleRoomScreen implements Screen {
                 dispose();
             }
         });
-        outerTable.add(back).top().left();;//.left().colspan(3).expand()
+
+        back.setTransform(true);
+        back.setOrigin(back.getWidth()/2, back.getHeight()/2);
+        back.setScale(0.6f,0.6f);
+
+        outerTable.add(back).top().left();//.pad(10).left().colspan(3).expand();
+
         outerTable.row();
         outerTable.add(scrollPane).expand();
 
@@ -278,23 +288,6 @@ public class CreateSingleRoomScreen implements Screen {
         fixedChrono(true);
 
 
-        /*table.row();
-        difficulty = cbutton.createTButton(game.getRules().getDifficulty(),"back");
-        difficulty.addListener(new ChangeListener() {
-            @Override
-            public void changed(ChangeEvent event, Actor actor) {
-                if (language.getEasy().equals(difficulty.getText().toString())) {
-                    difficulty.setText(language.getInter());
-                }else if (language.getInter().equals(difficulty.getText().toString())) {
-                    difficulty.setText(language.getHard());
-                }else{
-                    difficulty.setText(language.getEasy());
-                }
-            }
-        });
-        table.add(difficulty).colspan(3).expand();;//.colspan(3).expand().top();*/
-
-
         lTap = cbutton.createLabel(40,language.getTap());
         checkTap = cbutton.createCBox("","tap");
         checkTap.setOrigin(checkTap.getWidth()/2, checkTap.getHeight()/2);
@@ -367,8 +360,6 @@ public class CreateSingleRoomScreen implements Screen {
         }
 
 
-        innerTable = new Table();
-        //innerTable.debug();
 
         //scrollPane.setScrollingDisabled(true,false);
         innerTable.row();
@@ -386,8 +377,9 @@ public class CreateSingleRoomScreen implements Screen {
         innerTable.row();
         label2 = cbutton.createLabel(40,language.getDiff());
         innerTable.add(label2).colspan(4).padTop(60);//.colspan(3).expand();
-
-
+        innerTable.row();
+        infoscore = cbutton.createLabel(30,language.getInfoscore());
+        innerTable.add(infoscore).colspan(5);
         innerTable.row();
         /*innerTable.add(minusHour).colspan(2);
         innerTable.add(minusMin);
@@ -405,17 +397,13 @@ public class CreateSingleRoomScreen implements Screen {
         innerTable.add(lCompass);
         innerTable.add(checkCompass).colspan(4);
 
-        table.row();
-        table.add(innerTable).colspan(3);
-
 
         trackingTasks = new CheckBox[]{checkTap, checkSwipe, checkShake,checkCompass};
-        //trackingTasks[] = ;
+        available_tasks = trackingTasks.length;
         //scrollPane.setScrollingDisabled(true, true);
         //scrollPane.setScrollY(-100);
 
 
-        table.row();
         create = cbutton.createTButton(language.getCreate(), "noback");
         create.addListener(new ChangeListener() {
             @Override
@@ -427,21 +415,32 @@ public class CreateSingleRoomScreen implements Screen {
                     if (trackingTasks[i].isChecked()){
                         challenges[i] = trackingTasks[i].getName();
                         nbChallenge++;
-                        System.out.println("createsingleroom"+nbChallenge);
+                        //System.out.println("createsingleroom"+nbChallenge);
+                    }
+                    if (trackingTasks[i].isDisabled()){
+                        available_tasks--;
                     }
                 }
 
+                System.out.println("cratroomcrn: Entrer nbChallenge0000000000000000000000000000000000000000000000000000000000000000000000000000000 "+nbChallenge);
+                System.out.println("cratroomcrn: Entrer nbChallenge "+nbChallenge);
+                System.out.println("cratroomcrn: Entrer trackingTasks.length "+available_tasks);
+                if (nbChallenge == available_tasks){
+                    game.getRules().setRegister_score(true);
+                }else{
+                    game.getRules().setRegister_score(false);
+                }
                 game.getRules().setChallenge(challenges,nbChallenge);
                 game.getRules().setCountdown(hour,min,sec);
                 game.getRules().setNbPlayer(nbPlayer);
                 switch(nbPlayer){
                     case 1:
-                        System.out.println("cratroomcrn: Entrer dans singleplayer");
+                        //System.out.println("cratroomcrn: Entrer dans singleplayer");
                         game.setScreen(new GameScreen(game));
                         dispose();
                         break;
                     case 2:
-                        System.out.println("cratroomcrn: oh boy la decouverte du bluetooth ou wifi direct");
+                        System.out.println("cratroomcrn: potnta mutpayr dvopmnt n t futur");
                         break;
                     case 3:
                         System.out.println("cratroomcrn: do i even want to make it blow on only two people for this case and not up");
@@ -455,7 +454,8 @@ public class CreateSingleRoomScreen implements Screen {
             }
         });
         outerTable.row();
-        outerTable.add(create).fillX().padBottom(10);;//.colspan(3).fillX();
+        outerTable.add(create).fillX().padBottom(100);;//.colspan(3).fillX();
+        game.getMyRequestHandler().showAds(true);
         //Gdx.graphics.setContinuousRendering(false);
     }
 

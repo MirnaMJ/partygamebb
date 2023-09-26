@@ -96,7 +96,7 @@ public class ScoreRecordScreen implements Screen {
         table.add(label1).expand().top();
 
         table.row();
-        deleteScore = cbutton.createTButton("Foetus deletus","noback");
+        deleteScore = cbutton.createTButton(language.getFoetusdeletus(), "back");
         deleteScore.setColor(0.8f,0.05f,0.1f,1);
         deleteScore.getLabel().setColor(0.8f,0.05f,0.1f,1);
         deleteScore.addListener(new ChangeListener() {
@@ -111,7 +111,7 @@ public class ScoreRecordScreen implements Screen {
                 label1.setText(language.getMiss()+" : 0");
             }
         });
-        table.add(deleteScore).bottom().right();
+        table.add(deleteScore).bottom().right().padBottom(100);
 
         Gdx.graphics.setContinuousRendering(false);
     }

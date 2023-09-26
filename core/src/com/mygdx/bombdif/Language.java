@@ -1,6 +1,5 @@
 package com.mygdx.bombdif;
 
-import com.badlogic.gdx.scenes.scene2d.ui.Label;
 
 public class Language {
     private String language;
@@ -44,6 +43,8 @@ public class Language {
     private String music;
     private String vibe;
     private String assistColor;
+    private String foetusdeletus;
+    private String infoscore;
 
     public Language(String lang) {
         language = lang;
@@ -58,7 +59,7 @@ public class Language {
 
     private void translate(String language){
         switch (language) {
-            case "Français":
+            case "  Français  ":
                 create = "JOUER";
                 join = "Rejoindre une salle";
                 option = "Option";
@@ -91,17 +92,19 @@ public class Language {
                 so = "AU SUD OUEST!";
                 nTimes = " FOIS!";
                 newHighscore = "Nouveau Records!!!";
-                highscore = "  Record actuel  ";
+                highscore = "   Record actuel   ";
                 miss = "Erreurs";
                 sound = "Son";
                 music = "Musique";
                 vibe = "Vibreur";
                 assistColor = "Indice direction couleur";
+                foetusdeletus = " Supprimer score";
+                infoscore = "** Si une des taches est exclue,\n le record ne sera pas enregistré.";
                 break;
-            case "English":
+            case "  English  ":
                 create = "PLAY";
                 join = "Join room";
-                option = "Option";
+                option = " Option ";
                 tongue = "Language";
                 diff = "Task list";
                 selecTime = "Timer duration";
@@ -137,6 +140,8 @@ public class Language {
                 music = "Music";
                 vibe = "Vibrator";
                 assistColor = "Color indicator for direction";
+                foetusdeletus = "Delete Score";
+                infoscore = "** If one of the tasks aren't checked,\n the highscore won't be registered";
                 break;
             default:
                 create = "";
@@ -177,6 +182,8 @@ public class Language {
                 music = "";
                 vibe = "";
                 assistColor = "";
+                foetusdeletus = "";
+                infoscore = "";
         }
     }
 
@@ -195,9 +202,9 @@ public class Language {
     public String getEasy() {
         return "easy";
     }
-    public String getInter() {
+    /*public String getInter() {
         return "inter";
-    }
+    }*/
     public String getHard() {
         return "hard";
     }
@@ -350,5 +357,13 @@ public class Language {
 
     public String getAssistColor() {
         return assistColor;
+    }
+
+    public String getFoetusdeletus() {
+        return foetusdeletus;
+    }
+
+    public String getInfoscore() {
+        return infoscore;
     }
 }
