@@ -24,11 +24,7 @@ public class Bombdife extends Game {
 	public Music menuMusic;
 	private GameRulesManager rules;
 	private Preferences prefs;
-	private ActivityRequestHandler myRequestHandler;
 
-	public Bombdife(ActivityRequestHandler handler) {
-		myRequestHandler = handler;
-	}
 	
 	@Override
 	public void create () {
@@ -107,9 +103,6 @@ public class Bombdife extends Game {
 		return font100;
 	}*/
 
-	public ActivityRequestHandler getMyRequestHandler() {
-		return myRequestHandler;
-	}
 
 	@Override
 	public void dispose () {

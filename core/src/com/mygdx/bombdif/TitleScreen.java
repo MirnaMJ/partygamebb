@@ -100,7 +100,6 @@ public class TitleScreen implements Screen {
         Gdx.graphics.setContinuousRendering(false);
         //Gdx.graphics.requestRendering();
 
-        game.getMyRequestHandler().showAds(false);
 
     }
 

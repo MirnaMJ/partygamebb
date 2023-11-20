@@ -111,7 +111,7 @@ public class ScoreRecordScreen implements Screen {
                 label1.setText(language.getMiss()+" : 0");
             }
         });
-        table.add(deleteScore).bottom().right().padBottom(100);
+        table.add(deleteScore).bottom().right().padBottom(10);
 
         Gdx.graphics.setContinuousRendering(false);
     }

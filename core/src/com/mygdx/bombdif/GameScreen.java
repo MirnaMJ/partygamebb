@@ -211,7 +211,6 @@ public class GameScreen implements Screen, GestureDetector.GestureListener {
         secTime = 0;
         Gdx.graphics.setContinuousRendering(true);
 
-        game.getMyRequestHandler().showAds(false);
     }
 
     @Override

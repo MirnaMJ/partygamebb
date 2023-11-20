@@ -211,9 +211,8 @@ public class OptionScreen implements Screen {
                 dispose();
             }
         });
-        table.add(hScore).padBottom(200).expand().fill(0.5f,0.4f);//.pad(10).bottom();.top().colspan(2)Gdx.graphics.getWidth()/64
+        table.add(hScore).padBottom(20).expand().fill(0.5f,0.4f);//.pad(10).bottom();.top().colspan(2)Gdx.graphics.getWidth()/64
         scrollPane.setScrollingDisabled(true, false);
-        game.getMyRequestHandler().showAds(true);
         //Gdx.graphics.setContinuousRendering(true);.expand().fill().padBottom(Gdx.graphics.getHeight()/4).colspan(2).padLeft(Gdx.graphics.getWidth()/64).padRight(Gdx.graphics.getWidth()/4)
     }
 

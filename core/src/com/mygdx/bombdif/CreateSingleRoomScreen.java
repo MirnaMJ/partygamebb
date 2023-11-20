@@ -447,8 +447,7 @@ public class CreateSingleRoomScreen implements Screen {
             }
         });
         outerTable.row();
-        outerTable.add(create).fillX().padBottom(100);;//.colspan(3).fillX();
-        game.getMyRequestHandler().showAds(true);
+        outerTable.add(create).fillX().padBottom(10);;//.colspan(3).fillX();
         //Gdx.graphics.setContinuousRendering(false);
     }
 

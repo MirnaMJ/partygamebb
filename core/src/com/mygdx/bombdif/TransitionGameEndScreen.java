@@ -112,7 +112,6 @@ public class TransitionGameEndScreen  implements Screen {
         stateTime = 0;
         //check if im at the next s3c
         secTime = 0;
-        game.getMyRequestHandler().showAds(true);
     }
     @Override
     public void show() {
