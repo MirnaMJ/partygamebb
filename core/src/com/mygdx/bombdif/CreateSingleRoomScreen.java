@@ -292,7 +292,7 @@ public class CreateSingleRoomScreen implements Screen {
         checkTap = cbutton.createCBox("","tap");
         checkTap.setOrigin(checkTap.getWidth()/2, checkTap.getHeight()/2);
         checkTap.setTransform(true);
-        checkTap.setScale(0.5f);
+        checkTap.setScale(0.7f);
         checkTap.setChecked(true);
         checkTap.addListener(new ChangeListener() {
             @Override
@@ -306,7 +306,7 @@ public class CreateSingleRoomScreen implements Screen {
         checkSwipe = cbutton.createCBox("","swipe");
         checkSwipe.setOrigin(checkSwipe.getWidth()/2, checkSwipe.getHeight()/2);
         checkSwipe.setTransform(true);
-        checkSwipe.setScale(0.5f);
+        checkSwipe.setScale(0.7f);
         checkSwipe.setChecked(true);
         checkSwipe.addListener(new ChangeListener() {
             @Override
@@ -321,7 +321,7 @@ public class CreateSingleRoomScreen implements Screen {
         checkShake = cbutton.createCBox("","shake");
         checkShake.setOrigin(checkShake.getWidth()/2, checkShake.getHeight()/2);
         checkShake.setTransform(true);
-        checkShake.setScale(0.5f);
+        checkShake.setScale(0.7f);
         if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Accelerometer)){//
             checkShake.setChecked(true);
             checkShake.addListener(new ChangeListener() {
@@ -342,7 +342,7 @@ public class CreateSingleRoomScreen implements Screen {
         checkCompass = cbutton.createCBox("","pointTo");
         checkCompass.setOrigin(checkCompass.getWidth()/2, checkCompass.getHeight()/2);
         checkCompass.setTransform(true);
-        checkCompass.setScale(0.5f);
+        checkCompass.setScale(0.7f);
         if (Gdx.input.isPeripheralAvailable(Input.Peripheral.Compass)){//
             checkCompass.setChecked(true);
             checkCompass.addListener(new ChangeListener() {
@@ -422,9 +422,6 @@ public class CreateSingleRoomScreen implements Screen {
                     }
                 }
 
-                System.out.println("cratroomcrn: Entrer nbChallenge0000000000000000000000000000000000000000000000000000000000000000000000000000000 "+nbChallenge);
-                System.out.println("cratroomcrn: Entrer nbChallenge "+nbChallenge);
-                System.out.println("cratroomcrn: Entrer trackingTasks.length "+available_tasks);
                 if (nbChallenge == available_tasks){
                     game.getRules().setRegister_score(true);
                 }else{
@@ -440,10 +437,6 @@ public class CreateSingleRoomScreen implements Screen {
                         dispose();
                         break;
                     case 2:
-                        System.out.println("cratroomcrn: potnta mutpayr dvopmnt n t futur");
-                        break;
-                    case 3:
-                        System.out.println("cratroomcrn: do i even want to make it blow on only two people for this case and not up");
                         break;
                     default:
                         game.setScreen(new WaitingRoomScreen(game));
